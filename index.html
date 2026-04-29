@@ -6,32 +6,14 @@
 <title>Dashboard Comercial | LaraFy</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#012e43;--navy2:#013a55;--teal:#035a7a;
-  --cyan:#35b9d7;--cyan2:#2aa8c7;--cyan-soft:#d6f0f7;--cyan-pale:#eaf7fb;
-  --gold:#e8a838;--green:#00c853;--red:#ef5350;
-  --bg:#f4f7f9;--bg2:#edf1f4;--card:#ffffff;
-  --text:#012e43;--text2:rgba(1,46,67,0.65);--text3:rgba(1,46,67,0.4);
-  --border:rgba(1,46,67,0.08);--border2:rgba(1,46,67,0.15);
-  --shadow-xs:0 1px 3px rgba(1,46,67,0.04);
-  --shadow:0 4px 16px rgba(1,46,67,0.07);
-  --shadow-lg:0 12px 40px rgba(1,46,67,0.12);
-}
+:root{--navy:#012e43;--navy2:#013a55;--teal:#035a7a;--cyan:#35b9d7;--cyan2:#2aa8c7;--cyan-soft:#d6f0f7;--cyan-pale:#eaf7fb;--gold:#e8a838;--green:#00c853;--red:#ef5350;--bg:#f4f7f9;--bg2:#edf1f4;--card:#ffffff;--text:#012e43;--text2:rgba(1,46,67,0.65);--text3:rgba(1,46,67,0.4);--border:rgba(1,46,67,0.08);--border2:rgba(1,46,67,0.15);--shadow-xs:0 1px 3px rgba(1,46,67,0.04);--shadow:0 4px 16px rgba(1,46,67,0.07);--shadow-lg:0 12px 40px rgba(1,46,67,0.12)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes barGrow{from{width:0}to{width:var(--w)}}
-@keyframes colGrow{from{height:0}to{height:var(--h)}}
 
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
-.reveal.on{opacity:1;transform:translateY(0)}
-
-/* NAVBAR */
 .navbar{background:var(--navy);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.06)}
 .nav-wrap{max-width:1320px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
@@ -44,7 +26,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .nav-live-txt{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
 .nav-date{font-size:11px;color:rgba(255,255,255,0.5);font-weight:500}
 
-/* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--teal) 70%);padding:32px 32px 28px;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;top:-50%;right:-5%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(53,185,215,0.12),transparent 65%)}
 .hero-wrap{max-width:1320px;margin:0 auto;position:relative;z-index:2}
@@ -53,7 +34,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .hero-title span{color:var(--cyan)}
 .hero-sub{font-size:13px;color:rgba(255,255,255,0.55);font-weight:400}
 
-/* FILTROS */
 .filters-bar{background:var(--card);border-bottom:1px solid var(--border);padding:18px 32px;position:sticky;top:64px;z-index:90;box-shadow:0 4px 12px rgba(1,46,67,0.04)}
 .filters-wrap{max-width:1320px;margin:0 auto;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
 .flt{display:flex;flex-direction:column;gap:5px}
@@ -63,15 +43,13 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .fbtn:hover{color:var(--text);background:var(--cyan-pale)}
 .fbtn.active{background:var(--cyan);color:#fff;box-shadow:0 2px 8px rgba(53,185,215,0.3)}
 .flt-date{display:flex;gap:6px;align-items:center}
-.flt-input{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:all .2s;cursor:pointer}
-.flt-input:focus{border-color:var(--cyan);background:#fff;box-shadow:0 0 0 3px rgba(53,185,215,0.1)}
+.flt-input,.flt-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:all .2s;cursor:pointer}
+.flt-input:focus,.flt-select:focus{border-color:var(--cyan);background:#fff;box-shadow:0 0 0 3px rgba(53,185,215,0.1)}
 .flt-arrow{color:var(--text3);font-size:12px}
-.flt-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;cursor:pointer;min-width:150px;transition:all .2s}
-.flt-select:focus{border-color:var(--cyan);background:#fff}
+.flt-select{min-width:160px}
 .flt-reset{padding:8px 14px;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s}
 .flt-reset:hover{border-color:var(--red);color:var(--red)}
 
-/* TABS */
 .tabs-bar{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px}
 .tabs-wrap{max-width:1320px;margin:0 auto;display:flex;gap:0}
 .tab{padding:16px 24px;background:transparent;border:none;border-bottom:2px solid transparent;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;font-family:inherit;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:8px}
@@ -80,12 +58,10 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .tab-icon{font-size:14px}
 .tab-count{background:var(--cyan-pale);color:var(--cyan2);padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800}
 
-/* WRAP */
 .wrap{max-width:1320px;margin:0 auto;padding:32px}
 .tab-pane{display:none;animation:fadeIn .35s ease}
 .tab-pane.active{display:block}
 
-/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;position:relative;overflow:hidden;transition:all .25s;box-shadow:var(--shadow-xs)}
 .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--border2)}
@@ -100,16 +76,11 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .kpi.red .kpi-value{color:var(--red)}
 .kpi.gold .kpi-value{color:var(--gold)}
 
-/* GRIDS */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:24px}
-
-/* CARD */
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;box-shadow:var(--shadow-xs);transition:all .25s}
 .card:hover{box-shadow:var(--shadow);border-color:var(--border2)}
-.ct{font-size:14px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+.ct{font-size:14px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px}
 
-/* CHART COLUNAS */
 .chart{display:flex;align-items:flex-end;gap:6px;height:160px;padding-top:8px;position:relative;overflow-x:auto}
 .chart::before{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border)}
 .cc{flex:1;min-width:24px;display:flex;flex-direction:column;align-items:center;gap:5px}
@@ -117,12 +88,9 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .cc-bwrap{flex:1;display:flex;align-items:flex-end;width:100%}
 .cc-bar{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--cyan),var(--navy));min-height:3px;transition:height .8s cubic-bezier(.4,0,.2,1)}
 .cc-bar.green{background:linear-gradient(180deg,var(--green),#00695c)}
-.cc-bar.red{background:linear-gradient(180deg,var(--red),#b71c1c)}
 .cc-bar.gold{background:linear-gradient(180deg,var(--gold),#c07820)}
-.cc-lbl{font-size:9px;color:var(--text3);font-weight:500;text-align:center;white-space:nowrap;writing-mode:vertical-rl;transform:rotate(180deg);max-height:60px;overflow:hidden}
-.cc-lbl.h{writing-mode:horizontal-tb;transform:none;max-height:none}
+.cc-lbl{font-size:9px;color:var(--text3);font-weight:500;text-align:center;white-space:nowrap}
 
-/* BARRAS */
 .bl{display:flex;flex-direction:column;gap:11px;max-height:340px;overflow-y:auto;padding-right:4px}
 .bi-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
 .bi-name{font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62%}
@@ -136,7 +104,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .bi-fill.red{background:linear-gradient(90deg,var(--red),#b71c1c)}
 .bi-fill.gold{background:linear-gradient(90deg,var(--gold),#c07820)}
 
-/* TABELA */
 .tbl{width:100%;font-size:13px}
 .tbl th{text-align:left;padding:10px 8px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)}
 .tbl td{padding:11px 8px;border-bottom:1px solid var(--border);color:var(--text2)}
@@ -144,27 +111,14 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .tbl-name{font-weight:600;color:var(--text)}
 .tbl-num{font-weight:700;color:var(--cyan)}
 
-/* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
 
-/* HEATMAP */
-.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.heat-cell{aspect-ratio:1;border-radius:3px;background:var(--bg2);position:relative;transition:transform .15s}
-.heat-cell:hover{transform:scale(1.15);z-index:5}
-.heat-cell[data-v="1"]{background:rgba(53,185,215,0.2)}
-.heat-cell[data-v="2"]{background:rgba(53,185,215,0.4)}
-.heat-cell[data-v="3"]{background:rgba(53,185,215,0.6)}
-.heat-cell[data-v="4"]{background:rgba(53,185,215,0.8)}
-.heat-cell[data-v="5"]{background:var(--cyan)}
-
-/* FOOTER */
-.footer{background:var(--navy);padding:24px 32px;margin-top:40px;border-top:1px solid rgba(255,255,255,0.05)}
+.footer{background:var(--navy);padding:24px 32px;margin-top:40px}
 .fi{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .fi p{font-size:11px;color:rgba(255,255,255,0.4)}
 .fi-logo{height:20px;filter:brightness(0) invert(1);opacity:.55}
 
-/* RESPONSIVE */
-@media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}}
+@media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
 @media(max-width:640px){.wrap{padding:20px}.kpi-grid{grid-template-columns:1fr}.filters-wrap{flex-direction:column;align-items:stretch}.tabs-wrap{overflow-x:auto}.tab{padding:14px 16px;font-size:12px}}
 </style>
 </head>
@@ -221,7 +175,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
   </div>
   <div class="flt">
     <span class="flt-l">Vendedor</span>
-    <select class="flt-select" id="selVend" onchange="render()">
+    <select class="flt-select" id="selVend">
       <option value="todos">Todos os vendedores</option>
     </select>
   </div>
@@ -243,7 +197,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 
 <div class="wrap">
 
-<!-- ABA LEADS -->
 <div class="tab-pane active" id="pane-leads">
   <div class="kpi-grid">
     <div class="kpi cyan"><span class="kpi-icon">👥</span><div class="kpi-label">Total de Leads</div><div class="kpi-value" id="l-total">0</div><div class="kpi-sub">no período</div></div>
@@ -261,7 +214,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
   </div>
 </div>
 
-<!-- ABA VENDAS -->
 <div class="tab-pane" id="pane-vendas">
   <div class="kpi-grid">
     <div class="kpi cyan"><span class="kpi-icon">💰</span><div class="kpi-label">Total de Vendas</div><div class="kpi-value" id="v-total">0</div><div class="kpi-sub">contratos</div></div>
@@ -279,13 +231,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
   </div>
 </div>
 
-<!-- ABA REUNIÕES -->
 <div class="tab-pane" id="pane-reunioes">
   <div class="kpi-grid">
     <div class="kpi cyan"><span class="kpi-icon">📅</span><div class="kpi-label">Total Reuniões</div><div class="kpi-value" id="r-total">0</div><div class="kpi-sub">no período</div></div>
     <div class="kpi green"><span class="kpi-icon">✅</span><div class="kpi-label">Realizadas</div><div class="kpi-value" id="r-feitas">0</div><div class="kpi-sub" id="r-feitas-pct">0%</div></div>
     <div class="kpi gold"><span class="kpi-icon">⏱️</span><div class="kpi-label">Duração Média</div><div class="kpi-value" id="r-dur">0min</div><div class="kpi-sub">por reunião</div></div>
-    <div class="kpi"><span class="kpi-icon">📊</span><div class="kpi-label">Por Dia (média)</div><div class="kpi-value" id="r-pordia">0</div><div class="kpi-sub">reuniões/dia útil</div></div>
+    <div class="kpi"><span class="kpi-icon">📊</span><div class="kpi-label">Por Dia (média)</div><div class="kpi-value" id="r-pordia">0</div><div class="kpi-sub">reuniões/dia</div></div>
   </div>
   <div class="g2">
     <div class="card"><div class="ct">📈 Reuniões por Dia</div><div class="chart" id="r-chart-dia"></div></div>
@@ -297,7 +248,6 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
   </div>
 </div>
 
-<!-- ABA ATIVIDADES -->
 <div class="tab-pane" id="pane-atividades">
   <div class="kpi-grid">
     <div class="kpi cyan"><span class="kpi-icon">⚡</span><div class="kpi-label">Total Atividades</div><div class="kpi-value" id="a-total">0</div><div class="kpi-sub">no período</div></div>
@@ -326,7 +276,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 </footer>
 
 <script>
-const DASH_DATA = {"dataAtualizacao":"quarta-feira, 29 de abril de 2026 às 16:53","minDate":"","maxDate":"","counts":{"leads":0,"vendas":0,"reunioes":0,"atividades":0},"leads":[],"vendas":[],"reunioes":[],"atividades":[],"filtros":{"vendedores":[],"origensLeads":[],"origensVendas":[]}};
+const DASH_DATA = {"dataAtualizacao":"quarta-feira, 29 de abril de 2026 às 17:18","minDate":"2024-01-11","maxDate":"2026-31-03","counts":{"leads":0,"vendas":177,"reunioes":0,"atividades":0,"_debug_total":177,"_debug_ops":0},"leads":[],"vendas":[{"d":"2024-01-11","cl":"Leticia Staroski","v":5400,"l":"Indicação","i":"Sim","c":"BACCARO CONSULTORIA EMPRESARIAL LTDA"},{"d":"2024-08-11","cl":"Waldir","v":5400,"l":"Contatos","i":"Não","c":"MARINS BERTOLDI ADVOGADOS"},{"d":"2024-05-11","cl":"Waldir","v":4000,"l":"Contatos","i":"Não","c":"VENTURI, SILVA & HUTTNER ADVOGADOS ASSOCIADOS"},{"d":"2024-01-12","cl":"Leticia Staroski","v":5400,"l":"Prospecção Fria","i":"Sim","c":"AFVRECH ASSESSORIA TRIBUTARIA LTDA"},{"d":"2024-11-12","cl":"Waldir","v":1800,"l":"Contatos","i":"Sim","c":"RCA CONSULTORIA TRIBUTARIA LTDA"},{"d":"2025-13-01","cl":"Alysson","v":5400,"l":"Contatos","i":"Não","c":"A M C AMARAL SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-28-02","cl":"Alysson","v":2000,"l":"Contatos","i":"Sim","c":"BLINDA SOLUCOES TRIBUTARIAS LTDA"},{"d":"2025-27-02","cl":"Matheus Vieira","v":300,"l":"Prospecção Fria","i":"Não","c":"DÉBORA VIEIRA KESSLER"},{"d":"2025-01-03","cl":"Leticia Staroski","v":3000,"l":"Prospecção Fria","i":"Não","c":"​TAX REVIEW GESTAO TRIBUTARIA LTDA"},{"d":"2025-07-03","cl":"Leticia Staroski","v":1800,"l":"Prospecção Fria","i":"Sim","c":"AUDAZ APOIO ADMINISTRATIVO E OPERACIONAL LTDA"},{"d":"2025-01-03","cl":"Alysson","v":1800,"l":"Contatos","i":"Não","c":"SALAMACHA, BATISTA, ABAGGE & CALIXTO - ADVOCACIA"},{"d":"2025-17-03","cl":"Leticia Staroski","v":5400,"l":"Prospecção Fria","i":"Sim","c":"HMPX INTELIGENCIA FISCAL TRIBUTARIA E EMPRESARIAL LTDA"},{"d":"2025-24-03","cl":"Alysson","v":1800,"l":"Clube","i":"Não","c":"EVOX FISCAL LTDA"},{"d":"2025-24-03","cl":"Leticia Staroski","v":5400,"l":"Indicação","i":"Sim","c":"FUNCIONAL CONSULTORIA EMPRESARIAL LTDA"},{"d":"2025-28-03","cl":"Alysson","v":1800,"l":"Clube","i":"Não","c":"TAX ALL CONSULTORIA E PLANEJAMENTO TRIBUTARIO S/S LTDA"},{"d":"2025-29-04","cl":"Alysson","v":8100,"l":"Indicação","i":"Sim","c":"STRATECH CONTABILIDADE E CONSULTORIA LTDA"},{"d":"2025-30-04","cl":"Leticia Staroski","v":900,"l":"Contatos","i":"Não","c":"CARLOS PINTO NETO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-02-05","cl":"Waldir","v":1800,"l":"Clube","i":"Sim","c":"MMAB CONSULTORIA DE NEGOCIOS LTDA"},{"d":"2025-23-04","cl":"Leticia Staroski","v":2700,"l":"Indicação","i":"Não","c":"AG TAX LTDA"},{"d":"2025-05-05","cl":"Alysson","v":2160,"l":"Eventos","i":"Sim","c":"MARCIO ZAMBONI CREMACIO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-06-05","cl":"Alysson","v":1800,"l":"Eventos","i":"Sim","c":"LM ASSESSORIA CONTABIL - SOCIEDADE SIMPLES"},{"d":"2025-09-05","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"APEX ESTRATEGIAS PATRIMONIAIS LTDA"},{"d":"2025-09-05","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"ATAMA CONTABILIDADE E ASSESSORIA LTDA"},{"d":"2025-13-05","cl":"Andrey","v":6500,"l":"Contatos","i":"Sim","c":"FOCUS CONTABILIDADE DE SUPERMERCADOS E ATACADO LTDA"},{"d":"2025-15-05","cl":"Alysson","v":5400,"l":"Indicação","i":"Não","c":"F ORLAN ADMINISTRATIVOS LTDA"},{"d":"2025-30-04","cl":"Matheus Vieira","v":900,"l":"Prospecção Fria","i":"Sim","c":"BERNARDES SOCIEDADE DE ADVOGADOS"},{"d":"2025-29-05","cl":"Waldir","v":10018.67,"l":"Prospecção Fria","i":"Sim","c":"FN SOLUCOES TECNOLOGICAS, CONSULTORIA EMPRESARIAL E BENEFICI"},{"d":"2025-02-06","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"SARAIVA, ROSCHEL & MONTEIRO SOCIEDADE DE ADVOGADOS"},{"d":"2025-03-06","cl":"Alysson","v":0,"l":"Contatos","i":"Não","c":"VINTAX CONSULTORIA TRIBUTÁRIA LTDA"},{"d":"2025-04-06","cl":"Leticia Staroski","v":1800,"l":"Prospecção Fria","i":"Não","c":"ANDRE PINHEIRO - SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-09-06","cl":"Alysson","v":2160,"l":"Eventos","i":"Sim","c":"DIRECIONAL SOLUCOES TRIBUTARIAS EMPRESARIAIS LTDA"},{"d":"2025-09-06","cl":"Alysson","v":2160,"l":"Eventos","i":"Não","c":"RONALDO ANTUNES - SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-09-06","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"FM CONTABILIDADE E ASSESSORIA EMPRESARIAL LTDA"},{"d":"2025-09-06","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Sim","c":"LINDONICE DE BRITO ADVOGADOS ASSOCIADOS"},{"d":"2025-09-06","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Sim","c":"TRIBUTARIO COM CLASSE LTDA"},{"d":"2025-09-06","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"FERNANDEZ & FERNANDEZ ADVOGADOS ASSOCIADOS"},{"d":"2025-12-06","cl":"Leticia Staroski","v":2160,"l":"Clube","i":"Não","c":"SN SOLUCOES EMPRESARIAIS LTDA"},{"d":"2025-10-06","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"HEDGE CONSULTORIA EM TRIBUTOS E GESTAO EMPRESARIAL LTDA"},{"d":"2025-06-06","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"KUSTER MACHADO ADVOGADOS"},{"d":"2025-01-06","cl":"Waldir","v":96000,"l":"Contatos","i":"Não","c":"NELSON WILIANS ADVOGADOS"},{"d":"2025-23-06","cl":"Leticia Staroski","v":2160,"l":"Contatos","i":"Sim","c":"MV CONSULTORES ASSOCIADOS LTDA"},{"d":"2025-24-06","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Sim","c":"PALOMA SERVICOS ADMINISTRATIVOS LTDA"},{"d":"2025-02-07","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"DOMINIO TRIBUTARIO LTDA"},{"d":"2025-04-07","cl":"Leticia Staroski","v":1296,"l":"Eventos","i":"Não","c":"REIS E REIS ADVOGADOS S/C"},{"d":"2025-07-07","cl":"Larissa Leitolles","v":4500,"l":"Instagram","i":"Não","c":"FORUM SERVIÇOS LTDA"},{"d":"2025-15-07","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Sim","c":"DALE GESTÃO CONTABIL LTDA"},{"d":"2025-18-07","cl":"Leticia Staroski","v":1800,"l":"Eventos","i":"Sim","c":"MARCHESI & LESSA ADVOGADOS"},{"d":"2025-15-07","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"GESTACON CONTABILIDADE, AUDITORIA E CONSULTORIA LTDA"},{"d":"2025-22-07","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Sim","c":"CESARE SIMOES SOCIEDADE DE ADVOGADOS"},{"d":"2025-23-07","cl":"Alysson","v":2160,"l":"Instagram","i":"Não","c":"REVISE RECUPERAÇÃO TRIBUTÁRIA - ME"},{"d":"2025-23-07","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Não","c":"MAPA TAX CONSULTORIA E PLANEJAMENTO TRIBUTARIO LTDA"},{"d":"2025-25-07","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"FELLIPE MARQUES FERREIRA LTDA"},{"d":"2025-23-07","cl":"Larissa Leitolles","v":1620,"l":"Instagram","i":"Não","c":"ANDRE AUGUSTO DE OLIVEIRA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-29-07","cl":"Leticia Staroski","v":1800,"l":"Instagram","i":"Não","c":"SOLUCIONA CONSULTORIA TRIBUTARIA EMPRESARIAL LTDA"},{"d":"2025-31-07","cl":"Nathan Endrigo","v":19000,"l":"Instagram","i":"Não","c":"R-TORN INTELIGENCIA TRIBUTARIA LTDA"},{"d":"2025-31-07","cl":"Larissa Leitolles","v":1800,"l":"Eventos","i":"Não","c":"JEFFERSON DE OLIVEIRA LIMA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-31-07","cl":"Larissa Leitolles","v":1800,"l":"Eventos","i":"Não","c":"BREITBARTH AYRES SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-04-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"CONSULTORIA E ADVOCACIA TRABALHISTA APARECIDO ERRERIAS & ASS"},{"d":"2025-05-08","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"CONSULTORIA ORIGEM LTDA"},{"d":"2025-05-08","cl":"Leticia Staroski","v":1296,"l":"Prospecção Fria","i":"Sim","c":"RECCUPERA ASSESSORIA TRIBUTARIA LTDA"},{"d":"2025-08-08","cl":"Nathan Endrigo","v":1620,"l":"Instagram","i":"Não","c":"LEME E CANUTO CONSULTORIA TRIBUTARIA E TECNOLOGIA FISCAL LTD"},{"d":"2025-11-08","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"MURILO CASTILHO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-11-08","cl":"Bianca Silva","v":2160,"l":"Instagram","i":"Não","c":"RIBEIRO LIMA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-08-08","cl":"Alysson","v":7800,"l":"Prospecção Fria","i":"Não","c":"CLOUDGED SOLUCOES INTELIGENTES LTDA"},{"d":"2025-13-08","cl":"Leticia Staroski","v":2280,"l":"Contatos","i":"Sim","c":"TAG GESTAO TRIBUTARIA LTDA"},{"d":"2025-15-08","cl":"Larissa Leitolles","v":2160,"l":"Prospecção Fria","i":"Não","c":"DI NARDO E COSSI SOCIEDADE DE ADVOGADOS"},{"d":"2025-15-08","cl":"Leticia Staroski","v":2160,"l":"Indicação","i":"Sim","c":"GRCONSULTORIA LTDA"},{"d":"2025-15-08","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"ADMINISTRA PRO LTDA"},{"d":"2025-20-08","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Não","c":"TAX SOLUTIONS PLANEJAMENTO TRIBUTARIO E FINANCEIRO LTDA."},{"d":"2025-21-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"FERNANDES E SOUSA ASSESSORIA LTDA"},{"d":"2025-21-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"ALEXANDRE ANDREOZA SOCIEDADE DE ADVOGADOS"},{"d":"2025-25-08","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"ANDRE ABRÃO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-27-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"A. RODRIGUES - SOCIEDADE DE ADVOGADOS"},{"d":"2025-27-08","cl":"Nathan Endrigo","v":2160,"l":"Prospecção Fria","i":"Não","c":"DOM TAX ADVISORY LTDA"},{"d":"2025-28-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"CAIO RODRIGUES SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-28-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"PELEGRINI E FEITOSA ADVOGADOS ASSOCIADOS"},{"d":"2025-29-08","cl":"Bianca Silva","v":2160,"l":"Instagram","i":"Não","c":"IE GESTÃO, CONSULTORIAS E AUDITORIAS LTDA"},{"d":"2025-29-08","cl":"Leticia Staroski","v":3600,"l":"Eventos","i":"Sim","c":"VIVIANE PARRA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-29-08","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"OLIVEIRA, ROCHA & REZENDE ADVOGADOS"},{"d":"2025-29-08","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"ALVARO GUILHERME ZULZKE DE TELLA SOCIEDADE INDIVIDUAL DE ADV"},{"d":"2025-02-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"E. B. MARINS ASSESSORIA EMPRESARIAL"},{"d":"2025-04-09","cl":"Leticia Staroski","v":2160,"l":"Site","i":"Não","c":"DUARTE PESSOA & COSTA ADVOGADOS"},{"d":"2025-04-09","cl":"Leticia Staroski","v":12400,"l":"Instagram","i":"Não","c":"DEL VECCHIO SERVICOS ESPECIALIZADOS LTDA"},{"d":"2025-05-09","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"TG AUDITORIA E PERÍCIA LTDA"},{"d":"2025-09-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"THIAGO BRUNETTI RODRIGUES - SOCIEDADE INDIVIDUAL DE ADVOCACI"},{"d":"2025-15-09","cl":"Leticia Staroski","v":2160,"l":"Site","i":"Sim","c":"LMJ CONTABILIDADE & PLANEJAMENTO TRIBUTARIO LTDA"},{"d":"2025-17-09","cl":"Bianca Silva","v":2160,"l":"Site","i":"Não","c":"TICIANELLI SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-17-09","cl":"Nathan Endrigo","v":7200,"l":"Instagram","i":"Não","c":"SCHINZARI ADVOGADOS"},{"d":"2025-17-09","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"ANDRE LUIS ARAUJO DA COSTA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-18-09","cl":"Larissa Leitolles","v":16800,"l":"Site","i":"Não","c":"PLANNING ASSESSORIA TRIBUTARIA S/S LTDA"},{"d":"2025-19-09","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Sim","c":"ESCRITORIO COMERCIAL IPIRANGA S/S"},{"d":"2025-18-09","cl":"Nathan Endrigo","v":5580,"l":"Instagram","i":"Não","c":"FOCO FISCAL CONSULTORIA EMPRESARIAL LTDA"},{"d":"2025-19-09","cl":"Leticia Staroski","v":2160,"l":"Site","i":"Não","c":"GONCALVES E GUERRA SOCIEDADE DE ADVOGADOS"},{"d":"2025-22-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"LISBOA CONSULTORIA NEGOCIOS E PRODUTOS DIGITAIS LTDA"},{"d":"2025-19-09","cl":"Alysson","v":1000,"l":"Clube","i":"Não","c":"BILHIM EDUCATION & CONSULTING LTDA"},{"d":"2025-23-09","cl":"Alysson","v":2160,"l":"Indicação","i":"Não","c":"CONTMAIS CONTABILIDADE LTDA"},{"d":"2025-25-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"MARCIO FREITAS SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-25-09","cl":"Leticia Staroski","v":2160,"l":"Prospecção Fria","i":"Sim","c":"MAION TAX SOLUCOES TRIBUTARIAS E CORPORATIVAS LTDA"},{"d":"2025-25-09","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Não","c":"FEITOZA SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-29-09","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Sim","c":"CORREA, PORTO SOCIEDADE DE ADVOGADOS"},{"d":"2025-30-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"QUATRINI NETO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-30-09","cl":"Larissa Leitolles","v":5580,"l":"Contatos","i":"Não","c":"L BRAGA NEGÓCIOS TRIBUTÁRIOS E CONTABÉIS LTDA"},{"d":"2025-30-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"MICHELI HAMDAN SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-30-09","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"GIOVANA PERIM SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-30-09","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"L M S DE OLIVEIRA CONSULTORIA E CONTABILIDADE"},{"d":"2025-30-09","cl":"Nathan Endrigo","v":6000,"l":"Instagram","i":"Não","c":"MGM CONSULTORIA E GESTAO ESTRATEGICA LTDA"},{"d":"2025-01-10","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"H7 CONTABIL LTDA"},{"d":"2025-01-10","cl":"Nathan Endrigo","v":8100,"l":"Instagram","i":"Não","c":"EIKON SOLUCOES LTDA"},{"d":"2025-07-10","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Sim","c":"LAURENCIO MARTINS SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-09-10","cl":"Bianca Silva","v":2160,"l":"Site","i":"Sim","c":"PORTFOLIO SERVICOS ADMINISTRATIVOS LTDA"},{"d":"2025-15-10","cl":"Leticia Staroski","v":3160,"l":"Instagram","i":"Sim","c":"O2 INC GESTAO E TECNOLOGIA AS"},{"d":"2025-15-10","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"VICTOR HUGO DE OLIVEIRA ABREU SOCIEDADE INDIVIDUAL DE ADVOCA"},{"d":"2025-16-10","cl":"Nathan Endrigo","v":2160,"l":"Instagram","i":"Não","c":"SOMA SERVICOS CONTABEIS LTDA"},{"d":"2025-22-10","cl":"Alysson","v":3900,"l":"Indicação","i":"Não","c":"AGF EMPRESARIAL LTDA"},{"d":"2025-22-10","cl":"Leticia Staroski","v":10000,"l":"Prospecção Fria","i":"Não","c":"​ALMEIDA GUEDES - SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-28-10","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"ABR CONSULTORIA LTDA"},{"d":"2025-28-10","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"JM CONSULTORIA E ASSESSORIA CONTÁBIL"},{"d":"2025-30-10","cl":"Bianca Silva","v":2160,"l":"Indicação","i":"Sim","c":"JET TAX CENTRO DE INTELIGENCIA TRIBUTARIA LTDA"},{"d":"2025-30-10","cl":"Bianca Silva","v":2160,"l":"Site","i":"Sim","c":"​DO VALLE E BELLAN ADVOGADOS"},{"d":"2025-30-10","cl":"Leticia Staroski","v":2160,"l":"Site","i":"Sim","c":"​BONAVIDES BRAGA MOTA & ALENCAR ADVOGADOS ASSOCIADOS"},{"d":"2025-31-10","cl":"Larissa Leitolles","v":9000,"l":"Site","i":"Não","c":"REICHERT SOLUÇÕES EMPRESARIAS LTDA"},{"d":"2025-31-10","cl":"Leticia Staroski","v":11419,"l":"Site","i":"Não","c":"​TERRA NOVA CONSULTORIA EMPRESARIAL LTDA"},{"d":"2025-31-10","cl":"Leticia Staroski","v":2160,"l":"Instagram","i":"Não","c":"JOSE BELIDO - SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-04-11","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"FALCO SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2025-06-11","cl":"Larissa Leitolles","v":2160,"l":"Clube","i":"Não","c":"TAX REVISIO INTELIGENCIA TRIBUTARIA LTDA"},{"d":"2025-10-11","cl":"Leticia Staroski","v":3160,"l":"Instagram","i":"Não","c":"BRUSTOLIN ADVOGADOS ASSOCIADOS"},{"d":"2025-10-11","cl":"Bianca Silva","v":2160,"l":"Instagram","i":"Sim","c":"SGE TREINAMENTOS E SERVICOS ADMINISTRATIVOS LTDA"},{"d":"2025-12-11","cl":"Bianca Silva","v":3600,"l":"Instagram","i":"Não","c":"REVISA SOLUCOES EMPRESARIAIS E TRIBUTARIAS LTDA"},{"d":"2025-13-11","cl":"Larissa Leitolles","v":2160,"l":"Indicação","i":"Não","c":"REVISIO CONSULTORIA EMPRESARIAL LTDA"},{"d":"2025-19-11","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"FENA ASSESSORIA EMPRESARIAL LTDA"},{"d":"2025-19-11","cl":"Bianca Silva","v":2160,"l":"Instagram","i":"Não","c":"AUNORD CONSULTORES LTDA"},{"d":"2025-25-11","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"ELAINE SIQUEIRA ANTUNES BURTET"},{"d":"2025-27-11","cl":"Bianca Silva","v":2160,"l":"Instagram","i":"Não","c":"SOLUCIONE PJ LTDA"},{"d":"2025-25-11","cl":"Bianca Silva","v":8127,"l":"Instagram","i":"Não","c":"NUNES AUDITORES E CONSULTORES S/S"},{"d":"2025-05-12","cl":"Leticia Staroski","v":7200,"l":"Eventos","i":"Sim","c":"SANTOS FILHO ADVOGADOS"},{"d":"2025-05-12","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"SINDERLEI DOMINGOS DE FARIA"},{"d":"2025-08-12","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Sim","c":"RAFAEL SOUZA ADVOGADOS ASSOCIADOS"},{"d":"2025-12-12","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"COSTA INACIO ADVOGADOS"},{"d":"2025-16-12","cl":"Larissa Leitolles","v":3000,"l":"Site","i":"Não","c":"SIMÕES PIRES CONSULTORIA EMPRESARIAL LTDA"},{"d":"2025-18-12","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Não","c":"ALMEIDA VAZ LTDA"},{"d":"2025-19-12","cl":"Leticia Staroski","v":1140,"l":"Eventos","i":"Não","c":"GRAND ATTIVOS CONTABILIDADE ESTRATEGICA LTDA"},{"d":"2025-23-12","cl":"Larissa Leitolles","v":11400,"l":"Prospecção Fria","i":"Não","c":"JP BALABAN & ADVOGADOS"},{"d":"2025-30-12","cl":"Larissa Leitolles","v":2160,"l":"Eventos","i":"Não","c":"ABAX AUDITORIA, CONSULTORIA E CONTABILIDADE S/S"},{"d":"2025-31-12","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"RAMALHO & RANGEL SOCIEDADE DE ADVOGADOS"},{"d":"2026-13-01","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Sim","c":"VERTICE CONSULTORIA TRIBUTARIA LTDA"},{"d":"2026-27-01","cl":"Larissa Leitolles","v":2160,"l":"Indicação","i":"Sim","c":"MULLER & PREI AUDITORES INDEPENDENTES S/S"},{"d":"2026-27-01","cl":"Alysson Teixeira","v":3420,"l":"Indicação","i":"Sim","c":"BARROS CONSULTORIA TRIBUTARIA LTDA"},{"d":"2026-29-01","cl":"Leticia Staroski","v":8127,"l":"Indicação","i":"Sim","c":"EMS SOLUCOES TRIBUTARIAS LTDA"},{"d":"2026-29-01","cl":"Barbara Barbosa","v":0,"l":"Prospecção Fria","i":"Não","c":"LACERDA DINIZ MACHADO LTDA"},{"d":"2026-02-02","cl":"Larissa Leitolles","v":2160,"l":"Instagram","i":"Sim","c":"FKAP GROUP ASSESSORIA EMPRESARIAL E TRIBUTARIA\nSOCIEDADE UNI"},{"d":"2026-10-02","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Sim","c":"D2N CONSULTORIA & INVESTIMENTO LTDA"},{"d":"2026-13-02","cl":"Larissa Leitolles","v":5611,"l":"Site","i":"Não","c":"J e L FALAVINHA CONTABILIDADE S.S."},{"d":"2026-17-02","cl":"Alysson Teixeira","v":1620,"l":"Prospecção Fria","i":"Não","c":"GORDIUM GESTAO TRIBUTARIA LTDA"},{"d":"2026-18-02","cl":"Leticia Staroski","v":8127,"l":"Eventos","i":"Não","c":"CROWE MACRO AUDITORES INDEPENDENTES SOCIEDADE SIMPLES"},{"d":"2026-19-02","cl":"Barbara Barbosa","v":2160,"l":"Site","i":"Sim","c":"TAX PRIME CONSULTORIA"},{"d":"2026-20-02","cl":"Barbara Barbosa","v":2160,"l":"Prospecção Fria","i":"Sim","c":"ALVES & CAMPOS ADVOGADOS"},{"d":"2026-24-02","cl":"Barbara Barbosa","v":2160,"l":"Prospecção Fria","i":"Sim","c":"TAXUS INTELIGENCIA TRIBUTARIA LTDA"},{"d":"2026-25-02","cl":"Barbara Barbosa","v":12600,"l":"Clube","i":"Não","c":"BWA360 CONTABILIDADE LTDA"},{"d":"2026-26-02","cl":"Barbara Barbosa","v":2160,"l":"Site","i":"Sim","c":"FINANCE SOLUCOES FINANCEIRAS LTDA"},{"d":"2026-27-02","cl":"Larissa Leitolles","v":2160,"l":"Site","i":"Não","c":"NOVAIS CAVALCANTE ADVOGADOS ASSOCIADOS"},{"d":"2026-27-02","cl":"Barbara Barbosa","v":2160,"l":"Site","i":"Sim","c":"PURTEC PLATAFORMA DE SOLUCOES, CONSULTORIA E ASSESSORIA EMPR"},{"d":"2026-28-02","cl":"Leticia Staroski","v":15552,"l":"Eventos","i":"Não","c":"​RAFAEL DIDIER SOCIEDADE INDIVIDUAL DE ADVOCACIA"},{"d":"2026-02-03","cl":"Larissa Leitolles","v":1000,"l":"Indicação","i":"Não","c":"FARRACHA DE CASTRO ADVOGADOS"},{"d":"2026-04-03","cl":"Leticia Staroski","v":4160,"l":"Instagram","i":"Não","c":"ARAÚZ & ADVOGADOS ASSOCIADOS"},{"d":"2026-04-03","cl":"Barbara Barbosa","v":2160,"l":"Indicação","i":"Sim","c":"SGT GESTAO E TECNOLOGIA LTDA"},{"d":"2026-05-03","cl":"Barbara Barbosa","v":2160,"l":"Indicação","i":"Sim","c":"ALESSANDRA RODRIGUES CONSULTORIA ESTRATEGICA LTDA"},{"d":"2026-06-03","cl":"Barbara Barbosa","v":2160,"l":"Instagram","i":"Sim","c":"PINTO E GALVAO SOCIEDADE DE ADVOGADOS LIMITADA"},{"d":"2026-12-03","cl":"Barbara Barbosa","v":14000,"l":"Prospecção Fria","i":"Não","c":"STRATEGICOS CONSULTORIA EMPRESARIAL SA"},{"d":"2026-16-03","cl":"Leticia Staroski","v":10200,"l":"Site","i":"Não","c":"ARNONE ASSESSORIA DE EMPRESAS LTDA"},{"d":"2026-16-03","cl":"Larissa Leitolles","v":11419,"l":"Site","i":"Não","c":"TRIBUTARE GESTÃO E CONSULTORIA TRIBUTARIA"},{"d":"2026-19-03","cl":"Leticia Staroski","v":2160,"l":"Eventos","i":"Não","c":"PEDRO CEZAR MARTENDAL"},{"d":"2026-25-03","cl":"Barbara Barbosa","v":3672,"l":"Eventos","i":"Não","c":"AUDAX CONSULTORIA TRIBUTARIA LTDA"},{"d":"2026-27-03","cl":"Barbara Barbosa","v":2160,"l":"Indicação","i":"Sim","c":"SAFEGOLD GERENCIAMENTO DE CAPITAL LTDA"},{"d":"2026-27-03","cl":"Barbara Barbosa","v":1620,"l":"Instagram","i":"Sim","c":"GOMES ASSESSORIA E CONSULTORIA LTDA"},{"d":"2026-27-03","cl":"Barbara Barbosa","v":2160,"l":"Instagram","i":"Sim","c":"DA FONTE, ADVOGADOS"},{"d":"2026-31-03","cl":"Barbara Barbosa","v":2160,"l":"Eventos","i":"Sim","c":"CHARAO CONTADORES ASSOCIADOS"},{"d":"2026-31-03","cl":"Barbara Barbosa","v":2160,"l":"Instagram","i":"Sim","c":"TAXBAM TECNOLOGIAS E COMPLIANCE FISCAL LTDA"}],"reunioes":[],"atividades":[],"filtros":{"vendedores":["Alysson","Alysson Teixeira","Andrey","Barbara Barbosa","Bianca Silva","Larissa Leitolles","Leticia Staroski","Matheus Vieira","Nathan Endrigo","Waldir"]}};
 
 const F = { pipe:'todos', vend:'todos', d1:'', d2:'' };
 let activeTab = 'leads';
@@ -334,7 +284,7 @@ let activeTab = 'leads';
 const fmt = (n) => Number(n||0).toLocaleString('pt-BR');
 const fmtBR = (n) => 'R$ ' + Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtMin = (s) => Math.round((s||0)/60) + 'min';
-const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'...' : (s||'');
+const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'…' : (s||'');
 
 function inDateRange(d) {
   if (!d) return false;
@@ -343,13 +293,14 @@ function inDateRange(d) {
   return true;
 }
 
-function filterArr(arr, opts={}) {
+function filterArr(arr, opts) {
+  opts = opts || {};
   return arr.filter(r => {
     if (!inDateRange(r.d)) return false;
     if (opts.usePipe !== false && F.pipe !== 'todos' && r.p !== F.pipe) return false;
     if (F.vend !== 'todos') {
-      const userField = r.r || r.cl || r.u;
-      if (userField !== F.vend) return false;
+      const u = r.r || r.cl || r.u;
+      if (u !== F.vend) return false;
     }
     return true;
   });
@@ -358,271 +309,4 @@ function filterArr(arr, opts={}) {
 function setF(type, val, btn) {
   F[type] = val;
   if (btn) {
-    btn.closest('.flt-grp').querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  render();
-}
-
-function quickDate(days) {
-  const e = new Date();
-  if (days === 0) {
-    document.getElementById('dateStart').value = '';
-    document.getElementById('dateEnd').value = '';
-    F.d1 = ''; F.d2 = '';
-  } else {
-    const s = new Date();
-    s.setDate(s.getDate() - days);
-    document.getElementById('dateStart').value = s.toISOString().slice(0,10);
-    document.getElementById('dateEnd').value = e.toISOString().slice(0,10);
-    F.d1 = s.toISOString().slice(0,10);
-    F.d2 = e.toISOString().slice(0,10);
-  }
-  render();
-}
-
-function resetFilters() {
-  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = '';
-  document.getElementById('dateStart').value = '';
-  document.getElementById('dateEnd').value = '';
-  document.getElementById('selVend').value = 'todos';
-  document.querySelectorAll('#fg-pipe .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  render();
-}
-
-function setTab(tab, btn) {
-  activeTab = tab;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pane-'+tab).classList.add('active');
-  render();
-}
-
-function renderBars(elId, arr, color='cyan', limit=8) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  if (!arr.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
-  const max = arr[0].v || 1;
-  const total = arr.reduce((s,a)=>s+a.v,0);
-  el.innerHTML = arr.slice(0,limit).map(item => {
-    const pct = ((item.v/total)*100).toFixed(1);
-    const w = (item.v/max)*100;
-    return '<div class="bi"><div class="bi-hdr"><span class="bi-name" title="'+item.n+'">'+trunc(item.n,40)+'</span><div class="bi-right"><span class="bi-count">'+fmt(item.v)+'</span><span class="bi-pct">('+pct+'%)</span></div></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
-  }).join('');
-}
-
-function renderChart(elId, arr, color='', limit=14) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  if (!arr.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
-  const data = arr.slice(-limit);
-  const max = Math.max(...data.map(d=>d.v)) || 1;
-  el.innerHTML = data.map(d => {
-    const h = (d.v/max)*130;
-    return '<div class="cc"><div class="cc-val">'+d.v+'</div><div class="cc-bwrap"><div class="cc-bar '+color+'" style="height:'+h+'px"></div></div><div class="cc-lbl '+(data.length<=10?'h':'')+'">'+d.n+'</div></div>';
-  }).join('');
-}
-
-function groupCount(arr, key) {
-  const m = {};
-  arr.forEach(r => {
-    const k = r[key] || 'Não informado';
-    m[k] = (m[k] || 0) + 1;
-  });
-  return Object.entries(m).map(([n,v])=>({n,v})).sort((a,b)=>b.v-a.v);
-}
-
-function groupSum(arr, key, valueKey) {
-  const m = {};
-  arr.forEach(r => {
-    const k = r[key] || 'Não informado';
-    m[k] = (m[k] || 0) + (Number(r[valueKey])||0);
-  });
-  return Object.entries(m).map(([n,v])=>({n,v})).sort((a,b)=>b.v-a.v);
-}
-
-function groupByDate(arr, dateKey='d') {
-  const m = {};
-  arr.forEach(r => {
-    const k = r[dateKey];
-    if (!k) return;
-    m[k] = (m[k] || 0) + 1;
-  });
-  return Object.entries(m).map(([d,v])=>{
-    const [y,mo,da] = d.split('-');
-    return {n:da+'/'+mo,v,d};
-  }).sort((a,b)=>a.d.localeCompare(b.d));
-}
-
-function groupByMonth(arr, dateKey='d') {
-  const m = {};
-  arr.forEach(r => {
-    const k = r[dateKey];
-    if (!k) return;
-    const ym = k.slice(0,7);
-    m[ym] = (m[ym] || 0) + 1;
-  });
-  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  return Object.entries(m).map(([d,v])=>{
-    const [y,mo] = d.split('-');
-    return {n:meses[parseInt(mo)-1]+'/'+y.slice(2),v,d};
-  }).sort((a,b)=>a.d.localeCompare(b.d));
-}
-
-function renderLeads() {
-  const data = filterArr(DASH_DATA.leads);
-  document.getElementById('tc-leads').textContent = fmt(data.length);
-  document.getElementById('l-total').textContent = fmt(data.length);
-  
-  const porDia = groupByDate(data);
-  const dias = porDia.length || 1;
-  document.getElementById('l-pordia').textContent = (data.length/dias).toFixed(1);
-  
-  const origens = groupCount(data, 'o');
-  document.getElementById('l-toporigem').textContent = origens[0]?.n || '—';
-  document.getElementById('l-toporigem-c').textContent = (origens[0]?.v || 0) + ' leads';
-  
-  const resp = groupCount(data, 'r');
-  document.getElementById('l-topresp').textContent = trunc(resp[0]?.n || '—', 18);
-  document.getElementById('l-topresp-c').textContent = (resp[0]?.v || 0) + ' leads';
-  
-  renderChart('l-chart-dia', porDia, 'cyan');
-  renderBars('l-origens', origens, 'cyan');
-  renderBars('l-resp', resp, 'gold', 10);
-  renderBars('l-uf', groupCount(data.filter(d=>d.uf), 'uf'), 'green', 10);
-}
-
-function renderVendas() {
-  const data = filterArr(DASH_DATA.vendas, {usePipe:false});
-  document.getElementById('tc-vendas').textContent = fmt(data.length);
-  document.getElementById('v-total').textContent = fmt(data.length);
-  
-  const valorTotal = data.reduce((s,v)=>s+v.v,0);
-  document.getElementById('v-valor').textContent = fmtBR(valorTotal);
-  document.getElementById('v-ticket').textContent = data.length ? fmtBR(valorTotal/data.length) : 'R$ 0';
-  
-  const impl = data.filter(v=>v.i==='Sim').length;
-  const implPct = data.length ? Math.round((impl/data.length)*100) : 0;
-  document.getElementById('v-impl').textContent = implPct+'%';
-  
-  renderChart('v-chart-mes', groupByMonth(data), 'green');
-  
-  const vendedores = groupSum(data, 'cl', 'v');
-  const vendBars = vendedores.map(v=>({n:v.n,v:v.v,vCount:data.filter(d=>d.cl===v.n).length}));
-  document.getElementById('v-vend').innerHTML = vendBars.length ? vendBars.slice(0,10).map((item,i,arr) => {
-    const max = arr[0].v || 1;
-    const w = (item.v/max)*100;
-    return '<div class="bi"><div class="bi-hdr"><span class="bi-name">'+trunc(item.n,30)+'</span><div class="bi-right"><span class="bi-count">'+fmtBR(item.v)+'</span><span class="bi-pct">('+item.vCount+' vendas)</span></div></div><div class="bi-track"><div class="bi-fill green" style="width:'+w+'%"></div></div></div>';
-  }).join('') : '<div class="empty">Sem vendas no período</div>';
-  
-  renderBars('v-origem', groupCount(data, 'l'), 'cyan');
-  
-  const tbl = document.querySelector('#v-tabela tbody');
-  const rows = data.sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
-  tbl.innerHTML = rows.length ? rows.map(r => {
-    const [y,m,d] = r.d.split('-');
-    return '<tr><td>'+d+'/'+m+'/'+y+'</td><td class="tbl-name">'+trunc(r.c,40)+'</td><td>'+trunc(r.cl,25)+'</td><td class="tbl-num">'+fmtBR(r.v)+'</td></tr>';
-  }).join('') : '<tr><td colspan="4" class="empty">Sem vendas no período</td></tr>';
-}
-
-function renderReunioes() {
-  const data = filterArr(DASH_DATA.reunioes);
-  document.getElementById('tc-reunioes').textContent = fmt(data.length);
-  document.getElementById('r-total').textContent = fmt(data.length);
-  
-  const feitas = data.filter(r=>r.s==='done').length;
-  const feitasPct = data.length ? Math.round((feitas/data.length)*100) : 0;
-  document.getElementById('r-feitas').textContent = fmt(feitas);
-  document.getElementById('r-feitas-pct').textContent = feitasPct+'% do total';
-  
-  const durMedia = data.length ? data.reduce((s,r)=>s+r.dur,0)/data.length : 0;
-  document.getElementById('r-dur').textContent = fmtMin(durMedia);
-  
-  const porDia = groupByDate(data);
-  document.getElementById('r-pordia').textContent = porDia.length ? (data.length/porDia.length).toFixed(1) : '0';
-  
-  renderChart('r-chart-dia', porDia, 'cyan');
-  renderBars('r-vend', groupCount(data, 'u'), 'gold', 10);
-  renderBars('r-status', groupCount(data, 's'), 'cyan');
-  
-  const tbl = document.querySelector('#r-tabela tbody');
-  const rows = data.sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
-  tbl.innerHTML = rows.length ? rows.map(r => {
-    const [y,m,d] = r.d.split('-');
-    return '<tr><td class="tbl-name">'+trunc(r.u,25)+'</td><td>'+d+'/'+m+'/'+y+'</td><td>'+fmtMin(r.dur)+'</td><td>'+r.s||'—'+'</td></tr>';
-  }).join('') : '<tr><td colspan="4" class="empty">Sem reuniões no período</td></tr>';
-}
-
-function renderAtividades() {
-  const data = filterArr(DASH_DATA.atividades);
-  document.getElementById('tc-atividades').textContent = fmt(data.length);
-  document.getElementById('a-total').textContent = fmt(data.length);
-  
-  const exec = data.filter(a=>a.e).length;
-  const pend = data.length - exec;
-  document.getElementById('a-exec').textContent = fmt(exec);
-  document.getElementById('a-pend').textContent = fmt(pend);
-  document.getElementById('a-exec-pct').textContent = data.length ? Math.round((exec/data.length)*100)+'% concluídas' : '0%';
-  document.getElementById('a-pend-pct').textContent = data.length ? Math.round((pend/data.length)*100)+'% pendentes' : '0%';
-  
-  const top = groupCount(data, 'u');
-  document.getElementById('a-top').textContent = trunc(top[0]?.n || '—', 18);
-  document.getElementById('a-top-c').textContent = (top[0]?.v || 0) + ' atividades';
-  
-  renderChart('a-chart-dia', groupByDate(data), 'gold');
-  renderBars('a-vend', top, 'gold', 10);
-  renderBars('a-tipos', groupCount(data, 'n'), 'cyan', 10);
-  
-  const statusData = [
-    {n:'Executadas', v:exec},
-    {n:'Pendentes', v:pend}
-  ].sort((a,b)=>b.v-a.v);
-  document.getElementById('a-status').innerHTML = statusData[0].v ? statusData.map((item,i,arr) => {
-    const max = arr[0].v || 1;
-    const w = (item.v/max)*100;
-    const color = item.n==='Executadas' ? 'green' : 'red';
-    return '<div class="bi"><div class="bi-hdr"><span class="bi-name">'+item.n+'</span><span class="bi-count">'+fmt(item.v)+'</span></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
-  }).join('') : '<div class="empty">Sem atividades</div>';
-}
-
-function render() {
-  if (activeTab==='leads') renderLeads();
-  else if (activeTab==='vendas') renderVendas();
-  else if (activeTab==='reunioes') renderReunioes();
-  else if (activeTab==='atividades') renderAtividades();
-  
-  document.getElementById('tc-leads').textContent = fmt(filterArr(DASH_DATA.leads).length);
-  document.getElementById('tc-vendas').textContent = fmt(filterArr(DASH_DATA.vendas, {usePipe:false}).length);
-  document.getElementById('tc-reunioes').textContent = fmt(filterArr(DASH_DATA.reunioes).length);
-  document.getElementById('tc-atividades').textContent = fmt(filterArr(DASH_DATA.atividades).length);
-}
-
-function init() {
-  const sel = document.getElementById('selVend');
-  (DASH_DATA.filtros?.vendedores || []).forEach(v => {
-    const opt = document.createElement('option');
-    opt.value = v; opt.textContent = v;
-    sel.appendChild(opt);
-  });
-  sel.addEventListener('change', e => { F.vend = e.target.value; render(); });
-  
-  document.getElementById('dateStart').addEventListener('change', e => { F.d1 = e.target.value; render(); });
-  document.getElementById('dateEnd').addEventListener('change', e => { F.d2 = e.target.value; render(); });
-  
-  if (DASH_DATA.minDate) document.getElementById('dateStart').min = DASH_DATA.minDate;
-  if (DASH_DATA.maxDate) document.getElementById('dateEnd').max = DASH_DATA.maxDate;
-  
-  document.getElementById('navDate').textContent = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
-  document.getElementById('updTxt').textContent = 'Atualizado em ' + (DASH_DATA.dataAtualizacao || 'agora');
-  
-  render();
-}
-
-init();
-</script>
-
-</body>
-</html>
-
-</html>
+    btn.closest('.flt-grp').querySelectorAll
