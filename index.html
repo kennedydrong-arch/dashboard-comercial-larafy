@@ -276,7 +276,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 </footer>
 
 <script>
-const DASH_DATA = {"dataAtualizacao":"quarta-feira, 29 de abril de 2026 às 17:23","minDate":"","maxDate":"","counts":{"leads":0,"vendas":0,"reunioes":0,"atividades":0,"_debug_total":2800,"_debug_ops":2800},"leads":[],"vendas":[],"reunioes":[],"atividades":[],"filtros":{"vendedores":[]}};
+const DASH_DATA = __DASH_DATA_PLACEHOLDER__;
 
 const F = { pipe:'todos', vend:'todos', d1:'', d2:'' };
 let activeTab = 'leads';
@@ -309,4 +309,241 @@ function filterArr(arr, opts) {
 function setF(type, val, btn) {
   F[type] = val;
   if (btn) {
-    btn.closest('.flt-grp').querySelectorAll
+    btn.closest('.flt-grp').querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  render();
+}
+
+function quickDate(days) {
+  const e = new Date();
+  if (days === 0) {
+    document.getElementById('dateStart').value = '';
+    document.getElementById('dateEnd').value = '';
+    F.d1 = ''; F.d2 = '';
+  } else {
+    const s = new Date();
+    s.setDate(s.getDate() - days);
+    document.getElementById('dateStart').value = s.toISOString().slice(0,10);
+    document.getElementById('dateEnd').value = e.toISOString().slice(0,10);
+    F.d1 = s.toISOString().slice(0,10);
+    F.d2 = e.toISOString().slice(0,10);
+  }
+  render();
+}
+
+function resetFilters() {
+  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = '';
+  document.getElementById('dateStart').value = '';
+  document.getElementById('dateEnd').value = '';
+  document.getElementById('selVend').value = 'todos';
+  document.querySelectorAll('#fg-pipe .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  render();
+}
+
+function setTab(tab, btn) {
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pane-'+tab).classList.add('active');
+  render();
+}
+
+function renderBars(elId, arr, color, limit) {
+  color = color || 'cyan';
+  limit = limit || 8;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
+  const max = arr[0].v || 1;
+  const total = arr.reduce((s,a)=>s+a.v,0);
+  el.innerHTML = arr.slice(0,limit).map(item => {
+    const pct = ((item.v/total)*100).toFixed(1);
+    const w = (item.v/max)*100;
+    return '<div class="bi"><div class="bi-hdr"><span class="bi-name" title="'+item.n+'">'+trunc(item.n,40)+'</span><div class="bi-right"><span class="bi-count">'+fmt(item.v)+'</span><span class="bi-pct">('+pct+'%)</span></div></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
+  }).join('');
+}
+
+function renderChart(elId, arr, color, limit) {
+  color = color || '';
+  limit = limit || 14;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
+  const data = arr.slice(-limit);
+  const max = Math.max.apply(null, data.map(d=>d.v)) || 1;
+  el.innerHTML = data.map(d => {
+    const h = (d.v/max)*130;
+    return '<div class="cc"><div class="cc-val">'+d.v+'</div><div class="cc-bwrap"><div class="cc-bar '+color+'" style="height:'+h+'px"></div></div><div class="cc-lbl">'+d.n+'</div></div>';
+  }).join('');
+}
+
+function groupCount(arr, key) {
+  const m = {};
+  arr.forEach(r => {
+    const k = r[key] || 'Não informado';
+    m[k] = (m[k] || 0) + 1;
+  });
+  return Object.keys(m).map(n=>({n,v:m[n]})).sort((a,b)=>b.v-a.v);
+}
+
+function groupSum(arr, key, valueKey) {
+  const m = {};
+  arr.forEach(r => {
+    const k = r[key] || 'Não informado';
+    m[k] = (m[k] || 0) + (Number(r[valueKey])||0);
+  });
+  return Object.keys(m).map(n=>({n,v:m[n]})).sort((a,b)=>b.v-a.v);
+}
+
+function groupByDate(arr) {
+  const m = {};
+  arr.forEach(r => {
+    if (!r.d) return;
+    m[r.d] = (m[r.d] || 0) + 1;
+  });
+  return Object.keys(m).map(d=>{
+    const p = d.split('-');
+    return {n:p[2]+'/'+p[1],v:m[d],d};
+  }).sort((a,b)=>a.d.localeCompare(b.d));
+}
+
+function groupByMonth(arr) {
+  const m = {};
+  arr.forEach(r => {
+    if (!r.d) return;
+    const ym = r.d.slice(0,7);
+    m[ym] = (m[ym] || 0) + 1;
+  });
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return Object.keys(m).map(d=>{
+    const p = d.split('-');
+    return {n:meses[parseInt(p[1])-1]+'/'+p[0].slice(2),v:m[d],d};
+  }).sort((a,b)=>a.d.localeCompare(b.d));
+}
+
+function renderLeads() {
+  const data = filterArr(DASH_DATA.leads || []);
+  document.getElementById('l-total').textContent = fmt(data.length);
+  const porDia = groupByDate(data);
+  document.getElementById('l-pordia').textContent = porDia.length ? (data.length/porDia.length).toFixed(1) : '0';
+  const origens = groupCount(data, 'o');
+  document.getElementById('l-toporigem').textContent = trunc(origens[0]?.n || '—', 18);
+  document.getElementById('l-toporigem-c').textContent = (origens[0]?.v || 0) + ' leads';
+  const resp = groupCount(data, 'r');
+  document.getElementById('l-topresp').textContent = trunc(resp[0]?.n || '—', 18);
+  document.getElementById('l-topresp-c').textContent = (resp[0]?.v || 0) + ' leads';
+  renderChart('l-chart-dia', porDia, 'cyan');
+  renderBars('l-origens', origens, 'cyan');
+  renderBars('l-resp', resp, 'gold', 10);
+  renderBars('l-uf', groupCount(data.filter(d=>d.uf), 'uf'), 'green', 10);
+}
+
+function renderVendas() {
+  const data = filterArr(DASH_DATA.vendas || [], {usePipe:false});
+  document.getElementById('v-total').textContent = fmt(data.length);
+  const valorTotal = data.reduce((s,v)=>s+v.v,0);
+  document.getElementById('v-valor').textContent = fmtBR(valorTotal);
+  document.getElementById('v-ticket').textContent = data.length ? fmtBR(valorTotal/data.length) : 'R$ 0';
+  const impl = data.filter(v=>v.i==='Sim').length;
+  document.getElementById('v-impl').textContent = (data.length ? Math.round((impl/data.length)*100) : 0)+'%';
+  renderChart('v-chart-mes', groupByMonth(data), 'green');
+  const vendedores = groupSum(data, 'cl', 'v');
+  const el = document.getElementById('v-vend');
+  if (!vendedores.length) el.innerHTML = '<div class="empty">Sem vendas no período</div>';
+  else {
+    const max = vendedores[0].v || 1;
+    el.innerHTML = vendedores.slice(0,10).map(item => {
+      const cnt = data.filter(d=>d.cl===item.n).length;
+      const w = (item.v/max)*100;
+      return '<div class="bi"><div class="bi-hdr"><span class="bi-name">'+trunc(item.n,30)+'</span><div class="bi-right"><span class="bi-count">'+fmtBR(item.v)+'</span><span class="bi-pct">('+cnt+' vendas)</span></div></div><div class="bi-track"><div class="bi-fill green" style="width:'+w+'%"></div></div></div>';
+    }).join('');
+  }
+  renderBars('v-origem', groupCount(data, 'l'), 'cyan');
+  const tbl = document.querySelector('#v-tabela tbody');
+  const rows = data.slice().sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
+  tbl.innerHTML = rows.length ? rows.map(r => {
+    const p = r.d.split('-');
+    return '<tr><td>'+p[2]+'/'+p[1]+'/'+p[0]+'</td><td class="tbl-name">'+trunc(r.c,40)+'</td><td>'+trunc(r.cl,25)+'</td><td class="tbl-num">'+fmtBR(r.v)+'</td></tr>';
+  }).join('') : '<tr><td colspan="4" class="empty">Sem vendas no período</td></tr>';
+}
+
+function renderReunioes() {
+  const data = filterArr(DASH_DATA.reunioes || []);
+  document.getElementById('r-total').textContent = fmt(data.length);
+  const feitas = data.filter(r=>r.s==='done').length;
+  document.getElementById('r-feitas').textContent = fmt(feitas);
+  document.getElementById('r-feitas-pct').textContent = (data.length ? Math.round((feitas/data.length)*100) : 0)+'% do total';
+  const durMedia = data.length ? data.reduce((s,r)=>s+r.dur,0)/data.length : 0;
+  document.getElementById('r-dur').textContent = fmtMin(durMedia);
+  const porDia = groupByDate(data);
+  document.getElementById('r-pordia').textContent = porDia.length ? (data.length/porDia.length).toFixed(1) : '0';
+  renderChart('r-chart-dia', porDia, 'cyan');
+  renderBars('r-vend', groupCount(data, 'u'), 'gold', 10);
+  renderBars('r-status', groupCount(data, 's'), 'cyan');
+  const tbl = document.querySelector('#r-tabela tbody');
+  const rows = data.slice().sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
+  tbl.innerHTML = rows.length ? rows.map(r => {
+    const p = r.d.split('-');
+    return '<tr><td class="tbl-name">'+trunc(r.u,25)+'</td><td>'+p[2]+'/'+p[1]+'/'+p[0]+'</td><td>'+fmtMin(r.dur)+'</td><td>'+(r.s||'—')+'</td></tr>';
+  }).join('') : '<tr><td colspan="4" class="empty">Sem reuniões no período</td></tr>';
+}
+
+function renderAtividades() {
+  const data = filterArr(DASH_DATA.atividades || []);
+  document.getElementById('a-total').textContent = fmt(data.length);
+  const exec = data.filter(a=>a.e).length;
+  const pend = data.length - exec;
+  document.getElementById('a-exec').textContent = fmt(exec);
+  document.getElementById('a-pend').textContent = fmt(pend);
+  document.getElementById('a-exec-pct').textContent = (data.length ? Math.round((exec/data.length)*100) : 0)+'% concluídas';
+  document.getElementById('a-pend-pct').textContent = (data.length ? Math.round((pend/data.length)*100) : 0)+'% pendentes';
+  const top = groupCount(data, 'u');
+  document.getElementById('a-top').textContent = trunc(top[0]?.n || '—', 18);
+  document.getElementById('a-top-c').textContent = (top[0]?.v || 0) + ' atividades';
+  renderChart('a-chart-dia', groupByDate(data), 'gold');
+  renderBars('a-vend', top, 'gold', 10);
+  renderBars('a-tipos', groupCount(data, 'n'), 'cyan', 10);
+  const statusEl = document.getElementById('a-status');
+  if (!data.length) statusEl.innerHTML = '<div class="empty">Sem atividades</div>';
+  else {
+    const max = Math.max(exec, pend) || 1;
+    statusEl.innerHTML = '<div class="bi"><div class="bi-hdr"><span class="bi-name">Executadas</span><span class="bi-count">'+fmt(exec)+'</span></div><div class="bi-track"><div class="bi-fill green" style="width:'+((exec/max)*100)+'%"></div></div></div>'+
+      '<div class="bi"><div class="bi-hdr"><span class="bi-name">Pendentes</span><span class="bi-count">'+fmt(pend)+'</span></div><div class="bi-track"><div class="bi-fill red" style="width:'+((pend/max)*100)+'%"></div></div></div>';
+  }
+}
+
+function render() {
+  if (activeTab==='leads') renderLeads();
+  else if (activeTab==='vendas') renderVendas();
+  else if (activeTab==='reunioes') renderReunioes();
+  else if (activeTab==='atividades') renderAtividades();
+  document.getElementById('tc-leads').textContent = fmt(filterArr(DASH_DATA.leads || []).length);
+  document.getElementById('tc-vendas').textContent = fmt(filterArr(DASH_DATA.vendas || [], {usePipe:false}).length);
+  document.getElementById('tc-reunioes').textContent = fmt(filterArr(DASH_DATA.reunioes || []).length);
+  document.getElementById('tc-atividades').textContent = fmt(filterArr(DASH_DATA.atividades || []).length);
+}
+
+function init() {
+  const sel = document.getElementById('selVend');
+  ((DASH_DATA.filtros && DASH_DATA.filtros.vendedores) || []).forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', e => { F.vend = e.target.value; render(); });
+  document.getElementById('dateStart').addEventListener('change', e => { F.d1 = e.target.value; render(); });
+  document.getElementById('dateEnd').addEventListener('change', e => { F.d2 = e.target.value; render(); });
+  if (DASH_DATA.minDate) document.getElementById('dateStart').min = DASH_DATA.minDate;
+  if (DASH_DATA.maxDate) document.getElementById('dateEnd').max = DASH_DATA.maxDate;
+  document.getElementById('navDate').textContent = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('updTxt').textContent = 'Atualizado em ' + (DASH_DATA.dataAtualizacao || 'agora');
+  render();
+}
+
+init();
+</script>
+
+</body>
+</html>
