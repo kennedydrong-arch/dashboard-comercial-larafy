@@ -334,7 +334,7 @@ let activeTab = 'leads';
 const fmt = (n) => Number(n||0).toLocaleString('pt-BR');
 const fmtBR = (n) => 'R$ ' + Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtMin = (s) => Math.round((s||0)/60) + 'min';
-const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'…' : (s||'');
+const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'...' : (s||'');
 
 function inDateRange(d) {
   if (!d) return false;
@@ -408,7 +408,7 @@ function renderBars(elId, arr, color='cyan', limit=8) {
   el.innerHTML = arr.slice(0,limit).map(item => {
     const pct = ((item.v/total)*100).toFixed(1);
     const w = (item.v/max)*100;
-    return `<div class="bi"><div class="bi-hdr"><span class="bi-name" title="${item.n}">${trunc(item.n,40)}</span><div class="bi-right"><span class="bi-count">${fmt(item.v)}</span><span class="bi-pct">(${pct}%)</span></div></div><div class="bi-track"><div class="bi-fill ${color}" style="width:${w}%"></div></div></div>`;
+    return '<div class="bi"><div class="bi-hdr"><span class="bi-name" title="'+item.n+'">'+trunc(item.n,40)+'</span><div class="bi-right"><span class="bi-count">'+fmt(item.v)+'</span><span class="bi-pct">('+pct+'%)</span></div></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
   }).join('');
 }
 
@@ -420,7 +420,7 @@ function renderChart(elId, arr, color='', limit=14) {
   const max = Math.max(...data.map(d=>d.v)) || 1;
   el.innerHTML = data.map(d => {
     const h = (d.v/max)*130;
-    return `<div class="cc"><div class="cc-val">${d.v}</div><div class="cc-bwrap"><div class="cc-bar ${color}" style="height:${h}px"></div></div><div class="cc-lbl ${data.length<=10?'h':''}">${d.n}</div></div>`;
+    return '<div class="cc"><div class="cc-val">'+d.v+'</div><div class="cc-bwrap"><div class="cc-bar '+color+'" style="height:'+h+'px"></div></div><div class="cc-lbl '+(data.length<=10?'h':'')+'">'+d.n+'</div></div>';
   }).join('');
 }
 
@@ -451,7 +451,7 @@ function groupByDate(arr, dateKey='d') {
   });
   return Object.entries(m).map(([d,v])=>{
     const [y,mo,da] = d.split('-');
-    return {n:`${da}/${mo}`,v,d};
+    return {n:da+'/'+mo,v,d};
   }).sort((a,b)=>a.d.localeCompare(b.d));
 }
 
@@ -466,7 +466,7 @@ function groupByMonth(arr, dateKey='d') {
   const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   return Object.entries(m).map(([d,v])=>{
     const [y,mo] = d.split('-');
-    return {n:`${meses[parseInt(mo)-1]}/${y.slice(2)}`,v,d};
+    return {n:meses[parseInt(mo)-1]+'/'+y.slice(2),v,d};
   }).sort((a,b)=>a.d.localeCompare(b.d));
 }
 
@@ -513,7 +513,7 @@ function renderVendas() {
   document.getElementById('v-vend').innerHTML = vendBars.length ? vendBars.slice(0,10).map((item,i,arr) => {
     const max = arr[0].v || 1;
     const w = (item.v/max)*100;
-    return `<div class="bi"><div class="bi-hdr"><span class="bi-name">${trunc(item.n,30)}</span><div class="bi-right"><span class="bi-count">${fmtBR(item.v)}</span><span class="bi-pct">(${item.vCount} vendas)</span></div></div><div class="bi-track"><div class="bi-fill green" style="width:${w}%"></div></div></div>`;
+    return '<div class="bi"><div class="bi-hdr"><span class="bi-name">'+trunc(item.n,30)+'</span><div class="bi-right"><span class="bi-count">'+fmtBR(item.v)+'</span><span class="bi-pct">('+item.vCount+' vendas)</span></div></div><div class="bi-track"><div class="bi-fill green" style="width:'+w+'%"></div></div></div>';
   }).join('') : '<div class="empty">Sem vendas no período</div>';
   
   renderBars('v-origem', groupCount(data, 'l'), 'cyan');
@@ -522,7 +522,7 @@ function renderVendas() {
   const rows = data.sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
   tbl.innerHTML = rows.length ? rows.map(r => {
     const [y,m,d] = r.d.split('-');
-    return `<tr><td>${d}/${m}/${y}</td><td class="tbl-name">${trunc(r.c,40)}</td><td>${trunc(r.cl,25)}</td><td class="tbl-num">${fmtBR(r.v)}</td></tr>`;
+    return '<tr><td>'+d+'/'+m+'/'+y+'</td><td class="tbl-name">'+trunc(r.c,40)+'</td><td>'+trunc(r.cl,25)+'</td><td class="tbl-num">'+fmtBR(r.v)+'</td></tr>';
   }).join('') : '<tr><td colspan="4" class="empty">Sem vendas no período</td></tr>';
 }
 
@@ -550,7 +550,7 @@ function renderReunioes() {
   const rows = data.sort((a,b)=>b.d.localeCompare(a.d)).slice(0,15);
   tbl.innerHTML = rows.length ? rows.map(r => {
     const [y,m,d] = r.d.split('-');
-    return `<tr><td class="tbl-name">${trunc(r.u,25)}</td><td>${d}/${m}/${y}</td><td>${fmtMin(r.dur)}</td><td>${r.s||'—'}</td></tr>`;
+    return '<tr><td class="tbl-name">'+trunc(r.u,25)+'</td><td>'+d+'/'+m+'/'+y+'</td><td>'+fmtMin(r.dur)+'</td><td>'+r.s||'—'+'</td></tr>';
   }).join('') : '<tr><td colspan="4" class="empty">Sem reuniões no período</td></tr>';
 }
 
@@ -582,7 +582,7 @@ function renderAtividades() {
     const max = arr[0].v || 1;
     const w = (item.v/max)*100;
     const color = item.n==='Executadas' ? 'green' : 'red';
-    return `<div class="bi"><div class="bi-hdr"><span class="bi-name">${item.n}</span><span class="bi-count">${fmt(item.v)}</span></div><div class="bi-track"><div class="bi-fill ${color}" style="width:${w}%"></div></div></div>`;
+    return '<div class="bi"><div class="bi-hdr"><span class="bi-name">'+item.n+'</span><span class="bi-count">'+fmt(item.v)+'</span></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
   }).join('') : '<div class="empty">Sem atividades</div>';
 }
 
