@@ -174,9 +174,7 @@ body{
   background:var(--card);border:1px solid var(--border);
   border-radius:14px;padding:22px 24px;
   position:relative;overflow:hidden;
-  transition:transform .3s cubic-bezier(.4,0,.2,1),
-             box-shadow .3s cubic-bezier(.4,0,.2,1),
-             border-color .3s;
+  transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s cubic-bezier(.4,0,.2,1),border-color .3s;
   box-shadow:var(--shadow-xs);
 }
 .kpi::after{
@@ -336,7 +334,7 @@ body{
       <div class="nav-dot"></div>
       <span class="nav-live-txt">Ao vivo</span>
     </div>
-    <span class="nav-date" id="navDate">quarta-feira, 29 de abril de 2026 às 14:29</span>
+    <span class="nav-date" id="navDate"></span>
   </div>
 </div>
 </nav>
@@ -344,9 +342,9 @@ body{
 <div class="hero">
 <div class="hero-wrap">
   <div class="hero-left">
-    <div class="hero-eyebrow">Painel Executivo · LaraFy</div>
+    <div class="hero-eyebrow">Painel Executivo - LaraFy</div>
     <h1 class="hero-title">Dashboard <span>Comercial</span></h1>
-    <p class="hero-sub">Atualizado em quarta-feira, 29 de abril de 2026 às 14:29</p>
+    <p class="hero-sub">Atualizado em quarta-feira, 29 de abril de 2026 às 15:19</p>
   </div>
   <div class="hero-right">
     <div class="filters">
@@ -374,142 +372,443 @@ body{
 
 <div class="wrap">
 
-<div class="kpi-grid">
-  <div class="kpi c-cyan reveal d1">
-    <span class="kpi-icon">📊</span>
-    <div class="kpi-label">Oportunidades</div>
-    <div class="kpi-value" id="v-opps">2.791</div>
-    <div class="kpi-sub">no pipeline</div>
+  <div class="kpi-grid">
+    <div class="kpi c-cyan reveal d1">
+      <span class="kpi-icon">📊</span>
+      <div class="kpi-label">Oportunidades</div>
+      <div class="kpi-value" id="v-opps">2.791</div>
+      <div class="kpi-sub">no pipeline</div>
+    </div>
+    <div class="kpi c-green reveal d2">
+      <span class="kpi-icon">✅</span>
+      <div class="kpi-label">Ganhas</div>
+      <div class="kpi-value" id="v-ganhas">339</div>
+      <div class="kpi-sub">conversões</div>
+    </div>
+    <div class="kpi c-red reveal d3">
+      <span class="kpi-icon">❌</span>
+      <div class="kpi-label">Perdidas</div>
+      <div class="kpi-value" id="v-perdidas">1.627</div>
+      <div class="kpi-sub">com motivo</div>
+    </div>
+    <div class="kpi c-gold reveal d4">
+      <span class="kpi-icon">🎯</span>
+      <div class="kpi-label">Conversão</div>
+      <div class="kpi-value" id="v-conv">12,1%</div>
+      <div class="kpi-sub">ganhas / total</div>
+    </div>
   </div>
-  <div class="kpi c-green reveal d2">
-    <span class="kpi-icon">✅</span>
-    <div class="kpi-label">Ganhas</div>
-    <div class="kpi-value" id="v-ganhas">339</div>
-    <div class="kpi-sub">conversões</div>
-  </div>
-  <div class="kpi c-red reveal d3">
-    <span class="kpi-icon">❌</span>
-    <div class="kpi-label">Perdidas</div>
-    <div class="kpi-value" id="v-perdidas">1.627</div>
-    <div class="kpi-sub">com motivo</div>
-  </div>
-  <div class="kpi c-gold reveal d4">
-    <span class="kpi-icon">🎯</span>
-    <div class="kpi-label">Conversão</div>
-    <div class="kpi-value" id="v-conv">12,2%</div>
-    <div class="kpi-sub">ganhas / total</div>
-  </div>
-</div>
 
-<div class="kpi-grid-2">
-  <div class="kpi reveal d1">
-    <span class="kpi-icon">⏳</span>
-    <div class="kpi-label">Em Andamento</div>
-    <div class="kpi-value" id="v-and">825</div>
-    <div class="kpi-sub">ativos</div>
+  <div class="kpi-grid-2">
+    <div class="kpi reveal d1">
+      <span class="kpi-icon">⏳</span>
+      <div class="kpi-label">Em Andamento</div>
+      <div class="kpi-value" id="v-and">825</div>
+      <div class="kpi-sub">ativos</div>
+    </div>
+    <div class="kpi reveal d2">
+      <span class="kpi-icon">📅</span>
+      <div class="kpi-label">Ciclo Médio</div>
+      <div class="kpi-value" id="v-dias">113d</div>
+      <div class="kpi-sub">dias até fechar</div>
+    </div>
+    <div class="kpi reveal d3">
+      <span class="kpi-icon">👥</span>
+      <div class="kpi-label">Total Leads</div>
+      <div class="kpi-value" id="v-leads">2.167</div>
+      <div class="kpi-sub">na base</div>
+    </div>
+    <div class="kpi c-cyan reveal d4">
+      <span class="kpi-icon">💰</span>
+      <div class="kpi-label">Valor Pipeline</div>
+      <div class="kpi-value" id="v-valor" style="font-size:18px">R$ 13,9 bi</div>
+      <div class="kpi-sub">estimado</div>
+    </div>
   </div>
-  <div class="kpi reveal d2">
-    <span class="kpi-icon">📅</span>
-    <div class="kpi-label">Ciclo Médio</div>
-    <div class="kpi-value" id="v-dias">113d</div>
-    <div class="kpi-sub">dias até fechar</div>
-  </div>
-  <div class="kpi reveal d3">
-    <span class="kpi-icon">👥</span>
-    <div class="kpi-label">Total Leads</div>
-    <div class="kpi-value" id="v-leads">2.167</div>
-    <div class="kpi-sub">na base</div>
-  </div>
-  <div class="kpi c-cyan reveal d4">
-    <span class="kpi-icon">💰</span>
-    <div class="kpi-label">Valor Pipeline</div>
-    <div class="kpi-value" id="v-valor" style="font-size:20px">R$ 13.9B</div>
-    <div class="kpi-sub">estimado</div>
-  </div>
-</div>
 
-<div class="status-row reveal">
-  <div class="sc ganhas">
-    <span class="sc-n" id="st-g">339</span>
-    <span class="sc-l">Ganhas</span>
-    <p class="sc-pct" id="st-g-p">12,2% do total</p>
+  <div class="status-row reveal">
+    <div class="sc ganhas">
+      <span class="sc-n" id="st-g">339</span>
+      <span class="sc-l">Ganhas</span>
+      <p class="sc-pct" id="st-g-p">12,1% do total</p>
+    </div>
+    <div class="sc andamento">
+      <span class="sc-n" id="st-a">825</span>
+      <span class="sc-l">Em Andamento</span>
+      <p class="sc-pct">pipeline ativo</p>
+    </div>
+    <div class="sc perdidas">
+      <span class="sc-n" id="st-p">1.627</span>
+      <span class="sc-l">Perdidas</span>
+      <p class="sc-pct" id="st-p-p">58,3% do total</p>
+    </div>
   </div>
-  <div class="sc andamento">
-    <span class="sc-n" id="st-a">825</span>
-    <span class="sc-l">Em Andamento</span>
-    <p class="sc-pct">29,6% do pipeline</p>
-  </div>
-  <div class="sc perdidas">
-    <span class="sc-n" id="st-p">1.627</span>
-    <span class="sc-l">Perdidas</span>
-    <p class="sc-pct" id="st-p-p">58,3% do total</p>
-  </div>
-</div>
 
-<div class="g2">
-  <div class="card reveal-left">
-    <div class="ct"><span class="ct-icon">📈</span> Oportunidades por Mês</div>
-    <div class="chart" id="chart-meses">
-      <div class="cc">
-        <div class="cc-val">137</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:51px;--h:51px;animation-delay:0s"></div>
+  <div class="g2">
+    <div class="card reveal-left">
+      <div class="ct"><span class="ct-icon">📈</span> Oportunidades por Mês</div>
+      <div class="chart" id="chart-meses">
+        <div class="cc">
+          <div class="cc-val">137</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:40px;--h:40px;animation-delay:0s"></div>
+          </div>
+          <div class="cc-lbl">Nov/25</div>
         </div>
-        <div class="cc-lbl">Nov/25</div>
+        <div class="cc">
+          <div class="cc-val">176</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:52px;--h:52px;animation-delay:.1s"></div>
+          </div>
+          <div class="cc-lbl">Dez/25</div>
+        </div>
+        <div class="cc">
+          <div class="cc-val">345</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:101px;--h:101px;animation-delay:.2s"></div>
+          </div>
+          <div class="cc-lbl">Jan/26</div>
+        </div>
+        <div class="cc">
+          <div class="cc-val">406</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:119px;--h:119px;animation-delay:.3s"></div>
+          </div>
+          <div class="cc-lbl">Fev/26</div>
+        </div>
+        <div class="cc">
+          <div class="cc-val">428</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:126px;--h:126px;animation-delay:.4s"></div>
+          </div>
+          <div class="cc-lbl">Mar/26</div>
+        </div>
+        <div class="cc">
+          <div class="cc-val">302</div>
+          <div class="cc-bwrap">
+            <div class="cc-bar" style="height:89px;--h:89px;animation-delay:.5s"></div>
+          </div>
+          <div class="cc-lbl">Abr/26</div>
+        </div>
       </div>
-      <div class="cc">
-        <div class="cc-val">176</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:65px;--h:65px;animation-delay:.1s"></div>
+    </div>
+    <div class="card reveal-right">
+      <div class="ct"><span class="ct-icon">🌐</span> Origem dos Leads</div>
+      <div class="bl" id="bl-origins">
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Instagram</span>
+            <div class="bi-right">
+              <span class="bi-count">1.226</span>
+              <span class="bi-pct">(56,5%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill cyan d1f" style="width:100%"></div>
+          </div>
         </div>
-        <div class="cc-lbl">Dez/25</div>
-      </div>
-      <div class="cc">
-        <div class="cc-val">345</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:128px;--h:128px;animation-delay:.2s"></div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Site</span>
+            <div class="bi-right">
+              <span class="bi-count">469</span>
+              <span class="bi-pct">(21,6%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill cyan d2f" style="width:38,2%"></div>
+          </div>
         </div>
-        <div class="cc-lbl">Jan/26</div>
-      </div>
-      <div class="cc">
-        <div class="cc-val">406</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:150px;--h:150px;animation-delay:.3s"></div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Base de empresas Leads2b</span>
+            <div class="bi-right">
+              <span class="bi-count">425</span>
+              <span class="bi-pct">(19,6%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill cyan d3f" style="width:34,6%"></div>
+          </div>
         </div>
-        <div class="cc-lbl">Fev/26</div>
-      </div>
-      <div class="cc">
-        <div class="cc-val">428</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:159px;--h:159px;animation-delay:.4s"></div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Não informado</span>
+            <div class="bi-right">
+              <span class="bi-count">367</span>
+              <span class="bi-pct">(16,9%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill cyan d4f" style="width:29,9%"></div>
+          </div>
         </div>
-        <div class="cc-lbl">Mar/26</div>
-      </div>
-      <div class="cc">
-        <div class="cc-val">302</div>
-        <div class="cc-bwrap">
-          <div class="cc-bar" style="height:112px;--h:112px;animation-delay:.5s"></div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Facebook</span>
+            <div class="bi-right">
+              <span class="bi-count">159</span>
+              <span class="bi-pct">(7,3%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill cyan d5f" style="width:13,0%"></div>
+          </div>
         </div>
-        <div class="cc-lbl">Abr/26</div>
       </div>
     </div>
   </div>
-  <div class="card reveal-right">
-    <div class="ct"><span class="ct-icon">🌐</span> Origem dos Leads</div>
-    <div class="bl" id="bl-origins">
-      <div class="bi">
-        <div class="bi-hdr">
-          <span class="bi-name">Instagram</span>
-          <div class="bi-right">
-            <span class="bi-count">1.226</span>
-            <span class="bi-pct">(56,5%)</span>
+
+  <div class="g2">
+    <div class="card reveal-left">
+      <div class="ct"><span class="ct-icon">🔄</span> Etapas do Pipeline</div>
+      <div class="bl" id="bl-steps">
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Prospecção Manual</span>
+            <div class="bi-right">
+              <span class="bi-count">1.152</span>
+              <span class="bi-pct">(41,3%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill gold d1f" style="width:100%"></div>
           </div>
         </div>
-        <div class="bi-track">
-          <div class="bi-fill cyan d1f" style="width:100%"></div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Recovery</span>
+            <div class="bi-right">
+              <span class="bi-count">366</span>
+              <span class="bi-pct">(13,1%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill gold d2f" style="width:31,8%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Follow-up</span>
+            <div class="bi-right">
+              <span class="bi-count">262</span>
+              <span class="bi-pct">(9,4%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill gold d3f" style="width:22,7%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Retorno Futuro</span>
+            <div class="bi-right">
+              <span class="bi-count">173</span>
+              <span class="bi-pct">(6,2%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill gold d4f" style="width:15,0%"></div>
+          </div>
         </div>
       </div>
-      <div class="bi">
-        <div class="bi-hdr">
-          <span class="bi-name">Site</span>
-          
+    </div>
+    <div class="card reveal-right">
+      <div class="ct"><span class="ct-icon">❌</span> Motivos de Perda</div>
+      <div class="bl" id="bl-loss">
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Descartado - sem sucesso no contato</span>
+            <div class="bi-right">
+              <span class="bi-count">979</span>
+              <span class="bi-pct">(60,1%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill red d1f" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Sem perfil</span>
+            <div class="bi-right">
+              <span class="bi-count">315</span>
+              <span class="bi-pct">(19,3%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill red d2f" style="width:32,2%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Sem Interesse</span>
+            <div class="bi-right">
+              <span class="bi-count">189</span>
+              <span class="bi-pct">(11,6%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill red d3f" style="width:19,3%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Não houve aprovação financeira</span>
+            <div class="bi-right">
+              <span class="bi-count">43</span>
+              <span class="bi-pct">(2,6%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill red d4f" style="width:4,4%"></div>
+          </div>
+        </div>
+        <div class="bi">
+          <div class="bi-hdr">
+            <span class="bi-name">Lead duplicado</span>
+            <div class="bi-right">
+              <span class="bi-count">43</span>
+              <span class="bi-pct">(2,6%)</span>
+            </div>
+          </div>
+          <div class="bi-track">
+            <div class="bi-fill red d5f" style="width:4,4%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-bottom:24px">
+    <div class="ct"><span class="ct-icon">🏢</span> Distribuição por Pipeline</div>
+    <div class="pl" id="pl-list">
+      <div class="pr">
+        <span class="pr-name">LaraTAX</span>
+        <div class="pr-right">
+          <span class="pr-count">2.351 opp</span>
+          <span class="pr-badge">84,3%</span>
+        </div>
+      </div>
+      <div class="pr">
+        <span class="pr-name">LaraFY</span>
+        <div class="pr-right">
+          <span class="pr-count">349 opp</span>
+          <span class="pr-badge">12,5%</span>
+        </div>
+      </div>
+      <div class="pr">
+        <span class="pr-name">Entrega LaraFy</span>
+        <div class="pr-right">
+          <span class="pr-count">50 opp</span>
+          <span class="pr-badge">1,8%</span>
+        </div>
+      </div>
+      <div class="pr">
+        <span class="pr-name">Parceiros</span>
+        <div class="pr-right">
+          <span class="pr-count">41 opp</span>
+          <span class="pr-badge">1,5%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sum-grid reveal">
+    <div class="sum-item">
+      <div class="sum-label">Total de Registros</div>
+      <div class="sum-val">2.791</div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-label">Principal Origem</div>
+      <div class="sum-val" style="font-size:17px">Instagram</div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-label">Top Etapa</div>
+      <div class="sum-val" style="font-size:16px">Prospecção Manual</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+<div class="fi">
+  <img src="https://www.larafy.com.br/assets/images/larafy.png" alt="LaraFy" class="fi-logo">
+  <p>Dashboard Comercial LaraFy · Atualizado automaticamente todo dia útil às 8h</p>
+  <p>© 2026 LaraFy Consultoria Tributária</p>
+</div>
+</footer>
+
+<script>
+const D = {
+  opps:2791,
+  ganhas:339,
+  perdidas:1627,
+  and:825,
+  conv:12.1,
+  leads:2167,
+  dias:113,
+  mult:{
+    laratax:0.8427,
+    larafy:0.1251
+  }
+};
+
+const fs = {pipe:'todos', per:'tudo'};
+
+function setF(type, val, btn) {
+  fs[type] = val;
+  btn.closest('.filter-group').querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyF();
+}
+
+function applyF() {
+  let pMult = fs.pipe === 'laratax' ? D.mult.laratax : fs.pipe === 'larafy' ? D.mult.larafy : 1;
+  let tMult = fs.per === '90' ? 0.72 : fs.per === '60' ? 0.48 : fs.per === '30' ? 0.24 : 1;
+  const m = pMult * tMult;
+  ani('v-opps', Math.round(D.opps * m));
+  ani('v-ganhas', Math.round(D.ganhas * m));
+  ani('v-perdidas', Math.round(D.perdidas * m));
+  ani('v-and', Math.round(D.and * m));
+  ani('v-leads', Math.round(D.leads * m));
+  document.getElementById('st-g').textContent = Math.round(D.ganhas * m).toLocaleString('pt-BR');
+  document.getElementById('st-a').textContent = Math.round(D.and * m).toLocaleString('pt-BR');
+  document.getElementById('st-p').textContent = Math.round(D.perdidas * m).toLocaleString('pt-BR');
+  const conv = D.opps * m > 0 ? ((D.ganhas * m) / (D.opps * m) * 100).toFixed(1) : 0;
+  document.getElementById('v-conv').textContent = conv.replace('.',',') + '%';
+  document.getElementById('st-g-p').textContent = conv.replace('.',',') + '% do total';
+  const perdPct = D.opps * m > 0 ? ((D.perdidas * m) / (D.opps * m) * 100).toFixed(1) : 0;
+  document.getElementById('st-p-p').textContent = perdPct.replace('.',',') + '% do total';
+}
+
+function ani(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const raw = el.textContent.replace(/[^\d]/g,'');
+  const start = parseInt(raw) || 0;
+  const dur = 700;
+  const t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(start + (target - start) * e).toLocaleString('pt-BR');
+    if (p < 1) requestAnimationFrame(tick);
+  })(performance.now());
+}
+
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => ro.observe(el));
+
+document.getElementById('navDate').textContent = new Date().toLocaleDateString('pt-BR',{
+  weekday:'long', day:'2-digit', month:'long', year:'numeric',
+  timeZone:'America/Sao_Paulo'
+});
+</script>
+
+</body>
+</html>
