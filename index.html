@@ -491,7 +491,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 </footer>
 
 <script>
-const DASH_DATA = {"dataAtualizacao":"2026-05-04T16:20:52.096Z","minDate":"","maxDate":"2026-05-04","counts":{"leads":0,"vendas":0,"reunioes":0,"atividades":0},"leads":[],"vendas":[],"reunioes":[],"atividades":[],"filtros":{"vendedores":[]}};
+const DASH_DATA = {"dataAtualizacao":"2026-05-04T16:27:44.853Z","minDate":"","maxDate":"2026-05-04","counts":{"leads":0,"vendas":0,"reunioes":0,"atividades":0},"leads":[],"vendas":[],"reunioes":[],"atividades":[],"filtros":{"vendedores":[]}};
 
 const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos' };
 let activeTab = 'leads';
@@ -621,7 +621,7 @@ function renderBars(elId, arr, color, limit, clickType) {
       const isActive = (clickType === 'origin' && F.origin === item.n) || (clickType === 'vend' && F.vend === item.n);
       if (isActive) cls += ' active';
       const safeN = item.n.replace(/'/g, "\\'");
-      click = ' onclick="filterByItem(\\''+clickType+'\\',\\''+safeN+'\\')"';
+      click = ' onclick="filterByItem(\''+clickType+'\',\''+safeN+'\')"';
     }
     return '<div class="'+cls+'"'+click+'><div class="bi-hdr"><span class="bi-name" title="'+item.n+'">'+trunc(item.n,40)+'</span><div class="bi-right"><span class="bi-count">'+fmt(item.v)+'</span><span class="bi-pct">('+pct+'%)</span></div></div><div class="bi-track"><div class="bi-fill '+color+'" style="width:'+w+'%"></div></div></div>';
   }).join('');
@@ -653,7 +653,7 @@ function renderRanking(elId, arr, valueFn, metaFn, limit, clickType) {
       cls += ' click';
       if (clickType === 'vend' && F.vend === item.n) cls += ' active';
       const safeN = item.n.replace(/'/g, "\\'");
-      click = ' onclick="filterByItem(\\''+clickType+'\\',\\''+safeN+'\\')"';
+      click = ' onclick="filterByItem(\''+clickType+'\',\''+safeN+'\')"';
     }
     return '<div class="'+cls+'"'+click+'><div class="rank-pos '+posClass+'">'+medal+'</div><div class="rank-info"><div class="rank-name">'+trunc(item.n,30)+'</div>'+(metaFn?'<div class="rank-meta">'+metaFn(item)+'</div>':'')+'</div><div class="rank-val">'+valueFn(item)+'</div></div>';
   }).join('');
@@ -683,7 +683,7 @@ function renderOriginCards(elId, arr, limit) {
     const pct = total ? ((item.v/total)*100).toFixed(0) : 0;
     const isActive = F.origin === item.n;
     const safeN = item.n.replace(/'/g, "\\'");
-    return '<div class="og-card '+(isActive?'active':'')+'" onclick="filterByItem(\\'origin\\',\\''+safeN+'\\')"><div class="og-icon">'+getOriginIcon(item.n)+'</div><div class="og-name" title="'+item.n+'">'+trunc(item.n,16)+'</div><div class="og-count">'+fmt(item.v)+'</div><div class="og-pct">'+pct+'%</div></div>';
+    return '<div class="og-card '+(isActive?'active':'')+'" onclick="filterByItem(\'origin\',\''+safeN+'\')"><div class="og-icon">'+getOriginIcon(item.n)+'</div><div class="og-name" title="'+item.n+'">'+trunc(item.n,16)+'</div><div class="og-count">'+fmt(item.v)+'</div><div class="og-pct">'+pct+'%</div></div>';
   }).join('');
 }
 
@@ -856,4 +856,4 @@ function renderOpps() {
   
   // Motivos de perda
   const motivos = groupCount(data.filter(o => o.motivo), 'motivo');
-  renderBars('o-loss
+  renderBars('o-loss', motivos,
