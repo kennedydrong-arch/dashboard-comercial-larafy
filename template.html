@@ -644,6 +644,7 @@ function filterArr(arr) {
 function filterVendas(arr) {
   return (arr||[]).filter(r => {
     if (!inDateRange(r.d)) return false;
+    if (F.pipe !== 'todos' && r.p !== F.pipe) return false;
     if (F.vend !== 'todos' && r.cl !== F.vend) return false;
     if (F.origin !== 'todos' && r.o !== F.origin) return false;
     if (F.vimpl !== 'todos' && r.i !== F.vimpl) return false;
