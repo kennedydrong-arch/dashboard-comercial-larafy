@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Comercial · LaraFy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#012e43;--navy2:#013a55;--navy3:#01233a;--teal:#035a7a;--cyan:#35b9d7;--cyan2:#2aa8c7;--cyan3:#5ed3ed;--cyan-soft:#d6f0f7;--cyan-pale:#eaf7fb;--gold:#e8a838;--green:#00c853;--red:#ef5350;--purple:#7b61ff;--orange:#ff7043;--bg:#f4f7f9;--bg2:#edf1f4;--card:#ffffff;--text:#012e43;--text2:rgba(1,46,67,0.65);--text3:rgba(1,46,67,0.4);--border:rgba(1,46,67,0.08);--border2:rgba(1,46,67,0.15);--shadow-xs:0 1px 3px rgba(1,46,67,0.04);--shadow:0 4px 16px rgba(1,46,67,0.07);--shadow-md:0 8px 24px rgba(1,46,67,0.1);--shadow-lg:0 16px 48px rgba(1,46,67,0.14)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.mono{font-family:'JetBrains Mono',monospace}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:4px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(53,185,215,0.5)}50%{box-shadow:0 0 0 10px rgba(53,185,215,0)}}
+@keyframes slideRight{from{transform:translateX(-12px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.navbar{background:linear-gradient(90deg,var(--navy3) 0%,var(--navy) 50%,var(--navy2) 100%);position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(53,185,215,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.15)}
+.nav-wrap{max-width:1480px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-logo{height:28px;filter:brightness(0) invert(1);opacity:.95}
+.nav-sep{width:1px;height:22px;background:rgba(255,255,255,0.15)}
+.nav-tag{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cyan3);text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-clock{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan3);font-weight:600}
+.nav-live{display:inline-flex;align-items:center;gap:7px;background:rgba(0,200,83,0.15);border:1px solid rgba(0,200,83,0.35);padding:6px 14px;border-radius:999px}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:glow 2s infinite}
+.nav-live-txt{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.nav-date{font-size:11px;color:rgba(255,255,255,0.55);font-weight:500}
+
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--teal) 60%,var(--cyan2) 130%);padding:32px 32px 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 15% 30%,rgba(53,185,215,0.18) 0%,transparent 45%),radial-gradient(circle at 85% 70%,rgba(123,97,255,0.12) 0%,transparent 45%);pointer-events:none}
+.hero-pattern{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.hero-wrap{max-width:1480px;margin:0 auto;position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.hero-left{display:flex;flex-direction:column;gap:6px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(53,185,215,0.2);border:1px solid rgba(53,185,215,0.4);padding:6px 14px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan3);width:fit-content;margin-bottom:6px}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan3);animation:pulse 1.8s infinite}
+.hero-title{font-size:30px;font-weight:800;color:#fff;letter-spacing:-.025em;line-height:1.05}
+.hero-title span{background:linear-gradient(90deg,var(--cyan3),var(--cyan-pale));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.6);font-weight:400;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-sub-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan3);background:rgba(53,185,215,0.15);padding:3px 8px;border-radius:4px;border:1px solid rgba(53,185,215,0.25)}
+.hero-mini{display:flex;gap:10px;flex-wrap:wrap}
+.hmini{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;min-width:110px;backdrop-filter:blur(10px);transition:all .25s}
+.hmini:hover{transform:translateY(-3px);border-color:rgba(53,185,215,0.5);background:rgba(53,185,215,0.12)}
+.hmini-l{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.hmini-v{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em}
+
+.filters-bar{background:var(--card);border-bottom:1px solid var(--border);padding:18px 32px;position:sticky;top:68px;z-index:100;box-shadow:0 4px 16px rgba(1,46,67,0.04)}
+.filters-wrap{max-width:1480px;margin:0 auto;display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.flt{display:flex;flex-direction:column;gap:6px}
+.flt-l{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
+.flt-grp{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:4px}
+.fbtn{padding:8px 14px;border:none;border-radius:7px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;background:transparent;color:var(--text2);white-space:nowrap}
+.fbtn:hover{color:var(--text);background:rgba(53,185,215,0.08)}
+.fbtn.active{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#fff;box-shadow:0 4px 12px rgba(53,185,215,0.4);transform:translateY(-1px)}
+.flt-date{display:flex;gap:6px;align-items:center}
+.flt-input,.flt-select{padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:all .2s;cursor:pointer;min-height:36px}
+.flt-input:hover,.flt-select:hover{border-color:var(--cyan2);background:#fff}
+.flt-input:focus,.flt-select:focus{border-color:var(--cyan);background:#fff;box-shadow:0 0 0 3px rgba(53,185,215,0.12)}
+.flt-arrow{color:var(--text3);font-size:14px;font-weight:600}
+.flt-select{min-width:170px;font-weight:500}
+.flt-reset{padding:9px 16px;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px}
+.flt-reset:hover{border-color:var(--red);color:var(--red);background:rgba(239,83,80,0.06)}
+.flt-active-count{background:var(--cyan);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;font-family:'JetBrains Mono',monospace}
+
+.tabs-bar{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;overflow-x:auto}
+.tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:0}
+.tab{padding:18px 22px;background:transparent;border:none;border-bottom:3px solid transparent;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;font-family:inherit;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.tab:hover{color:var(--text);background:rgba(53,185,215,0.04)}
+.tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+.tab-icon{font-size:14px}
+.tab-count{background:var(--cyan-pale);color:var(--cyan2);padding:3px 9px;border-radius:999px;font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.tab.active .tab-count{background:var(--cyan);color:#fff}
+
+.wrap{max-width:1480px;margin:0 auto;padding:28px 32px}
+.tab-pane{display:none;animation:fadeIn .35s ease}
+.tab-pane.active{display:block}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;transition:all .3s;box-shadow:var(--shadow-xs)}
+.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--cyan2)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.kpi-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--cyan-pale),var(--cyan-soft));display:flex;align-items:center;justify-content:center;font-size:16px}
+.kpi-icon.green{background:linear-gradient(135deg,#e8f9ef,#c8f0d6)}
+.kpi-icon.red{background:linear-gradient(135deg,#ffe8e7,#ffcdc9)}
+.kpi-icon.gold{background:linear-gradient(135deg,#fff3d6,#ffe5a8)}
+.kpi-icon.purple{background:linear-gradient(135deg,#ede8ff,#d4c8ff)}
+.kpi-icon.orange{background:linear-gradient(135deg,#ffe5d6,#ffcca8)}
+.kpi-trend{font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 8px;border-radius:6px}
+.kpi-trend.up{background:rgba(0,200,83,0.1);color:var(--green)}
+.kpi-trend.down{background:rgba(239,83,80,0.1);color:var(--red)}
+.kpi-trend.neutral{background:var(--bg2);color:var(--text3)}
+.kpi-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.kpi-value{font-size:28px;font-weight:800;letter-spacing:-.025em;line-height:1;margin-bottom:4px;color:var(--text)}
+.kpi-value.cyan{color:var(--cyan)}
+.kpi-value.green{color:var(--green)}
+.kpi-value.red{color:var(--red)}
+.kpi-value.gold{color:var(--gold)}
+.kpi-value.purple{color:var(--purple)}
+.kpi-value.orange{color:var(--orange)}
+.kpi-sub{font-size:11px;color:var(--text3);font-weight:500}
+
+.section-title{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan2);margin:28px 0 14px;display:flex;align-items:center;gap:12px}
+.section-title::before{content:'';width:24px;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);border-radius:2px}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;box-shadow:var(--shadow-xs);transition:all .25s;animation:fadeIn .4s ease}
+.card:hover{box-shadow:var(--shadow);border-color:var(--border2)}
+.ct{font-size:13px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.ct-info{font-size:10px;color:var(--text3);font-weight:500;margin-left:auto;font-family:'JetBrains Mono',monospace}
+
+.chart{display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:8px;position:relative;overflow-x:auto}
+.chart::before{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border)}
+.cc{flex:1;min-width:28px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.cc-val{font-size:10px;font-weight:700;color:var(--cyan2);font-family:'JetBrains Mono',monospace}
+.cc-bwrap{flex:1;display:flex;align-items:flex-end;width:100%}
+.cc-bar{width:100%;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,var(--cyan),var(--navy));min-height:4px;transition:all .8s;cursor:pointer}
+.cc-bar:hover{filter:brightness(1.15)}
+.cc-bar.green{background:linear-gradient(180deg,var(--green),#00695c)}
+.cc-bar.gold{background:linear-gradient(180deg,var(--gold),#c07820)}
+.cc-bar.red{background:linear-gradient(180deg,var(--red),#b71c1c)}
+.cc-bar.purple{background:linear-gradient(180deg,var(--purple),#4a3aaa)}
+.cc-lbl{font-size:9px;color:var(--text3);font-weight:500;text-align:center;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+
+.bl{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;padding-right:4px}
+.bi{padding:10px 12px;margin:-2px;border-radius:8px;transition:all .15s;animation:slideRight .3s ease}
+.bi-click{cursor:pointer}
+.bi-click:hover{background:var(--cyan-pale)}
+.bi-click.active{background:linear-gradient(135deg,var(--cyan-pale),#c5e8f0);box-shadow:inset 0 0 0 2px var(--cyan)}
+.bi-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:8px}
+.bi-name{font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.bi-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.bi-count{font-size:13px;font-weight:700;color:var(--text);font-family:'JetBrains Mono',monospace}
+.bi-pct{font-size:10px;color:var(--text3);font-weight:600;font-family:'JetBrains Mono',monospace}
+.bi-track{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.bi-fill{height:100%;border-radius:3px;transition:width 1s}
+.bi-fill.cyan{background:linear-gradient(90deg,var(--cyan),var(--navy))}
+.bi-fill.green{background:linear-gradient(90deg,var(--green),#00695c)}
+.bi-fill.red{background:linear-gradient(90deg,var(--red),#b71c1c)}
+.bi-fill.gold{background:linear-gradient(90deg,var(--gold),#c07820)}
+.bi-fill.purple{background:linear-gradient(90deg,var(--purple),#4a3aaa)}
+.bi-fill.orange{background:linear-gradient(90deg,var(--orange),#c0541b)}
+
+.ranking{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto}
+.rank-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--border);transition:all .25s}
+.rank-item:hover{transform:translateX(4px);border-color:var(--cyan2);background:var(--cyan-pale)}
+.rank-item.click{cursor:pointer}
+.rank-item.active{background:linear-gradient(135deg,var(--cyan-pale),#c5e8f0);border-color:var(--cyan)}
+.rank-pos{font-size:16px;font-weight:800;color:var(--cyan);width:32px;text-align:center}
+.rank-pos.gold{color:var(--gold);font-size:20px}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.rank-meta{font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.rank-val{font-size:13px;font-weight:800;color:var(--cyan2);text-align:right}
+
+.tbl{width:100%;font-size:12px;border-collapse:collapse}
+.tbl th{text-align:left;padding:11px 10px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:2px solid var(--border);background:var(--bg)}
+.tbl td{padding:11px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
+.tbl tr:hover td{background:var(--cyan-pale)}
+.tbl-name{font-weight:600;color:var(--text)}
+.tbl-num{font-weight:700;color:var(--cyan2);font-family:'JetBrains Mono',monospace}
+.tbl-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.tbl-badge.green{background:rgba(0,200,83,0.1);color:var(--green)}
+.tbl-badge.red{background:rgba(239,83,80,0.1);color:var(--red)}
+.tbl-badge.gold{background:rgba(232,168,56,0.1);color:var(--gold)}
+.tbl-badge.gray{background:var(--bg2);color:var(--text2)}
+.tbl-wrap{overflow-x:auto;max-height:560px;overflow-y:auto;border-radius:8px;border:1px solid var(--border)}
+
+.empty{text-align:center;padding:60px 20px;color:var(--text3);font-size:13px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.empty-icon{font-size:32px;opacity:.4}
+
+.og-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.og-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;text-align:center}
+.og-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--cyan2);background:#fff}
+.og-card.active{background:linear-gradient(135deg,var(--cyan-pale),#c5e8f0);border-color:var(--cyan)}
+.og-icon{font-size:22px;margin-bottom:6px}
+.og-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.og-count{font-size:18px;font-weight:800;color:var(--cyan2);line-height:1}
+.og-pct{font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-top:2px}
+
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cmp-card{background:linear-gradient(135deg,var(--bg),var(--card));border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:all .25s}
+.cmp-card:hover{border-color:var(--cyan2);box-shadow:var(--shadow)}
+.cmp-card.green{border-left:4px solid var(--green)}
+.cmp-card.gold{border-left:4px solid var(--gold)}
+.cmp-card.red{border-left:4px solid var(--red)}
+.cmp-card.cyan{border-left:4px solid var(--cyan)}
+.cmp-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.cmp-value{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:4px}
+.cmp-sub{font-size:11px;color:var(--text2);font-weight:500}
+
+.ov-hero{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+.ov-kpi{background:linear-gradient(135deg,var(--card),var(--bg));border:1px solid var(--border);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;transition:all .3s;box-shadow:var(--shadow-xs);cursor:pointer}
+.ov-kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--cyan2)}
+.ov-kpi::after{content:'→';position:absolute;top:18px;right:20px;font-size:18px;color:var(--text3);transition:all .25s;font-weight:700}
+.ov-kpi:hover::after{color:var(--cyan);transform:translateX(4px)}
+.ov-kpi-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.ov-kpi-icon.c1{background:linear-gradient(135deg,var(--cyan-pale),var(--cyan-soft));color:var(--cyan2)}
+.ov-kpi-icon.c2{background:linear-gradient(135deg,#ede8ff,#d4c8ff);color:var(--purple)}
+.ov-kpi-icon.c3{background:linear-gradient(135deg,#e8f9ef,#c8f0d6);color:var(--green)}
+.ov-kpi-icon.c4{background:linear-gradient(135deg,#fff3d6,#ffe5a8);color:var(--gold)}
+.ov-kpi-icon.c5{background:linear-gradient(135deg,#ffe5d6,#ffcca8);color:var(--orange)}
+.ov-kpi-l{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.ov-kpi-v{font-size:26px;font-weight:800;letter-spacing:-.025em;line-height:1;color:var(--text);margin-bottom:4px}
+.ov-kpi-s{font-size:11px;color:var(--text3);font-weight:500}
+
+.funnel-stages{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.fs-stage{padding:24px 18px;text-align:center;position:relative;background:var(--bg);border-right:1px solid var(--border);transition:all .3s;cursor:pointer}
+.fs-stage:last-child{border-right:none}
+.fs-stage:first-child{border-radius:12px 0 0 12px}
+.fs-stage:last-child{border-radius:0 12px 12px 0}
+.fs-stage:hover{background:var(--cyan-pale);transform:translateY(-2px)}
+.fs-stage::after{content:'';position:absolute;top:50%;right:-1px;width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:10px solid var(--bg);transform:translateY(-50%);z-index:2;transition:all .3s}
+.fs-stage:hover::after{border-left-color:var(--cyan-pale)}
+.fs-stage:last-child::after{display:none}
+.fs-icon{font-size:24px;margin-bottom:8px}
+.fs-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.fs-value{font-size:30px;font-weight:800;color:var(--text);letter-spacing:-.025em;margin-bottom:4px;line-height:1}
+.fs-pct{font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace;font-weight:600}
+.fs-arrow-line{display:flex;align-items:center;justify-content:space-around;padding:10px 0;background:linear-gradient(90deg,var(--cyan-pale),var(--bg2),var(--cyan-pale));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.fs-arrow-item{font-size:11px;color:var(--text2);font-weight:600;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:6px}
+.fs-arrow-item span{color:var(--cyan2);font-weight:800}
+
+.og-funnel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ogf-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:all .25s;cursor:pointer}
+.ogf-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--cyan2)}
+.ogf-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ogf-icon{font-size:24px}
+.ogf-name{font-size:14px;font-weight:700;color:var(--text);flex:1}
+.ogf-arrow{color:var(--text3);font-size:14px;font-weight:700}
+.ogf-card:hover .ogf-arrow{color:var(--cyan)}
+.ogf-stages{display:flex;flex-direction:column;gap:8px}
+.ogf-row{display:flex;align-items:center;gap:10px}
+.ogf-row-label{font-size:10px;font-weight:600;color:var(--text3);width:78px;text-transform:uppercase;letter-spacing:.06em}
+.ogf-row-bar{flex:1;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;position:relative}
+.ogf-row-fill{height:100%;border-radius:4px;transition:width .8s}
+.ogf-row-fill.s1{background:linear-gradient(90deg,var(--cyan),var(--navy))}
+.ogf-row-fill.s2{background:linear-gradient(90deg,var(--purple),#4a3aaa)}
+.ogf-row-fill.s3{background:linear-gradient(90deg,var(--gold),#c07820)}
+.ogf-row-fill.s4{background:linear-gradient(90deg,var(--green),#00695c)}
+.ogf-row-val{font-size:12px;font-weight:700;color:var(--text);font-family:'JetBrains Mono',monospace;min-width:48px;text-align:right}
+.ogf-row-pct{font-size:10px;font-weight:600;color:var(--text3);font-family:'JetBrains Mono',monospace;min-width:38px;text-align:right}
+.ogf-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.ogf-receita{font-size:13px;font-weight:800;color:var(--green);font-family:'JetBrains Mono',monospace}
+.ogf-conv{font-size:11px;font-weight:700;color:var(--cyan2);background:var(--cyan-pale);padding:3px 9px;border-radius:999px}
+
+.eff-list{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow-y:auto}
+.eff-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--border);transition:all .25s}
+.eff-item:hover{transform:translateX(4px);border-color:var(--cyan2);background:var(--cyan-pale)}
+.eff-pos{font-size:18px;font-weight:800;width:32px;text-align:center}
+.eff-info{flex:1;min-width:0}
+.eff-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.eff-meta{font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.eff-pct{font-size:18px;font-weight:800;color:var(--cyan2);font-family:'JetBrains Mono',monospace}
+.eff-pct.gold{color:var(--gold)}
+.eff-pct.green{color:var(--green)}
+
+.dh-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dh-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+.dh-card.green{border-left:4px solid var(--green)}
+.dh-card.red{border-left:4px solid var(--red)}
+.dh-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.dh-card.green .dh-title{color:var(--green)}
+.dh-card.red .dh-title{color:var(--red)}
+.dh-list{display:flex;flex-direction:column;gap:10px}
+.dh-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text2);line-height:1.5;padding:10px 12px;border-radius:8px;background:var(--bg)}
+.dh-item-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+.dh-item strong{color:var(--text);font-weight:700}
+.dh-item .mono{color:var(--cyan2);font-weight:700}
+
+.nav-cta-bar{display:flex;justify-content:center;align-items:center;gap:14px;padding:24px;background:linear-gradient(135deg,var(--bg),var(--card));border:1px solid var(--border);border-radius:14px;margin-top:28px;flex-wrap:wrap}
+.nav-cta-txt{font-size:13px;color:var(--text2);font-weight:500}
+.nav-cta-btns{display:flex;gap:8px;flex-wrap:wrap}
+.nav-cta-btn{padding:9px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.nav-cta-btn:hover{background:var(--cyan);color:#fff;border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 4px 12px rgba(53,185,215,0.3)}
+.nav-cta-btn .arr{font-size:14px}
+
+.footer{background:var(--navy);padding:28px 32px;margin-top:48px}
+.fi{max-width:1480px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.fi p{font-size:11px;color:rgba(255,255,255,0.45)}
+.fi-logo{height:22px;filter:brightness(0) invert(1);opacity:.6}
+
+@media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.g2,.g3,.cmp-grid,.dh-grid,.og-funnel-grid{grid-template-columns:1fr}.hero-wrap{flex-direction:column;align-items:flex-start}.ov-hero{grid-template-columns:repeat(2,1fr)}.funnel-stages{grid-template-columns:1fr 1fr}.fs-stage::after{display:none}}
+@media(max-width:640px){.wrap,.hero,.filters-bar{padding-left:18px;padding-right:18px}.kpi-grid,.ov-hero{grid-template-columns:1fr}.filters-wrap{flex-direction:column;align-items:stretch}.tab{padding:14px 16px;font-size:11px}.hero-title{font-size:24px}.funnel-stages{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="navbar"><div class="nav-wrap">
+<a href="https://www.larafy.com.br/" class="nav-brand">
+<img src="https://www.larafy.com.br/assets/images/larafy.png" class="nav-logo" alt="LaraFy">
+<div class="nav-sep"></div>
+<span class="nav-tag">Dashboard Comercial</span>
+</a>
+<div class="nav-right">
+<span class="nav-clock" id="navClock">--:--</span>
+<div class="nav-live"><div class="nav-dot"></div><span class="nav-live-txt">Atualizado</span></div>
+<span class="nav-date" id="navDate"></span>
+</div></div></nav>
+
+<div class="hero">
+<div class="hero-pattern"></div>
+<div class="hero-wrap">
+<div class="hero-left">
+<div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span><span>Painel Executivo</span></div>
+<h1 class="hero-title">Dashboard <span>Comercial</span></h1>
+<div class="hero-sub"><span id="updTxt">Carregando dados...</span><span class="hero-sub-tag" id="periodoLbl">Período: Histórico completo</span></div>
+</div>
+<div class="hero-mini" id="heroMini"></div>
+</div></div>
+
+<div class="filters-bar"><div class="filters-wrap">
+<div class="flt"><span class="flt-l">🏢 Pipeline</span><div class="flt-grp" id="fg-pipe">
+<button class="fbtn active" data-pipe="todos">Todos</button>
+<button class="fbtn" data-pipe="LaraTAX">LaraTAX</button>
+<button class="fbtn" data-pipe="LaraFy">LaraFy</button>
+</div></div>
+<div class="flt"><span class="flt-l">🌐 Origem</span><select class="flt-select" id="selOrigin"><option value="todos">Todas as origens</option></select></div>
+<div class="flt"><span class="flt-l">👤 Vendedor</span><select class="flt-select" id="selVend"><option value="todos">Todos</option></select></div>
+<div class="flt"><span class="flt-l">📅 Período</span><div class="flt-date">
+<input type="date" class="flt-input" id="dateStart">
+<span class="flt-arrow">→</span>
+<input type="date" class="flt-input" id="dateEnd">
+</div></div>
+<div class="flt"><span class="flt-l">⚡ Atalhos</span><div class="flt-grp" id="fg-quick">
+<button class="fbtn" data-days="7">7 dias</button>
+<button class="fbtn" data-days="30">30 dias</button>
+<button class="fbtn" data-days="90">90 dias</button>
+<button class="fbtn active" data-days="0">Tudo</button>
+</div></div>
+<div class="flt" style="margin-left:auto"><span class="flt-l">&nbsp;</span>
+<button class="flt-reset" id="btnReset">↺ Limpar filtros <span class="flt-active-count" id="fltCount" style="display:none">0</span></button>
+</div>
+</div></div>
+
+<div class="tabs-bar"><div class="tabs-wrap">
+<button class="tab active" data-tab="overview"><span class="tab-icon">🏠</span> Visão Geral</button>
+<button class="tab" data-tab="leads"><span class="tab-icon">📊</span> Leads <span class="tab-count" id="tc-leads">0</span></button>
+<button class="tab" data-tab="opps"><span class="tab-icon">🎯</span> Oportunidades <span class="tab-count" id="tc-opps">0</span></button>
+<button class="tab" data-tab="vendas"><span class="tab-icon">💰</span> Vendas <span class="tab-count" id="tc-vendas">0</span></button>
+<button class="tab" data-tab="reunioes"><span class="tab-icon">📅</span> Reuniões <span class="tab-count" id="tc-reunioes">0</span></button>
+<button class="tab" data-tab="atividades"><span class="tab-icon">⚡</span> Atividades <span class="tab-count" id="tc-atividades">0</span></button>
+</div></div>
+
+<div class="wrap">
+
+<!-- ============ VISÃO GERAL ============ -->
+<div class="tab-pane active" id="pane-overview">
+
+<div class="section-title">Resumo Executivo</div>
+<div class="ov-hero">
+<div class="ov-kpi" data-goto="leads"><div class="ov-kpi-icon c1">📊</div><div class="ov-kpi-l">Leads</div><div class="ov-kpi-v" id="ov-leads">0</div><div class="ov-kpi-s">na base de captação</div></div>
+<div class="ov-kpi" data-goto="opps"><div class="ov-kpi-icon c2">🎯</div><div class="ov-kpi-l">Oportunidades</div><div class="ov-kpi-v" id="ov-opps">0</div><div class="ov-kpi-s">no pipeline</div></div>
+<div class="ov-kpi" data-goto="reunioes"><div class="ov-kpi-icon c4">📅</div><div class="ov-kpi-l">Reuniões</div><div class="ov-kpi-v" id="ov-reunioes">0</div><div class="ov-kpi-s" id="ov-reunioes-s">agendadas</div></div>
+<div class="ov-kpi" data-goto="vendas"><div class="ov-kpi-icon c3">💰</div><div class="ov-kpi-l">Vendas</div><div class="ov-kpi-v" id="ov-vendas">0</div><div class="ov-kpi-s">contratos fechados</div></div>
+<div class="ov-kpi" data-goto="vendas"><div class="ov-kpi-icon c5">💵</div><div class="ov-kpi-l">Receita Anual</div><div class="ov-kpi-v" id="ov-receita" style="font-size:22px">R$ 0</div><div class="ov-kpi-s">faturamento contratado</div></div>
+</div>
+
+<div class="section-title">Funil de Conversão Geral</div>
+<div class="card" style="padding:0;overflow:hidden">
+<div class="funnel-stages">
+<div class="fs-stage" data-goto="leads"><div class="fs-icon">📊</div><div class="fs-label">Leads</div><div class="fs-value" id="fs-l">0</div><div class="fs-pct">100%</div></div>
+<div class="fs-stage" data-goto="reunioes"><div class="fs-icon">📅</div><div class="fs-label">Reuniões</div><div class="fs-value" id="fs-r">0</div><div class="fs-pct" id="fs-r-pct">0%</div></div>
+<div class="fs-stage" data-goto="opps"><div class="fs-icon">🎯</div><div class="fs-label">Oportunidades</div><div class="fs-value" id="fs-o">0</div><div class="fs-pct" id="fs-o-pct">0%</div></div>
+<div class="fs-stage" data-goto="vendas"><div class="fs-icon">💰</div><div class="fs-label">Vendas</div><div class="fs-value" id="fs-v">0</div><div class="fs-pct" id="fs-v-pct">0%</div></div>
+</div>
+<div class="fs-arrow-line">
+<div class="fs-arrow-item">Lead → Reunião <span id="conv-lr">0%</span></div>
+<div class="fs-arrow-item">Reunião → Oportunidade <span id="conv-ro">0%</span></div>
+<div class="fs-arrow-item">Oportunidade → Venda <span id="conv-ov">0%</span></div>
+<div class="fs-arrow-item">Lead → Venda <span id="conv-lv">0%</span></div>
+</div>
+</div>
+
+<div class="section-title">Funil por Origem · Top 6</div>
+<div class="og-funnel-grid" id="ogFunnelGrid"></div>
+
+<div class="section-title">Eficiência por Origem</div>
+<div class="g2">
+<div class="card"><div class="ct">🏆 Taxa de Conversão Lead → Venda <span class="ct-info">mínimo 5 leads</span></div><div class="eff-list" id="effList"></div></div>
+<div class="card"><div class="ct">💰 Receita Anual por Origem</div><div class="bl" id="ovReceitaOrigem"></div></div>
+</div>
+
+<div class="section-title">Destaques e Pontos de Atenção</div>
+<div class="dh-grid">
+<div class="dh-card green"><div class="dh-title">⭐ Destaques do Período</div><div class="dh-list" id="dhDestaques"></div></div>
+<div class="dh-card red"><div class="dh-title">⚠️ Pontos de Atenção</div><div class="dh-list" id="dhAlertas"></div></div>
+</div>
+
+<div class="nav-cta-bar">
+<span class="nav-cta-txt">📍 Aprofunde-se em qualquer área:</span>
+<div class="nav-cta-btns">
+<button class="nav-cta-btn" data-goto="leads"><span>📊</span> Leads <span class="arr">→</span></button>
+<button class="nav-cta-btn" data-goto="opps"><span>🎯</span> Oportunidades <span class="arr">→</span></button>
+<button class="nav-cta-btn" data-goto="vendas"><span>💰</span> Vendas <span class="arr">→</span></button>
+<button class="nav-cta-btn" data-goto="reunioes"><span>📅</span> Reuniões <span class="arr">→</span></button>
+<button class="nav-cta-btn" data-goto="atividades"><span>⚡</span> Atividades <span class="arr">→</span></button>
+</div>
+</div>
+
+</div>
+
+<!-- ============ LEADS ============ -->
+<div class="tab-pane" id="pane-leads">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">👥</div></div><div class="kpi-label">Total de Leads</div><div class="kpi-value cyan" id="l-total">0</div><div class="kpi-sub">no período selecionado</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">📅</div></div><div class="kpi-label">Média Diária</div><div class="kpi-value green" id="l-pordia">0</div><div class="kpi-sub">leads por dia</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">🚀</div></div><div class="kpi-label">Pico em 1 Dia</div><div class="kpi-value gold" id="l-pico">0</div><div class="kpi-sub" id="l-pico-c">—</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🔥</div><span class="kpi-trend neutral mono" id="l-trend">—</span></div><div class="kpi-label">Última Semana</div><div class="kpi-value purple" id="l-week">0</div><div class="kpi-sub">comparado à anterior</div></div>
+</div>
+
+<div class="section-title">Conversão dos Leads</div>
+<div class="g3">
+<div class="cmp-card green"><div class="cmp-label">✅ Ganhos</div><div class="cmp-value" id="l-ganhos">0</div><div class="cmp-sub" id="l-ganhos-pct">0% viraram cliente</div></div>
+<div class="cmp-card gold"><div class="cmp-label">⏳ Em Andamento</div><div class="cmp-value" id="l-andamento">0</div><div class="cmp-sub" id="l-andamento-pct">0% em negociação</div></div>
+<div class="cmp-card red"><div class="cmp-label">❌ Perdidos</div><div class="cmp-value" id="l-perdidos">0</div><div class="cmp-sub" id="l-perdidos-pct">0% sem conversão</div></div>
+</div>
+
+<div class="section-title">Análise Temporal</div>
+<div class="card"><div class="ct">📈 Leads por Dia <span class="ct-info">últimos dias</span></div><div class="chart" id="l-chart-dia"></div></div>
+
+<div class="section-title">Origens · Clique para Filtrar</div>
+<div class="card"><div class="og-grid" id="l-origens"></div></div>
+
+<div class="section-title">Performance por Responsável</div>
+<div class="card"><div class="ct">🏆 Ranking <span class="ct-info">clique para filtrar</span></div><div class="ranking" id="l-resp"></div></div>
+
+<div class="section-title">Status e Motivos de Perda</div>
+<div class="g2">
+<div class="card"><div class="ct">🏷️ Status do Lead</div><div class="bl" id="l-status"></div></div>
+<div class="card"><div class="ct">❌ Motivos de Perda</div><div class="bl" id="l-motivos"></div></div>
+</div>
+</div>
+
+<!-- ============ OPORTUNIDADES ============ -->
+<div class="tab-pane" id="pane-opps">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">🎯</div></div><div class="kpi-label">Total de Oportunidades</div><div class="kpi-value cyan" id="o-total">0</div><div class="kpi-sub">no período</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">✅</div></div><div class="kpi-label">Ganhas</div><div class="kpi-value green" id="o-ganhas">0</div><div class="kpi-sub" id="o-ganhas-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon red">❌</div></div><div class="kpi-label">Perdidas</div><div class="kpi-value red" id="o-perdidas">0</div><div class="kpi-sub" id="o-perdidas-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">⏳</div></div><div class="kpi-label">Em Andamento</div><div class="kpi-value gold" id="o-aberto">0</div><div class="kpi-sub" id="o-aberto-pct">0%</div></div>
+</div>
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💰</div></div><div class="kpi-label">Valor Total em Pipeline</div><div class="kpi-value cyan" id="o-valor" style="font-size:22px">R$ 0</div><div class="kpi-sub">soma das oportunidades</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">🎯</div></div><div class="kpi-label">Ticket Médio</div><div class="kpi-value green" id="o-ticket" style="font-size:22px">R$ 0</div><div class="kpi-sub">por oportunidade</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">⏱️</div></div><div class="kpi-label">Ciclo Médio</div><div class="kpi-value purple" id="o-ciclo">0d</div><div class="kpi-sub">dias no funil</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📈</div></div><div class="kpi-label">Taxa de Conversão</div><div class="kpi-value gold" id="o-conv">0%</div><div class="kpi-sub">ganhas sobre fechadas</div></div>
+</div>
+
+<div class="section-title">Funil · Etapas do Pipeline</div>
+<div class="g2">
+<div class="card"><div class="ct">🔄 Quantidade por Etapa</div><div class="bl" id="o-steps"></div></div>
+<div class="card"><div class="ct">⏱️ Tempo Médio por Etapa <span class="ct-info">em dias</span></div><div class="bl" id="o-steps-dias"></div></div>
+</div>
+
+<div class="section-title">Origens · Clique para Filtrar</div>
+<div class="card"><div class="og-grid" id="o-origens"></div></div>
+
+<div class="section-title">Análise Temporal</div>
+<div class="card"><div class="ct">📈 Oportunidades por Mês</div><div class="chart" id="o-chart-mes"></div></div>
+
+<div class="section-title">Performance e Perdas</div>
+<div class="g2">
+<div class="card"><div class="ct">🏆 Ranking por Vendedor · Valor</div><div class="ranking" id="o-vend"></div></div>
+<div class="card"><div class="ct">❌ Motivos de Perda</div><div class="bl" id="o-loss"></div></div>
+</div>
+
+<div class="section-title">Detalhamento</div>
+<div class="card"><div class="ct">📋 Últimas 50 Oportunidades</div>
+<div class="tbl-wrap"><table class="tbl" id="o-tabela"><thead><tr><th>Data</th><th>Cliente</th><th>Etapa</th><th>Vendedor</th><th>Origem</th><th>Pipeline</th><th>Dias</th><th>Status</th><th>Valor</th></tr></thead><tbody></tbody></table></div>
+</div>
+</div>
+
+<!-- ============ VENDAS ============ -->
+<div class="tab-pane" id="pane-vendas">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💰</div></div><div class="kpi-label">Total de Contratos</div><div class="kpi-value cyan" id="v-total">0</div><div class="kpi-sub">vendas fechadas</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">💵</div></div><div class="kpi-label">Receita Anual Total</div><div class="kpi-value green" id="v-valor" style="font-size:22px">R$ 0</div><div class="kpi-sub">faturamento contratado</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">🎯</div></div><div class="kpi-label">Ticket Médio Anual</div><div class="kpi-value gold" id="v-ticket" style="font-size:22px">R$ 0</div><div class="kpi-sub">por venda</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">⚙️</div></div><div class="kpi-label">Com Implantação</div><div class="kpi-value purple" id="v-impl">0%</div><div class="kpi-sub" id="v-impl-c">0 de 0 contratos</div></div>
+</div>
+
+<div class="card" style="padding:16px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
+<span class="flt-l">⚙️ Filtros desta Aba:</span>
+<div class="flt-grp" id="fg-impl">
+<button class="fbtn active" data-impl="todos">Todas</button>
+<button class="fbtn" data-impl="Sim">Com Implantação</button>
+<button class="fbtn" data-impl="Não">Sem Implantação</button>
+</div>
+<select class="flt-select" id="selVStatus"><option value="todos">Todos os Status</option></select>
+</div>
+
+<div class="section-title">Comparativo · Com Implantação versus Sem Implantação</div>
+<div class="cmp-grid">
+<div class="cmp-card cyan"><div class="cmp-label">✅ Com Implantação</div><div class="cmp-value" id="v-cmp-com" style="font-size:18px">R$ 0</div><div class="cmp-sub" id="v-cmp-com-c">0 contratos · ticket R$ 0</div></div>
+<div class="cmp-card gold"><div class="cmp-label">⚠️ Sem Implantação</div><div class="cmp-value" id="v-cmp-sem" style="font-size:18px">R$ 0</div><div class="cmp-sub" id="v-cmp-sem-c">0 contratos · ticket R$ 0</div></div>
+</div>
+
+<div class="section-title">Análise Temporal · Receita Anual Mês a Mês</div>
+<div class="card"><div class="ct">📈 Valor Anual por Mês de Assinatura</div><div class="chart" id="v-chart-mes"></div></div>
+
+<div class="section-title">Origens das Vendas</div>
+<div class="card"><div class="og-grid" id="v-origens"></div></div>
+
+<div class="section-title">Performance por Closer</div>
+<div class="g2">
+<div class="card"><div class="ct">🏆 Ranking Closer · Receita Anual</div><div class="ranking" id="v-vend"></div></div>
+<div class="card"><div class="ct">📊 Status dos Contratos</div><div class="bl" id="v-status"></div></div>
+</div>
+
+<div class="section-title">Detalhamento</div>
+<div class="card"><div class="ct">📋 Últimas 30 Vendas</div>
+<div class="tbl-wrap"><table class="tbl" id="v-tabela"><thead><tr><th>Data</th><th>Cliente</th><th>Closer</th><th>Origem</th><th>Status</th><th>Implantação</th><th>Receita Anual</th></tr></thead><tbody></tbody></table></div>
+</div>
+</div>
+
+<!-- ============ REUNIÕES ============ -->
+<div class="tab-pane" id="pane-reunioes">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">📅</div></div><div class="kpi-label">Total de Reuniões</div><div class="kpi-value cyan" id="r-total">0</div><div class="kpi-sub">no período</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">✅</div></div><div class="kpi-label">Realizadas</div><div class="kpi-value green" id="r-feitas">0</div><div class="kpi-sub" id="r-feitas-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon red">⏳</div></div><div class="kpi-label">Não Realizadas</div><div class="kpi-value red" id="r-pendentes">0</div><div class="kpi-sub" id="r-pendentes-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">⏱️</div></div><div class="kpi-label">Duração Média</div><div class="kpi-value gold" id="r-dur">0min</div><div class="kpi-sub">por reunião</div></div>
+</div>
+
+<div class="section-title">Métricas de Volume</div>
+<div class="g3">
+<div class="cmp-card cyan"><div class="cmp-label">📊 Reuniões por Dia</div><div class="cmp-value" id="r-pordia">0</div><div class="cmp-sub">média diária</div></div>
+<div class="cmp-card green"><div class="cmp-label">✅ Taxa de Realização</div><div class="cmp-value" id="r-taxa">0%</div><div class="cmp-sub">realizadas sobre total</div></div>
+<div class="cmp-card gold"><div class="cmp-label">🕐 Tempo Total</div><div class="cmp-value" id="r-tempo-tot">0h</div><div class="cmp-sub">horas acumuladas</div></div>
+</div>
+
+<div class="section-title">Análise Temporal</div>
+<div class="card"><div class="ct">📈 Reuniões por Dia</div><div class="chart" id="r-chart-dia"></div></div>
+
+<div class="section-title">Reuniões por Origem</div>
+<div class="card"><div class="og-grid" id="r-origens"></div></div>
+
+<div class="section-title">Performance e Status</div>
+<div class="g2">
+<div class="card"><div class="ct">🏆 Ranking de Vendedores</div><div class="ranking" id="r-vend"></div></div>
+<div class="card"><div class="ct">📊 Status</div><div class="bl" id="r-status"></div></div>
+</div>
+
+<div class="section-title">Detalhamento</div>
+<div class="card"><div class="ct">📋 Últimas 30 Reuniões</div>
+<div class="tbl-wrap"><table class="tbl" id="r-tabela"><thead><tr><th>Data</th><th>Vendedor</th><th>Empresa</th><th>Duração</th><th>Status</th><th>Origem</th></tr></thead><tbody></tbody></table></div>
+</div>
+</div>
+
+<!-- ============ ATIVIDADES ============ -->
+<div class="tab-pane" id="pane-atividades">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">⚡</div></div><div class="kpi-label">Total de Atividades</div><div class="kpi-value cyan" id="a-total">0</div><div class="kpi-sub">no período</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">✅</div></div><div class="kpi-label">Concluídas</div><div class="kpi-value green" id="a-exec">0</div><div class="kpi-sub" id="a-exec-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon red">⏳</div></div><div class="kpi-label">Em Aberto</div><div class="kpi-value red" id="a-pend">0</div><div class="kpi-sub" id="a-pend-pct">0%</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">🎯</div></div><div class="kpi-label">Taxa de Execução</div><div class="kpi-value gold" id="a-taxa">0%</div><div class="kpi-sub">geral</div></div>
+</div>
+
+<div class="section-title">Análise de Fechamento</div>
+<div class="card"><div class="ct">📊 Status de Fechamento <span class="ct-info">close_date preenchido?</span></div>
+<div class="cmp-grid">
+<div class="cmp-card green"><div class="cmp-label">✅ Concluídas</div><div class="cmp-value" id="a-fechadas">0</div><div class="cmp-sub">com data de fechamento</div></div>
+<div class="cmp-card red"><div class="cmp-label">⚠️ Em Aberto</div><div class="cmp-value" id="a-abertas">0</div><div class="cmp-sub">sem data de fechamento · risco de não execução</div></div>
+</div>
+</div>
+
+<div class="section-title">Análise Temporal</div>
+<div class="card"><div class="ct">📈 Atividades por Dia</div><div class="chart" id="a-chart-dia"></div></div>
+
+<div class="section-title">Tipos e Vinculação</div>
+<div class="g2">
+<div class="card"><div class="ct">📋 Tipos de Atividade</div><div class="bl" id="a-tipos"></div></div>
+<div class="card"><div class="ct">🔗 Por Entidade Vinculada</div><div class="bl" id="a-entidades"></div></div>
+</div>
+
+<div class="section-title">Taxa de Execução por Vendedor</div>
+<div class="card"><div class="ct">👤 Percentual de Atividades Concluídas <span class="ct-info">mínimo 3 atividades</span></div><div class="bl" id="a-vend-taxa"></div></div>
+</div>
+
+</div>
+
+<footer class="footer"><div class="fi">
+<img src="https://www.larafy.com.br/assets/images/larafy.png" class="fi-logo" alt="LaraFy">
+<p>Dashboard Comercial LaraFy · Atualizado todo dia útil às 8h</p>
+<p>© 2026 LaraFy Consultoria Tributária</p>
+</div></footer>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// DASHBOARD COMERCIAL LARAFY · v3
+// HTML estático · dados injetados pelo N8N
+// ════════════════════════════════════════════════════════════
+
+const DASH_DATA = __DASH_DATA__;
+
+const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos', vimpl:'todos', vstatus:'todos' };
+let activeTab = 'overview';
+
+// ═══ HELPERS ═══
+const fmt = (n) => Number(n||0).toLocaleString('pt-BR');
+const fmtBR = (n) => 'R$ ' + Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtBRshort = (n) => {
+  const v = Number(n||0);
+  if (v >= 1000000000) return 'R$ ' + (v/1000000000).toFixed(2) + 'B';
+  if (v >= 1000000) return 'R$ ' + (v/1000000).toFixed(2) + 'M';
+  if (v >= 1000) return 'R$ ' + (v/1000).toFixed(1) + 'k';
+  return 'R$ ' + v.toFixed(0);
+};
+const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'…' : (s||'');
+const esc = (s) => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
+const ORIGIN_ICONS = {'Instagram':'📸','Facebook':'👤','Site':'🌐','Google':'🔍','Indicação':'🤝','Evento':'🎤','Base de empresas Leads2b':'📋','Base Leads2b':'📋','LinkedIn':'💼','WhatsApp':'💬','YouTube':'📹','Email':'📧','Não informado':'❓','Parceiro':'🤝','Outbound':'📞','Inbound':'📥'};
+const getOriginIcon = (n) => ORIGIN_ICONS[n] || '🔹';
+
+// ═══ FILTROS ═══
+function inDateRange(d) {
+  if (!d) return false;
+  if (F.d1 && d < F.d1) return false;
+  if (F.d2 && d > F.d2) return false;
+  return true;
+}
+
+function filterArr(arr) {
+  return (arr||[]).filter(r => {
+    if (!inDateRange(r.d)) return false;
+    if (F.pipe !== 'todos' && r.p !== F.pipe) return false;
+    if (F.vend !== 'todos') {
+      const u = r.r || r.cl || r.u;
+      if (u !== F.vend) return false;
+    }
+    if (F.origin !== 'todos' && r.o !== F.origin) return false;
+    return true;
+  });
+}
+
+function filterVendas(arr) {
+  return (arr||[]).filter(r => {
+    if (!inDateRange(r.d)) return false;
+    if (F.vend !== 'todos' && r.cl !== F.vend) return false;
+    if (F.origin !== 'todos' && r.o !== F.origin) return false;
+    if (F.vimpl !== 'todos' && r.i !== F.vimpl) return false;
+    if (F.vstatus !== 'todos' && r.s !== F.vstatus) return false;
+    return true;
+  });
+}
+
+// ═══ FUNÇÕES DE INTERAÇÃO ═══
+function setPipe(val) {
+  F.pipe = val;
+  document.querySelectorAll('#fg-pipe .fbtn').forEach(b => {
+    b.classList.toggle('active', b.dataset.pipe === val);
+  });
+  render();
+}
+
+function setVImpl(val) {
+  F.vimpl = val;
+  document.querySelectorAll('#fg-impl .fbtn').forEach(b => {
+    b.classList.toggle('active', b.dataset.impl === val);
+  });
+  render();
+}
+
+function quickDate(days) {
+  document.querySelectorAll('#fg-quick .fbtn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.days) === days);
+  });
+  if (days === 0) {
+    document.getElementById('dateStart').value = '';
+    document.getElementById('dateEnd').value = '';
+    F.d1 = ''; F.d2 = '';
+    document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
+  } else {
+    const e = new Date();
+    const s = new Date(); s.setDate(s.getDate() - days);
+    document.getElementById('dateStart').value = s.toISOString().slice(0,10);
+    document.getElementById('dateEnd').value = e.toISOString().slice(0,10);
+    F.d1 = s.toISOString().slice(0,10); F.d2 = e.toISOString().slice(0,10);
+    document.getElementById('periodoLbl').textContent = 'Período: Últimos ' + days + ' dias';
+  }
+  render();
+}
+
+function resetFilters() {
+  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = ''; F.origin = 'todos'; F.vimpl = 'todos'; F.vstatus = 'todos';
+  document.getElementById('dateStart').value = '';
+  document.getElementById('dateEnd').value = '';
+  document.getElementById('selVend').value = 'todos';
+  document.getElementById('selOrigin').value = 'todos';
+  document.getElementById('selVStatus').value = 'todos';
+  document.querySelectorAll('#fg-pipe .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#fg-impl .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days)===0));
+  document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
+  render();
+}
+
+function setTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  const pane = document.getElementById('pane-'+tab);
+  if (pane) pane.classList.add('active');
+  render();
+}
+
+function goToTab(tab) {
+  setTab(tab);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function filterByOrigin(value) {
+  F.origin = (F.origin === value) ? 'todos' : value;
+  document.getElementById('selOrigin').value = F.origin;
+  render();
+}
+
+function filterByVend(value) {
+  F.vend = (F.vend === value) ? 'todos' : value;
+  document.getElementById('selVend').value = F.vend;
+  render();
+}
+
+function updateFilterCount() {
+  let c = 0;
+  if (F.pipe !== 'todos') c++;
+  if (F.vend !== 'todos') c++;
+  if (F.origin !== 'todos') c++;
+  if (F.d1 || F.d2) c++;
+  if (F.vimpl !== 'todos') c++;
+  if (F.vstatus !== 'todos') c++;
+  const el = document.getElementById('fltCount');
+  if (c > 0) { el.style.display = 'inline-block'; el.textContent = c; }
+  else el.style.display = 'none';
+}
+
+// ═══ AGRUPADORES ═══
+function groupCount(arr, key) {
+  const m = {};
+  arr.forEach(r => { const k = r[key] || 'Não informado'; m[k] = (m[k] || 0) + 1; });
+  return Object.keys(m).map(n=>({n,v:m[n]})).sort((a,b)=>b.v-a.v);
+}
+
+function groupSum(arr, key, valueKey) {
+  const m = {};
+  arr.forEach(r => { const k = r[key] || 'Não informado'; m[k] = (m[k] || 0) + (Number(r[valueKey])||0); });
+  return Object.keys(m).map(n=>({n,v:m[n]})).sort((a,b)=>b.v-a.v);
+}
+
+function groupByDate(arr) {
+  const m = {};
+  arr.forEach(r => { if (!r.d) return; m[r.d] = (m[r.d] || 0) + 1; });
+  return Object.keys(m).map(d=>{ const p = d.split('-'); return {n:p[2]+'/'+p[1],v:m[d],d}; }).sort((a,b)=>a.d.localeCompare(b.d));
+}
+
+function groupByMonth(arr, valueKey) {
+  const m = {};
+  arr.forEach(r => { 
+    if (!r.d) return; 
+    const k = r.d.slice(0,7);
+    m[k] = (m[k] || 0) + (valueKey ? (Number(r[valueKey])||0) : 1); 
+  });
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return Object.keys(m).map(d=>{ const p = d.split('-'); return {n:meses[parseInt(p[1])-1]+'/'+p[0].slice(2),v:m[d],d}; }).sort((a,b)=>a.d.localeCompare(b.d));
+}
+
+// ═══ RENDERIZADORES GENÉRICOS ═══
+function renderBars(elId, arr, color, limit, clickType) {
+  color = color || 'cyan';
+  limit = limit || 10;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados no período</span></div>`; return; }
+  const max = arr[0].v || 1;
+  const total = arr.reduce((s,a)=>s+a.v,0);
+  el.innerHTML = arr.slice(0,limit).map(item => {
+    const pct = total ? ((item.v/total)*100).toFixed(1) : 0;
+    const w = (item.v/max)*100;
+    let cls = 'bi';
+    let dataAttr = '';
+    if (clickType) {
+      cls += ' bi-click';
+      const isActive = (clickType === 'origin' && F.origin === item.n) || (clickType === 'vend' && F.vend === item.n);
+      if (isActive) cls += ' active';
+      dataAttr = ` data-click-type="${clickType}" data-click-value="${esc(item.n)}"`;
+    }
+    return `<div class="${cls}"${dataAttr}><div class="bi-hdr"><span class="bi-name" title="${esc(item.n)}">${esc(trunc(item.n,40))}</span><div class="bi-right"><span class="bi-count">${fmt(item.v)}</span><span class="bi-pct">(${pct}%)</span></div></div><div class="bi-track"><div class="bi-fill ${color}" style="width:${w}%"></div></div></div>`;
+  }).join('');
+}
+
+function renderRanking(elId, arr, valueFn, metaFn, limit, clickType) {
+  limit = limit || 10;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados no período</span></div>`; return; }
+  el.innerHTML = arr.slice(0,limit).map((item,i) => {
+    const pos = i+1;
+    const posClass = pos<=3 ? 'gold' : '';
+    const medal = pos===1?'🥇':pos===2?'🥈':pos===3?'🥉':('#'+pos);
+    let cls = 'rank-item';
+    let dataAttr = '';
+    if (clickType) {
+      cls += ' click';
+      if (clickType === 'vend' && F.vend === item.n) cls += ' active';
+      dataAttr = ` data-click-type="${clickType}" data-click-value="${esc(item.n)}"`;
+    }
+    return `<div class="${cls}"${dataAttr}><div class="rank-pos ${posClass}">${medal}</div><div class="rank-info"><div class="rank-name">${esc(trunc(item.n,30))}</div>${metaFn?`<div class="rank-meta">${metaFn(item)}</div>`:''}</div><div class="rank-val">${valueFn(item)}</div></div>`;
+  }).join('');
+}
+
+function renderChart(elId, arr, color, limit) {
+  color = color || '';
+  limit = limit || 30;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">📊</span><span>Sem dados no período</span></div>`; return; }
+  const data = arr.slice(-limit);
+  const max = Math.max.apply(null, data.map(d=>d.v)) || 1;
+  el.innerHTML = data.map(d => {
+    const h = (d.v/max)*170;
+    const valDisp = typeof d.label !== 'undefined' ? d.label : d.v;
+    return `<div class="cc"><div class="cc-val">${valDisp}</div><div class="cc-bwrap"><div class="cc-bar ${color}" style="height:${h}px"></div></div><div class="cc-lbl">${d.n}</div></div>`;
+  }).join('');
+}
+
+function renderOriginCards(elId, arr, limit) {
+  limit = limit || 12;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">🌐</span><span>Sem origens no período</span></div>`; return; }
+  const total = arr.reduce((s,a)=>s+a.v,0);
+  el.innerHTML = arr.slice(0,limit).map(item => {
+    const pct = total ? ((item.v/total)*100).toFixed(0) : 0;
+    const isActive = F.origin === item.n;
+    return `<div class="og-card ${isActive?'active':''}" data-click-type="origin" data-click-value="${esc(item.n)}"><div class="og-icon">${getOriginIcon(item.n)}</div><div class="og-name" title="${esc(item.n)}">${esc(trunc(item.n,16))}</div><div class="og-count">${fmt(item.v)}</div><div class="og-pct">${pct}%</div></div>`;
+  }).join('');
+}
+
+// ═══ RENDER VISÃO GERAL ═══
+function renderOverview() {
+  const leads = filterArr(DASH_DATA.leads);
+  const opps = filterArr(DASH_DATA.opps);
+  const vendas = filterVendas(DASH_DATA.vendas);
+  const reunioes = filterArr(DASH_DATA.reunioes);
+  
+  document.getElementById('ov-leads').textContent = fmt(leads.length);
+  document.getElementById('ov-opps').textContent = fmt(opps.length);
+  document.getElementById('ov-reunioes').textContent = fmt(reunioes.length);
+  document.getElementById('ov-vendas').textContent = fmt(vendas.length);
+  const receitaTotal = vendas.reduce((s,v) => s + v.va, 0);
+  document.getElementById('ov-receita').textContent = fmtBRshort(receitaTotal);
+  const reunFeitas = reunioes.filter(r => r.s === 'done').length;
+  document.getElementById('ov-reunioes-s').textContent = reunFeitas + ' realizadas e ' + (reunioes.length - reunFeitas) + ' não realizadas';
+  
+  const totalLeads = leads.length;
+  const totalReunioes = reunioes.length;
+  const totalOpps = opps.length;
+  const totalVendas = vendas.length;
+  
+  document.getElementById('fs-l').textContent = fmt(totalLeads);
+  document.getElementById('fs-r').textContent = fmt(totalReunioes);
+  document.getElementById('fs-o').textContent = fmt(totalOpps);
+  document.getElementById('fs-v').textContent = fmt(totalVendas);
+  
+  document.getElementById('fs-r-pct').textContent = totalLeads ? Math.round((totalReunioes/totalLeads)*100)+'% dos leads' : '0%';
+  document.getElementById('fs-o-pct').textContent = totalLeads ? Math.round((totalOpps/totalLeads)*100)+'% dos leads' : '0%';
+  document.getElementById('fs-v-pct').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'% dos leads' : '0%';
+  
+  document.getElementById('conv-lr').textContent = totalLeads ? Math.round((totalReunioes/totalLeads)*100)+'%' : '0%';
+  document.getElementById('conv-ro').textContent = totalReunioes ? Math.round((totalOpps/totalReunioes)*100)+'%' : '0%';
+  document.getElementById('conv-ov').textContent = totalOpps ? Math.round((totalVendas/totalOpps)*100)+'%' : '0%';
+  document.getElementById('conv-lv').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'%' : '0%';
+  
+  // Funil por origem
+  const origemStats = {};
+  leads.forEach(l => {
+    const o = l.o || 'Não informado';
+    if (!origemStats[o]) origemStats[o] = { leads:0, reunioes:0, opps:0, vendas:0, receita:0 };
+    origemStats[o].leads++;
+  });
+  reunioes.forEach(r => {
+    const o = r.o || 'Não informado';
+    if (!origemStats[o]) origemStats[o] = { leads:0, reunioes:0, opps:0, vendas:0, receita:0 };
+    origemStats[o].reunioes++;
+  });
+  opps.forEach(op => {
+    const o = op.o || 'Não informado';
+    if (!origemStats[o]) origemStats[o] = { leads:0, reunioes:0, opps:0, vendas:0, receita:0 };
+    origemStats[o].opps++;
+  });
+  vendas.forEach(v => {
+    const o = v.o || 'Não informado';
+    if (!origemStats[o]) origemStats[o] = { leads:0, reunioes:0, opps:0, vendas:0, receita:0 };
+    origemStats[o].vendas++;
+    origemStats[o].receita += v.va;
+  });
+  
+  const origemArr = Object.keys(origemStats).map(n => ({ n, ...origemStats[n] })).sort((a,b) => b.leads - a.leads).slice(0, 6);
+  const maxLeadsOrigem = origemArr.length ? origemArr[0].leads : 1;
+  const ogfEl = document.getElementById('ogFunnelGrid');
+  
+  if (!origemArr.length) {
+    ogfEl.innerHTML = `<div class="empty"><span class="empty-icon">🌐</span><span>Sem origens com dados</span></div>`;
+  } else {
+    ogfEl.innerHTML = origemArr.map(item => {
+      const wL = (item.leads/maxLeadsOrigem)*100;
+      const wR = item.leads ? Math.min((item.reunioes/item.leads)*100, 100) : 0;
+      const wO = item.leads ? Math.min((item.opps/item.leads)*100, 100) : 0;
+      const wV = item.leads ? Math.min((item.vendas/item.leads)*100, 100) : 0;
+      const taxaConv = item.leads ? ((item.vendas/item.leads)*100).toFixed(1) : 0;
+      return `<div class="ogf-card" data-click-type="origin-goto" data-click-value="${esc(item.n)}">
+        <div class="ogf-hdr"><span class="ogf-icon">${getOriginIcon(item.n)}</span><span class="ogf-name" title="${esc(item.n)}">${esc(trunc(item.n,22))}</span><span class="ogf-arrow">→</span></div>
+        <div class="ogf-stages">
+          <div class="ogf-row"><span class="ogf-row-label">Leads</span><div class="ogf-row-bar"><div class="ogf-row-fill s1" style="width:${wL}%"></div></div><span class="ogf-row-val">${fmt(item.leads)}</span><span class="ogf-row-pct">100%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Reuniões</span><div class="ogf-row-bar"><div class="ogf-row-fill s2" style="width:${wR}%"></div></div><span class="ogf-row-val">${fmt(item.reunioes)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.reunioes/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Oportunid.</span><div class="ogf-row-bar"><div class="ogf-row-fill s3" style="width:${wO}%"></div></div><span class="ogf-row-val">${fmt(item.opps)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.opps/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Vendas</span><div class="ogf-row-bar"><div class="ogf-row-fill s4" style="width:${wV}%"></div></div><span class="ogf-row-val">${fmt(item.vendas)}</span><span class="ogf-row-pct">${(item.leads?(item.vendas/item.leads)*100:0).toFixed(1)}%</span></div>
+        </div>
+        <div class="ogf-footer"><span class="ogf-receita">💰 ${fmtBRshort(item.receita)}</span><span class="ogf-conv">${taxaConv}% conv.</span></div>
+      </div>`;
+    }).join('');
+  }
+  
+  // Eficiência (mín 5 leads)
+  const effArr = Object.keys(origemStats)
+    .map(n => ({ n, ...origemStats[n], taxa: origemStats[n].leads >= 5 ? (origemStats[n].vendas/origemStats[n].leads)*100 : -1 }))
+    .filter(x => x.taxa >= 0)
+    .sort((a,b) => b.taxa - a.taxa)
+    .slice(0, 10);
+  
+  const effEl = document.getElementById('effList');
+  if (!effArr.length) {
+    effEl.innerHTML = `<div class="empty"><span class="empty-icon">📊</span><span>Sem dados suficientes para ranking</span></div>`;
+  } else {
+    effEl.innerHTML = effArr.map((item, i) => {
+      const pos = i+1;
+      const medal = pos===1?'🥇':pos===2?'🥈':pos===3?'🥉':('#'+pos);
+      const colorCls = item.taxa >= 10 ? 'green' : item.taxa >= 5 ? 'gold' : '';
+      return `<div class="eff-item"><div class="eff-pos">${medal}</div><div class="eff-info"><div class="eff-name">${getOriginIcon(item.n)} ${esc(trunc(item.n,28))}</div><div class="eff-meta">${fmt(item.leads)} leads → ${fmt(item.vendas)} vendas · ${fmtBRshort(item.receita)}</div></div><div class="eff-pct ${colorCls}">${item.taxa.toFixed(1)}%</div></div>`;
+    }).join('');
+  }
+  
+  // Receita por origem
+  const receitaPorOrigem = Object.keys(origemStats).map(n => ({ n, v: origemStats[n].receita })).filter(x => x.v > 0).sort((a,b) => b.v - a.v);
+  const ovReEl = document.getElementById('ovReceitaOrigem');
+  if (!receitaPorOrigem.length) {
+    ovReEl.innerHTML = `<div class="empty"><span class="empty-icon">💰</span><span>Sem vendas no período</span></div>`;
+  } else {
+    const max = receitaPorOrigem[0].v || 1;
+    const total = receitaPorOrigem.reduce((s,a)=>s+a.v,0);
+    ovReEl.innerHTML = receitaPorOrigem.slice(0,8).map(item => {
+      const pct = total ? ((item.v/total)*100).toFixed(1) : 0;
+      const w = (item.v/max)*100;
+      return `<div class="bi bi-click" data-click-type="origin" data-click-value="${esc(item.n)}"><div class="bi-hdr"><span class="bi-name">${getOriginIcon(item.n)} ${esc(trunc(item.n,32))}</span><div class="bi-right"><span class="bi-count">${fmtBRshort(item.v)}</span><span class="bi-pct">(${pct}%)</span></div></div><div class="bi-track"><div class="bi-fill green" style="width:${w}%"></div></div></div>`;
+    }).join('');
+  }
+  
+  // Destaques
+  const destaques = [];
+  const vendasPorMes = {};
+  vendas.forEach(v => {
+    const k = v.d.slice(0,7);
+    if (!vendasPorMes[k]) vendasPorMes[k] = { count:0, valor:0 };
+    vendasPorMes[k].count++;
+    vendasPorMes[k].valor += v.va;
+  });
+  const melhorMes = Object.keys(vendasPorMes).sort((a,b) => vendasPorMes[b].valor - vendasPorMes[a].valor)[0];
+  if (melhorMes) {
+    const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const p = melhorMes.split('-');
+    destaques.push({icon:'📈', txt:`Melhor mês: <strong>${meses[parseInt(p[1])-1]} de ${p[0]}</strong> com <span class="mono">${fmtBRshort(vendasPorMes[melhorMes].valor)}</span> em ${vendasPorMes[melhorMes].count} contratos`});
+  }
+  
+  const ultimos30 = leads.filter(l => {
+    const lim = new Date(); lim.setDate(lim.getDate()-30);
+    return new Date(l.d) >= lim;
+  });
+  if (ultimos30.length) {
+    const origemRecente = groupCount(ultimos30, 'o')[0];
+    if (origemRecente) destaques.push({icon:'🚀', txt:`Origem em alta nos últimos 30 dias: <strong>${esc(origemRecente.n)}</strong> com <span class="mono">${origemRecente.v} leads</span>`});
+  }
+  
+  const closersStats = {};
+  vendas.forEach(v => {
+    if (!closersStats[v.cl]) closersStats[v.cl] = { count:0, valor:0 };
+    closersStats[v.cl].count++;
+    closersStats[v.cl].valor += v.va;
+  });
+  const topCloser = Object.keys(closersStats).sort((a,b) => closersStats[b].valor - closersStats[a].valor)[0];
+  if (topCloser) destaques.push({icon:'🏆', txt:`Top closer: <strong>${esc(topCloser)}</strong> com <span class="mono">${fmtBRshort(closersStats[topCloser].valor)}</span> em ${closersStats[topCloser].count} contratos`});
+  
+  if (effArr.length) destaques.push({icon:'🎯', txt:`Origem mais eficiente: <strong>${esc(effArr[0].n)}</strong> com <span class="mono">${effArr[0].taxa.toFixed(1)}%</span> de conversão Lead → Venda`});
+  
+  const comImpl = vendas.filter(v => v.i === 'Sim').length;
+  if (vendas.length > 0) {
+    const pctImpl = Math.round((comImpl/vendas.length)*100);
+    destaques.push({icon:'⚙️', txt:`<strong>${pctImpl}%</strong> dos contratos vieram com implantação · ${comImpl} de ${vendas.length}`});
+  }
+  
+  document.getElementById('dhDestaques').innerHTML = destaques.length ?
+    destaques.map(d => `<div class="dh-item"><span class="dh-item-icon">${d.icon}</span><span>${d.txt}</span></div>`).join('') :
+    `<div class="dh-item"><span>Sem destaques no período</span></div>`;
+  
+  // Alertas
+  const alertas = [];
+  const reunPendentes = reunioes.filter(r => r.s === 'pending').length;
+  if (reunPendentes > 0 && reunioes.length > 0) {
+    const pct = Math.round((reunPendentes/reunioes.length)*100);
+    alertas.push({icon:'📅', txt:`<strong>${reunPendentes} reuniões</strong> não realizadas · <span class="mono">${pct}%</span> do total · verificar agenda`});
+  }
+  
+  const atividades = filterArr(DASH_DATA.atividades);
+  const atvAbertas = atividades.filter(a => !a.e).length;
+  if (atvAbertas > 0 && atividades.length > 0) {
+    const pct = Math.round((atvAbertas/atividades.length)*100);
+    alertas.push({icon:'⚡', txt:`<strong>${atvAbertas} atividades</strong> sem fechamento · <span class="mono">${pct}%</span> · risco de não execução`});
+  }
+  
+  const oppsParadas = opps.filter(o => o.dias > 90 && o.s !== 'Ganha' && o.s !== 'Perdida' && o.s !== 'Won' && o.s !== 'Lost').length;
+  if (oppsParadas > 0) {
+    alertas.push({icon:'⏰', txt:`<strong>${oppsParadas} oportunidades</strong> paradas há mais de <span class="mono">90 dias</span> · revisar pipeline`});
+  }
+  
+  const leadsSemOpp = leads.filter(l => !l.oppId).length;
+  if (leadsSemOpp > 0 && leads.length > 0) {
+    const pct = Math.round((leadsSemOpp/leads.length)*100);
+    if (pct > 50) alertas.push({icon:'🔍', txt:`<strong>${pct}% dos leads</strong> ainda não viraram oportunidade · ${fmt(leadsSemOpp)} leads · oportunidade de prospecção`});
+  }
+  
+  const origemBaixa = effArr.filter(x => x.leads >= 20 && x.taxa < 2);
+  if (origemBaixa.length) {
+    alertas.push({icon:'📉', txt:`<strong>${esc(origemBaixa[0].n)}</strong> com baixa conversão · <span class="mono">${origemBaixa[0].taxa.toFixed(1)}%</span> em ${origemBaixa[0].leads} leads · revisar estratégia`});
+  }
+  
+  document.getElementById('dhAlertas').innerHTML = alertas.length ?
+    alertas.map(a => `<div class="dh-item"><span class="dh-item-icon">${a.icon}</span><span>${a.txt}</span></div>`).join('') :
+    `<div class="dh-item"><span class="dh-item-icon">✅</span><span>Nenhum ponto crítico identificado no período</span></div>`;
+}
+
+// ═══ RENDER LEADS ═══
+function renderLeads() {
+  const data = filterArr(DASH_DATA.leads);
+  document.getElementById('l-total').textContent = fmt(data.length);
+  const porDia = groupByDate(data);
+  document.getElementById('l-pordia').textContent = porDia.length ? (data.length/porDia.length).toFixed(1) : '0';
+  const pico = porDia.length ? porDia.reduce((m,d)=>d.v>m.v?d:m, porDia[0]) : null;
+  document.getElementById('l-pico').textContent = pico ? pico.v : '0';
+  document.getElementById('l-pico-c').textContent = pico ? 'em ' + pico.n : '—';
+  
+  const hoje = new Date();
+  const s1 = new Date(hoje); s1.setDate(s1.getDate()-7);
+  const s2 = new Date(hoje); s2.setDate(s2.getDate()-14);
+  const ultSem = data.filter(d => d.d >= s1.toISOString().slice(0,10)).length;
+  const semAnt = data.filter(d => d.d >= s2.toISOString().slice(0,10) && d.d < s1.toISOString().slice(0,10)).length;
+  document.getElementById('l-week').textContent = fmt(ultSem);
+  const trendEl = document.getElementById('l-trend');
+  if (semAnt > 0) {
+    const diff = Math.round(((ultSem - semAnt) / semAnt) * 100);
+    trendEl.textContent = (diff>0?'↑ +':diff<0?'↓ ':'')+diff+'%';
+    trendEl.className = 'kpi-trend mono ' + (diff>0?'up':diff<0?'down':'neutral');
+  } else { trendEl.textContent = '—'; trendEl.className = 'kpi-trend neutral mono'; }
+  
+  const ganhos = data.filter(l => l.oppStatus === 'Ganha' || l.oppStatus === 'Won').length;
+  const perdidos = data.filter(l => l.oppStatus === 'Perdida' || l.oppStatus === 'Lost').length;
+  const andamento = data.filter(l => l.oppId && !['Ganha','Won','Perdida','Lost'].includes(l.oppStatus)).length;
+  document.getElementById('l-ganhos').textContent = fmt(ganhos);
+  document.getElementById('l-perdidos').textContent = fmt(perdidos);
+  document.getElementById('l-andamento').textContent = fmt(andamento);
+  document.getElementById('l-ganhos-pct').textContent = data.length ? Math.round((ganhos/data.length)*100)+'% viraram cliente' : '0%';
+  document.getElementById('l-perdidos-pct').textContent = data.length ? Math.round((perdidos/data.length)*100)+'% sem conversão' : '0%';
+  document.getElementById('l-andamento-pct').textContent = data.length ? Math.round((andamento/data.length)*100)+'% em negociação' : '0%';
+  
+  renderChart('l-chart-dia', porDia, 'cyan');
+  renderOriginCards('l-origens', groupCount(data, 'o'));
+  renderRanking('l-resp', groupCount(data, 'r'), item => fmt(item.v) + ' leads', null, 12, 'vend');
+  renderBars('l-status', groupCount(data, 's'), 'cyan', 10);
+  renderBars('l-motivos', groupCount(data.filter(l => l.motivo), 'motivo'), 'red', 10);
+}
+
+// ═══ RENDER OPORTUNIDADES ═══
+function renderOpps() {
+  const data = filterArr(DASH_DATA.opps);
+  document.getElementById('o-total').textContent = fmt(data.length);
+  const ganhas = data.filter(o => o.s === 'Ganha' || o.s === 'Won').length;
+  const perdidas = data.filter(o => o.s === 'Perdida' || o.s === 'Lost').length;
+  const aberto = data.length - ganhas - perdidas;
+  document.getElementById('o-ganhas').textContent = fmt(ganhas);
+  document.getElementById('o-perdidas').textContent = fmt(perdidas);
+  document.getElementById('o-aberto').textContent = fmt(aberto);
+  document.getElementById('o-ganhas-pct').textContent = data.length ? Math.round((ganhas/data.length)*100)+'%' : '0%';
+  document.getElementById('o-perdidas-pct').textContent = data.length ? Math.round((perdidas/data.length)*100)+'%' : '0%';
+  document.getElementById('o-aberto-pct').textContent = data.length ? Math.round((aberto/data.length)*100)+'%' : '0%';
+  const valorTotal = data.reduce((s,o)=>s+o.v, 0);
+  document.getElementById('o-valor').textContent = fmtBRshort(valorTotal);
+  document.getElementById('o-ticket').textContent = data.length ? fmtBRshort(valorTotal/data.length) : 'R$ 0';
+  const ciclos = data.filter(o => o.dias > 0);
+  const cicloMedio = ciclos.length ? Math.round(ciclos.reduce((s,o)=>s+o.dias,0)/ciclos.length) : 0;
+  document.getElementById('o-ciclo').textContent = cicloMedio + 'd';
+  const conv = (ganhas+perdidas) > 0 ? Math.round((ganhas/(ganhas+perdidas))*100) : 0;
+  document.getElementById('o-conv').textContent = conv + '%';
+  
+  renderBars('o-steps', groupCount(data, 'step'), 'purple', 15);
+  
+  const stepDias = {}; const stepCount = {};
+  data.forEach(o => {
+    if (o.dias > 0) {
+      stepDias[o.step] = (stepDias[o.step] || 0) + o.dias;
+      stepCount[o.step] = (stepCount[o.step] || 0) + 1;
+    }
+  });
+  const stepsAvg = Object.keys(stepDias).map(n => ({ n, v: Math.round(stepDias[n]/stepCount[n]), count: stepCount[n] })).sort((a,b)=>b.v-a.v);
+  const elDias = document.getElementById('o-steps-dias');
+  if (!stepsAvg.length) elDias.innerHTML = `<div class="empty"><span class="empty-icon">⏱️</span><span>Sem dados de tempo</span></div>`;
+  else {
+    const maxD = stepsAvg[0].v || 1;
+    elDias.innerHTML = stepsAvg.slice(0,15).map(item => {
+      const w = (item.v/maxD)*100;
+      const colorClass = item.v > 60 ? 'red' : item.v > 30 ? 'gold' : 'green';
+      return `<div class="bi"><div class="bi-hdr"><span class="bi-name" title="${esc(item.n)}">${esc(trunc(item.n,38))}</span><div class="bi-right"><span class="bi-count">${item.v}d</span><span class="bi-pct">(${item.count} opps)</span></div></div><div class="bi-track"><div class="bi-fill ${colorClass}" style="width:${w}%"></div></div></div>`;
+    }).join('');
+  }
+  
+  renderOriginCards('o-origens', groupCount(data, 'o'));
+  renderChart('o-chart-mes', groupByMonth(data), 'cyan');
+  
+  const vendValor = groupSum(data, 'r', 'v');
+  renderRanking('o-vend', vendValor, item => fmtBRshort(item.v), item => data.filter(d=>d.r===item.n).length + ' opps', 10, 'vend');
+  renderBars('o-loss', groupCount(data.filter(o => o.motivo), 'motivo'), 'red', 10);
+  
+  const tbl = document.querySelector('#o-tabela tbody');
+  const rows = data.slice().sort((a,b)=>b.d.localeCompare(a.d)).slice(0,50);
+  tbl.innerHTML = rows.length ? rows.map(o => {
+    const p = o.d.split('-');
+    let badge = `<span class="tbl-badge gold">Em andamento</span>`;
+    if (o.s === 'Ganha' || o.s === 'Won') badge = `<span class="tbl-badge green">Ganha</span>`;
+    else if (o.s === 'Perdida' || o.s === 'Lost') badge = `<span class="tbl-badge red">Perdida</span>`;
+    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(o.c,26))}</td><td>${esc(trunc(o.step,18))}</td><td>${esc(trunc(o.r,18))}</td><td>${esc(trunc(o.o,16))}</td><td>${esc(o.p)}</td><td class="tbl-num">${o.dias>0?o.dias+'d':'—'}</td><td>${badge}</td><td class="tbl-num">${o.v?fmtBRshort(o.v):'—'}</td></tr>`;
+  }).join('') : `<tr><td colspan="9" class="empty">Sem oportunidades no período</td></tr>`;
+}
+
+// ═══ RENDER VENDAS ═══
+function renderVendas() {
+  const data = filterVendas(DASH_DATA.vendas);
+  document.getElementById('v-total').textContent = fmt(data.length);
+  const valorTotalAnual = data.reduce((s,v)=>s+v.va, 0);
+  document.getElementById('v-valor').textContent = fmtBRshort(valorTotalAnual);
+  document.getElementById('v-ticket').textContent = data.length ? fmtBRshort(valorTotalAnual/data.length) : 'R$ 0';
+  const impl = data.filter(v=>v.i==='Sim').length;
+  document.getElementById('v-impl').textContent = (data.length ? Math.round((impl/data.length)*100) : 0)+'%';
+  document.getElementById('v-impl-c').textContent = impl + ' de ' + data.length + ' contratos';
+  
+  const comImpl = data.filter(v => v.i === 'Sim');
+  const semImpl = data.filter(v => v.i === 'Não');
+  const valComImpl = comImpl.reduce((s,v)=>s+v.va, 0);
+  const valSemImpl = semImpl.reduce((s,v)=>s+v.va, 0);
+  const ticketCom = comImpl.length ? valComImpl/comImpl.length : 0;
+  const ticketSem = semImpl.length ? valSemImpl/semImpl.length : 0;
+  document.getElementById('v-cmp-com').textContent = fmtBRshort(valComImpl);
+  document.getElementById('v-cmp-sem').textContent = fmtBRshort(valSemImpl);
+  document.getElementById('v-cmp-com-c').textContent = comImpl.length + ' contratos · ticket ' + fmtBRshort(ticketCom);
+  document.getElementById('v-cmp-sem-c').textContent = semImpl.length + ' contratos · ticket ' + fmtBRshort(ticketSem);
+  
+  const porMes = groupByMonth(data, 'va');
+  const chartData = porMes.map(m => ({...m, label: fmtBRshort(m.v).replace('R$ ', '')}));
+  renderChart('v-chart-mes', chartData, 'green');
+  
+  renderOriginCards('v-origens', groupCount(data, 'o'));
+  
+  const vendValor = groupSum(data, 'cl', 'va');
+  renderRanking('v-vend', vendValor, item => fmtBRshort(item.v), item => data.filter(d=>d.cl===item.n).length + ' vendas', 10, 'vend');
+  renderBars('v-status', groupCount(data, 's'), 'cyan', 10);
+  
+  const tbl = document.querySelector('#v-tabela tbody');
+  const rows = data.slice().sort((a,b)=>b.d.localeCompare(a.d)).slice(0,30);
+  tbl.innerHTML = rows.length ? rows.map(r => {
+    const p = r.d.split('-');
+    const badgeImpl = r.i==='Sim' ? `<span class="tbl-badge green">Sim</span>` : `<span class="tbl-badge red">Não</span>`;
+    const badgeStatus = `<span class="tbl-badge gray">${esc(r.s)}</span>`;
+    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(r.c,28))}</td><td>${esc(trunc(r.cl,18))}</td><td>${esc(trunc(r.o,16))}</td><td>${badgeStatus}</td><td>${badgeImpl}</td><td class="tbl-num">${fmtBR(r.va)}</td></tr>`;
+  }).join('') : `<tr><td colspan="7" class="empty">Sem vendas no período</td></tr>`;
+}
+
+// ═══ RENDER REUNIÕES ═══
+function renderReunioes() {
+  const data = filterArr(DASH_DATA.reunioes);
+  document.getElementById('r-total').textContent = fmt(data.length);
+  const feitas = data.filter(r=>r.s==='done').length;
+  const pendentes = data.length - feitas;
+  document.getElementById('r-feitas').textContent = fmt(feitas);
+  document.getElementById('r-pendentes').textContent = fmt(pendentes);
+  document.getElementById('r-feitas-pct').textContent = (data.length ? Math.round((feitas/data.length)*100) : 0)+'% realizadas';
+  document.getElementById('r-pendentes-pct').textContent = (data.length ? Math.round((pendentes/data.length)*100) : 0)+'% não realizadas';
+  
+  const realizadas = data.filter(r => r.s === 'done' && r.dur > 0);
+  const durMedia = realizadas.length ? realizadas.reduce((s,r)=>s+r.dur,0)/realizadas.length : 0;
+  document.getElementById('r-dur').textContent = Math.round(durMedia) + 'min';
+  
+  const porDia = groupByDate(data);
+  document.getElementById('r-pordia').textContent = porDia.length ? (data.length/porDia.length).toFixed(1) : '0';
+  document.getElementById('r-taxa').textContent = (data.length ? Math.round((feitas/data.length)*100) : 0)+'%';
+  const tempoTot = realizadas.reduce((s,r)=>s+r.dur,0);
+  document.getElementById('r-tempo-tot').textContent = Math.round(tempoTot/60) + 'h';
+  
+  renderChart('r-chart-dia', porDia, 'cyan');
+  renderOriginCards('r-origens', groupCount(data, 'o'));
+  
+  renderRanking('r-vend', groupCount(data, 'u'),
+    item => fmt(item.v) + ' reuniões',
+    item => { 
+      const userMeets = data.filter(d=>d.u===item.n);
+      const realiz = userMeets.filter(d => d.s === 'done').length;
+      return Math.round((realiz/item.v)*100) + '% realizadas';
+    },
+    10, 'vend'
+  );
+  
+  const statusData = [
+    {n: '✅ Realizada', v: feitas},
+    {n: '⏳ Não realizada', v: pendentes}
+  ].filter(s => s.v > 0);
+  const elS = document.getElementById('r-status');
+  if (!statusData.length) elS.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados</span></div>`;
+  else {
+    const max = Math.max.apply(null, statusData.map(s=>s.v));
+    const total = statusData.reduce((s,a)=>s+a.v,0);
+    elS.innerHTML = statusData.map(item => {
+      const pct = ((item.v/total)*100).toFixed(1);
+      const w = (item.v/max)*100;
+      const color = item.n.includes('Realizada') ? 'green' : 'red';
+      return `<div class="bi"><div class="bi-hdr"><span class="bi-name">${item.n}</span><div class="bi-right"><span class="bi-count">${fmt(item.v)}</span><span class="bi-pct">(${pct}%)</span></div></div><div class="bi-track"><div class="bi-fill ${color}" style="width:${w}%"></div></div></div>`;
+    }).join('');
+  }
+  
+  const tbl = document.querySelector('#r-tabela tbody');
+  const rows = data.slice().sort((a,b)=>b.d.localeCompare(a.d)).slice(0,30);
+  tbl.innerHTML = rows.length ? rows.map(r => {
+    const p = r.d.split('-');
+    const badge = r.s==='done' ? `<span class="tbl-badge green">Realizada</span>` : `<span class="tbl-badge red">Não realizada</span>`;
+    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(r.u,22))}</td><td>${esc(trunc(r.cn,24))}</td><td>${r.dur>0?r.dur+'min':'—'}</td><td>${badge}</td><td>${esc(r.o||'—')}</td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="empty">Sem reuniões no período</td></tr>`;
+}
+
+// ═══ RENDER ATIVIDADES ═══
+function renderAtividades() {
+  const data = filterArr(DASH_DATA.atividades);
+  document.getElementById('a-total').textContent = fmt(data.length);
+  const exec = data.filter(a=>a.e).length;
+  const pend = data.length - exec;
+  document.getElementById('a-exec').textContent = fmt(exec);
+  document.getElementById('a-pend').textContent = fmt(pend);
+  document.getElementById('a-exec-pct').textContent = (data.length ? Math.round((exec/data.length)*100) : 0)+'%';
+  document.getElementById('a-pend-pct').textContent = (data.length ? Math.round((pend/data.length)*100) : 0)+'%';
+  document.getElementById('a-taxa').textContent = (data.length ? Math.round((exec/data.length)*100) : 0)+'%';
+  document.getElementById('a-fechadas').textContent = fmt(exec);
+  document.getElementById('a-abertas').textContent = fmt(pend);
+  
+  renderChart('a-chart-dia', groupByDate(data), 'gold');
+  renderBars('a-tipos', groupCount(data, 'n'), 'cyan', 12);
+  renderBars('a-entidades', groupCount(data, 'ent'), 'purple', 8);
+  
+  const vendStats = {};
+  data.forEach(a => {
+    const v = a.u;
+    if (!vendStats[v]) vendStats[v] = { total: 0, fechadas: 0 };
+    vendStats[v].total++;
+    if (a.e) vendStats[v].fechadas++;
+  });
+  const taxaArr = Object.keys(vendStats).map(n => ({
+    n,
+    v: vendStats[n].total > 0 ? Math.round((vendStats[n].fechadas/vendStats[n].total)*100) : 0,
+    total: vendStats[n].total,
+    fechadas: vendStats[n].fechadas
+  })).filter(x => x.total >= 3).sort((a,b)=>b.v-a.v);
+  
+  const elT = document.getElementById('a-vend-taxa');
+  if (!taxaArr.length) elT.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados suficientes</span></div>`;
+  else {
+    elT.innerHTML = taxaArr.slice(0,15).map(item => {
+      const colorClass = item.v >= 80 ? 'green' : item.v >= 50 ? 'gold' : 'red';
+      return `<div class="bi"><div class="bi-hdr"><span class="bi-name" title="${esc(item.n)}">${esc(trunc(item.n,30))}</span><div class="bi-right"><span class="bi-count">${item.v}%</span><span class="bi-pct">(${item.fechadas}/${item.total})</span></div></div><div class="bi-track"><div class="bi-fill ${colorClass}" style="width:${item.v}%"></div></div></div>`;
+    }).join('');
+  }
+}
+
+// ═══ HERO MINI ═══
+function renderHeroMini() {
+  const lc = filterArr(DASH_DATA.leads).length;
+  const oc = filterArr(DASH_DATA.opps).length;
+  const vc = filterVendas(DASH_DATA.vendas).length;
+  const rc = filterArr(DASH_DATA.reunioes).length;
+  const ac = filterArr(DASH_DATA.atividades).length;
+  document.getElementById('heroMini').innerHTML = 
+    `<div class="hmini"><div class="hmini-l">📊 Leads</div><div class="hmini-v">${fmt(lc)}</div></div>`+
+    `<div class="hmini"><div class="hmini-l">🎯 Oportunidades</div><div class="hmini-v">${fmt(oc)}</div></div>`+
+    `<div class="hmini"><div class="hmini-l">💰 Vendas</div><div class="hmini-v">${fmt(vc)}</div></div>`+
+    `<div class="hmini"><div class="hmini-l">📅 Reuniões</div><div class="hmini-v">${fmt(rc)}</div></div>`+
+    `<div class="hmini"><div class="hmini-l">⚡ Atividades</div><div class="hmini-v">${fmt(ac)}</div></div>`;
+}
+
+// ═══ RENDER PRINCIPAL ═══
+function render() {
+  if (activeTab==='overview') renderOverview();
+  else if (activeTab==='leads') renderLeads();
+  else if (activeTab==='opps') renderOpps();
+  else if (activeTab==='vendas') renderVendas();
+  else if (activeTab==='reunioes') renderReunioes();
+  else if (activeTab==='atividades') renderAtividades();
+  document.getElementById('tc-leads').textContent = fmt(filterArr(DASH_DATA.leads).length);
+  document.getElementById('tc-opps').textContent = fmt(filterArr(DASH_DATA.opps).length);
+  document.getElementById('tc-vendas').textContent = fmt(filterVendas(DASH_DATA.vendas).length);
+  document.getElementById('tc-reunioes').textContent = fmt(filterArr(DASH_DATA.reunioes).length);
+  document.getElementById('tc-atividades').textContent = fmt(filterArr(DASH_DATA.atividades).length);
+  renderHeroMini();
+  updateFilterCount();
+}
+
+function updateClock() {
+  const d = new Date();
+  document.getElementById('navClock').textContent = String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+
+// ═══ INICIALIZAÇÃO + EVENT DELEGATION ═══
+function init() {
+  // Popula selects
+  const sv = document.getElementById('selVend');
+  ((DASH_DATA.filtros && DASH_DATA.filtros.vendedores) || []).forEach(v => {
+    const o = document.createElement('option'); o.value = v; o.textContent = v; sv.appendChild(o);
+  });
+  sv.addEventListener('change', e => { F.vend = e.target.value; render(); });
+  
+  const so = document.getElementById('selOrigin');
+  ((DASH_DATA.filtros && DASH_DATA.filtros.origens) || []).forEach(o => {
+    const opt = document.createElement('option'); opt.value = o; opt.textContent = o; so.appendChild(opt);
+  });
+  so.addEventListener('change', e => { F.origin = e.target.value; render(); });
+  
+  const sst = document.getElementById('selVStatus');
+  ((DASH_DATA.filtros && DASH_DATA.filtros.vendaStatus) || []).forEach(s => {
+    const opt = document.createElement('option'); opt.value = s; opt.textContent = s; sst.appendChild(opt);
+  });
+  sst.addEventListener('change', e => { F.vstatus = e.target.value; render(); });
+  
+  // Datas
+  document.getElementById('dateStart').addEventListener('change', e => {
+    F.d1 = e.target.value;
+    document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.remove('active'));
+    document.getElementById('periodoLbl').textContent = 'Período: Personalizado';
+    render();
+  });
+  document.getElementById('dateEnd').addEventListener('change', e => {
+    F.d2 = e.target.value;
+    document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.remove('active'));
+    document.getElementById('periodoLbl').textContent = 'Período: Personalizado';
+    render();
+  });
+  if (DASH_DATA.minDate) document.getElementById('dateStart').min = DASH_DATA.minDate;
+  if (DASH_DATA.maxDate) { 
+    document.getElementById('dateEnd').max = DASH_DATA.maxDate; 
+    document.getElementById('dateStart').max = DASH_DATA.maxDate; 
+  }
+  
+  // Botões com data-attribute (event delegation)
+  document.getElementById('fg-pipe').addEventListener('click', e => {
+    const btn = e.target.closest('.fbtn');
+    if (btn) setPipe(btn.dataset.pipe);
+  });
+  document.getElementById('fg-quick').addEventListener('click', e => {
+    const btn = e.target.closest('.fbtn');
+    if (btn) quickDate(parseInt(btn.dataset.days));
+  });
+  const fgImpl = document.getElementById('fg-impl');
+  if (fgImpl) fgImpl.addEventListener('click', e => {
+    const btn = e.target.closest('.fbtn');
+    if (btn) setVImpl(btn.dataset.impl);
+  });
+  document.getElementById('btnReset').addEventListener('click', resetFilters);
+  
+  // Tabs
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => setTab(t.dataset.tab));
+  });
+  
+  // Event delegation global pra cliques dinâmicos
+  document.addEventListener('click', e => {
+    // Botões "ir para aba"
+    const goto = e.target.closest('[data-goto]');
+    if (goto) {
+      goToTab(goto.dataset.goto);
+      return;
+    }
+    // Filtros por origem/vendedor (data-click-type)
+    const clickItem = e.target.closest('[data-click-type]');
+    if (clickItem) {
+      const type = clickItem.dataset.clickType;
+      const val = clickItem.dataset.clickValue;
+      if (type === 'origin') filterByOrigin(val);
+      else if (type === 'vend') filterByVend(val);
+      else if (type === 'origin-goto') { 
+        F.origin = val;
+        document.getElementById('selOrigin').value = val;
+        goToTab('leads');
+      }
+    }
+  });
+  
+  document.getElementById('navDate').textContent = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('updTxt').textContent = 'Atualizado em ' + (DASH_DATA.dataAtualizacao || 'agora');
+  
+  updateClock();
+  setInterval(updateClock, 30000);
+  render();
+}
+
+// Inicia quando DOM estiver pronto
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
