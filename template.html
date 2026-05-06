@@ -2,8 +2,19 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Dashboard Comercial · LaraFy</title>
+
+<!-- PWA: Fullscreen no mobile -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LaraFy Dashboard">
+<meta name="application-name" content="LaraFy Dashboard">
+<meta name="theme-color" content="#012e43">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://www.larafy.com.br/assets/images/larafy.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +22,7 @@
 :root{--navy:#012e43;--navy2:#013a55;--navy3:#01233a;--teal:#035a7a;--cyan:#35b9d7;--cyan2:#2aa8c7;--cyan3:#5ed3ed;--cyan-soft:#d6f0f7;--cyan-pale:#eaf7fb;--gold:#e8a838;--green:#00c853;--red:#ef5350;--purple:#7b61ff;--orange:#ff7043;--bg:#f4f7f9;--bg2:#edf1f4;--card:#ffffff;--text:#012e43;--text2:rgba(1,46,67,0.65);--text3:rgba(1,46,67,0.4);--border:rgba(1,46,67,0.08);--border2:rgba(1,46,67,0.15);--shadow-xs:0 1px 3px rgba(1,46,67,0.04);--shadow:0 4px 16px rgba(1,46,67,0.07);--shadow-md:0 8px 24px rgba(1,46,67,0.1);--shadow-lg:0 16px 48px rgba(1,46,67,0.14)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
 .mono{font-family:'JetBrains Mono',monospace}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -288,7 +299,200 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .fi-logo{height:22px;filter:brightness(0) invert(1);opacity:.6}
 
 @media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.g2,.g3,.cmp-grid,.dh-grid,.og-funnel-grid{grid-template-columns:1fr}.hero-wrap{flex-direction:column;align-items:flex-start}.ov-hero{grid-template-columns:repeat(2,1fr)}.funnel-stages{grid-template-columns:1fr 1fr}.fs-stage::after{display:none}}
-@media(max-width:640px){.wrap,.hero,.filters-bar{padding-left:18px;padding-right:18px}.kpi-grid,.ov-hero{grid-template-columns:1fr}.filters-wrap{flex-direction:column;align-items:stretch}.tab{padding:14px 16px;font-size:11px}.hero-title{font-size:24px}.funnel-stages{grid-template-columns:1fr}}
+
+@media(max-width:768px){
+/* ━━━━━━━━━━ MOBILE OTIMIZADO ━━━━━━━━━━ */
+
+/* Navbar compacta */
+.nav-wrap{padding:0 14px;height:56px;gap:10px}
+.nav-logo{height:22px}
+.nav-tag{font-size:10px;letter-spacing:.1em}
+.nav-clock{font-size:11px}
+.nav-live{padding:4px 9px}
+.nav-live-txt{font-size:9px}
+.nav-date{display:none}
+
+/* Hero compacto */
+.hero{padding:18px 14px 16px}
+.hero-wrap{gap:14px}
+.hero-eyebrow{font-size:9px;padding:4px 10px;margin-bottom:4px}
+.hero-title{font-size:22px;line-height:1.1}
+.hero-sub{font-size:11px;gap:6px}
+.hero-sub-tag{font-size:9px;padding:2px 6px}
+.hero-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%}
+.hmini{padding:8px 10px;min-width:0}
+.hmini-l{font-size:8px;letter-spacing:.1em;margin-bottom:2px}
+.hmini-v{font-size:15px}
+
+/* Filtros compactos */
+.filters-bar{padding:12px 14px;top:56px}
+.filters-wrap{gap:10px}
+.flt{flex:1;min-width:0;width:100%}
+.flt-l{font-size:8px;letter-spacing:.1em}
+.flt-grp{padding:3px;width:100%}
+.flt-grp .fbtn{flex:1;padding:7px 8px;font-size:11px;text-align:center}
+.flt-input,.flt-select{padding:8px 10px;font-size:12px;min-width:0;width:100%}
+.flt-select{min-width:0}
+.flt-date{flex:1}
+.flt-reset{width:100%;justify-content:center;padding:8px}
+
+/* Tabs compactas com scroll */
+.tabs-bar{padding:0 8px;-webkit-overflow-scrolling:touch}
+.tabs-wrap{gap:0}
+.tab{padding:13px 12px;font-size:10px;letter-spacing:.04em;gap:6px}
+.tab-icon{font-size:13px}
+.tab-count{font-size:9px;padding:2px 6px}
+
+/* Wrapper geral */
+.wrap{padding:18px 12px}
+
+/* Section title menor */
+.section-title{margin:18px 0 10px;font-size:10px;letter-spacing:.14em}
+
+/* KPIs em 2 colunas (em vez de 1) */
+.kpi-grid{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.kpi{padding:14px 14px;border-radius:11px}
+.kpi-top{margin-bottom:8px}
+.kpi-icon{width:30px;height:30px;font-size:13px;border-radius:8px}
+.kpi-trend{font-size:9px;padding:2px 6px}
+.kpi-label{font-size:9px;letter-spacing:.1em;margin-bottom:4px}
+.kpi-value{font-size:22px}
+.kpi-sub{font-size:10px}
+
+/* Visão Geral KPIs em 2 colunas */
+.ov-hero{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:18px}
+.ov-kpi{padding:14px 14px}
+.ov-kpi::after{top:14px;right:14px;font-size:14px}
+.ov-kpi-icon{width:32px;height:32px;font-size:14px;margin-bottom:8px}
+.ov-kpi-l{font-size:9px;letter-spacing:.1em}
+.ov-kpi-v{font-size:21px}
+.ov-kpi-s{font-size:10px}
+
+/* Funil em 2 colunas no mobile */
+.funnel-stages{grid-template-columns:repeat(2,1fr)}
+.fs-stage{padding:16px 12px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.fs-stage:nth-child(odd){border-right:1px solid var(--border)}
+.fs-stage:nth-child(2){border-right:none}
+.fs-stage:nth-child(3),.fs-stage:nth-child(4){border-bottom:none}
+.fs-stage:nth-child(4){border-right:none}
+.fs-stage:first-child{border-radius:12px 0 0 0}
+.fs-stage:nth-child(2){border-radius:0 12px 0 0}
+.fs-stage:nth-child(3){border-radius:0 0 0 12px}
+.fs-stage:nth-child(4){border-radius:0 0 12px 0}
+.fs-stage::after{display:none}
+.fs-icon{font-size:20px;margin-bottom:6px}
+.fs-label{font-size:9px;margin-bottom:4px}
+.fs-value{font-size:24px}
+.fs-pct{font-size:10px}
+
+/* Linha de conversão */
+.fs-arrow-line{flex-direction:column;padding:8px;gap:4px;align-items:flex-start}
+.fs-arrow-item{font-size:10px;width:100%;justify-content:space-between;display:flex}
+
+/* Cards padding reduzido */
+.card{padding:14px 16px;border-radius:12px}
+.ct{font-size:12px;margin-bottom:14px;flex-wrap:wrap;gap:6px}
+.ct-info{font-size:9px;width:100%;margin-left:0}
+
+/* Funil por Origem 1 coluna */
+.og-funnel-grid{grid-template-columns:1fr;gap:10px}
+.ogf-card{padding:14px 16px}
+.ogf-hdr{margin-bottom:10px;gap:8px}
+.ogf-icon{font-size:20px}
+.ogf-name{font-size:13px}
+.ogf-stages{gap:6px}
+.ogf-row-label{width:62px;font-size:9px}
+.ogf-row-bar{height:6px}
+.ogf-row-val{font-size:11px;min-width:38px}
+.ogf-row-pct{font-size:9px;min-width:32px}
+.ogf-receita{font-size:12px}
+.ogf-conv{font-size:10px;padding:2px 7px}
+
+/* Cards de origem grid mais denso */
+.og-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+.og-card{padding:10px 8px}
+.og-icon{font-size:18px;margin-bottom:4px}
+.og-name{font-size:11px}
+.og-count{font-size:15px}
+.og-pct{font-size:9px}
+
+/* Comparativos em 1 coluna */
+.cmp-grid,.dh-grid{grid-template-columns:1fr;gap:10px}
+.cmp-card{padding:14px 16px}
+.cmp-label{font-size:9px;letter-spacing:.1em;margin-bottom:4px}
+.cmp-value{font-size:18px}
+.cmp-sub{font-size:10px}
+
+/* Bars compactas */
+.bl{max-height:340px;gap:6px}
+.bi{padding:7px 8px}
+.bi-name{font-size:11px}
+.bi-count{font-size:11px}
+.bi-pct{font-size:9px}
+.bi-track{height:4px}
+
+/* Ranking compacto */
+.ranking{max-height:340px;gap:6px}
+.rank-item{padding:9px 11px;gap:9px}
+.rank-pos{font-size:14px;width:26px}
+.rank-pos.gold{font-size:17px}
+.rank-name{font-size:12px}
+.rank-meta{font-size:9px}
+.rank-val{font-size:11px}
+
+/* Eficiência compacto */
+.eff-list{max-height:340px;gap:6px}
+.eff-item{padding:9px 11px;gap:9px}
+.eff-pos{font-size:14px;width:26px}
+.eff-name{font-size:12px}
+.eff-meta{font-size:9px}
+.eff-pct{font-size:14px}
+
+/* Destaques e Alertas */
+.dh-card{padding:14px 16px}
+.dh-title{font-size:11px;margin-bottom:10px}
+.dh-list{gap:6px}
+.dh-item{padding:8px 10px;font-size:11px;gap:7px;line-height:1.45}
+.dh-item-icon{font-size:12px}
+
+/* Chart */
+.chart{height:160px;gap:3px}
+.cc-val{font-size:9px}
+.cc-lbl{font-size:8px}
+.cc{min-width:22px}
+
+/* CTA buttons */
+.nav-cta-bar{padding:14px;gap:10px;flex-direction:column;align-items:stretch}
+.nav-cta-txt{font-size:11px;text-align:center}
+.nav-cta-btns{justify-content:center;gap:6px}
+.nav-cta-btn{padding:7px 12px;font-size:11px;flex:1;justify-content:center;min-width:0}
+
+/* Tabelas com scroll horizontal natural */
+.tbl-wrap{max-height:420px;border-radius:6px}
+.tbl{font-size:11px;min-width:520px}
+.tbl th{padding:8px 7px;font-size:9px;letter-spacing:.08em}
+.tbl td{padding:8px 7px}
+.tbl-badge{font-size:9px;padding:1px 7px}
+
+/* Footer compacto */
+.footer{padding:18px 14px;margin-top:24px}
+.fi{flex-direction:column;align-items:center;text-align:center;gap:8px}
+.fi p{font-size:10px}
+
+/* Filtro de Vendas (sub-filtros) */
+#fg-impl{width:100%}
+#fg-impl .fbtn{padding:7px 6px;font-size:10px}
+}
+
+@media(max-width:380px){
+/* Telas muito pequenas */
+.hero-mini{grid-template-columns:repeat(2,1fr)}
+.tab{padding:11px 9px;font-size:9px}
+.tab-icon{font-size:12px}
+.kpi-value{font-size:19px}
+.fs-value{font-size:20px}
+.ov-kpi-v{font-size:18px}
+}
 </style>
 </head>
 <body>
