@@ -152,9 +152,9 @@ input,select,textarea{font-family:inherit}
 .flt-active-count{background:var(--cyan);color:var(--navy-deep);font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:999px;margin-left:4px}
 
 /* ━━━ TABS BAR ━━━ */
-.tabs-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:148px;z-index:99;box-shadow:inset 0 1px 0 var(--border)}
-.tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tab{padding:18px 22px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;position:relative}
+.tabs-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:12px 32px 0 32px;position:sticky;top:148px;z-index:99;box-shadow:inset 0 1px 0 var(--border)}
+.tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:18px 22px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;position:relative;border-radius:10px 10px 0 0}
 .tab:hover{color:var(--text);background:var(--card)}
 .tab.active{color:var(--cyan-deep);border-bottom-color:var(--cyan);background:var(--cyan-mist)}
 .tab.active .tab-icon{color:var(--cyan)}
@@ -423,7 +423,7 @@ input,select,textarea{font-family:inherit}
   .flt-date .flt-input{flex:1}
   .flt-reset{width:100%;justify-content:center;padding:10px}
   
-  .tabs-bar{padding:0 8px;top:auto}
+  .tabs-bar{padding:8px 8px 0 8px;top:auto}
   .tab{padding:14px 12px;font-size:11px;letter-spacing:.04em;gap:6px}
   .tab-icon{font-size:13px}
   .tab-count{font-size:9px;padding:2px 7px}
@@ -574,14 +574,14 @@ input,select,textarea{font-family:inherit}
 <div class="card" style="padding:0;overflow:hidden">
 <div class="funnel-stages">
 <div class="fs-stage" data-goto="leads"><div class="fs-icon">📊</div><div class="fs-label">Leads</div><div class="fs-value" id="fs-l">0</div><div class="fs-pct">100%</div></div>
-<div class="fs-stage" data-goto="reunioes"><div class="fs-icon">📅</div><div class="fs-label">Reuniões</div><div class="fs-value" id="fs-r">0</div><div class="fs-pct" id="fs-r-pct">0%</div></div>
 <div class="fs-stage" data-goto="opps"><div class="fs-icon">🎯</div><div class="fs-label">Oportunidades</div><div class="fs-value" id="fs-o">0</div><div class="fs-pct" id="fs-o-pct">0%</div></div>
+<div class="fs-stage" data-goto="reunioes"><div class="fs-icon">📅</div><div class="fs-label">Reuniões</div><div class="fs-value" id="fs-r">0</div><div class="fs-pct" id="fs-r-pct">0%</div></div>
 <div class="fs-stage" data-goto="vendas"><div class="fs-icon">💰</div><div class="fs-label">Vendas</div><div class="fs-value" id="fs-v">0</div><div class="fs-pct" id="fs-v-pct">0%</div></div>
 </div>
 <div class="fs-arrow-line">
-<div class="fs-arrow-item">Lead → Reunião <span id="conv-lr">0%</span></div>
-<div class="fs-arrow-item">Reunião → Oportunidade <span id="conv-ro">0%</span></div>
-<div class="fs-arrow-item">Oportunidade → Venda <span id="conv-ov">0%</span></div>
+<div class="fs-arrow-item">Lead → Oportunidade <span id="conv-lo">0%</span></div>
+<div class="fs-arrow-item">Oportunidade → Reunião <span id="conv-or">0%</span></div>
+<div class="fs-arrow-item">Reunião → Venda <span id="conv-rv">0%</span></div>
 <div class="fs-arrow-item">Lead → Venda <span id="conv-lv">0%</span></div>
 </div>
 </div>
@@ -1124,9 +1124,9 @@ function renderOverview() {
   document.getElementById('fs-o-pct').textContent = totalLeads ? Math.round((totalOpps/totalLeads)*100)+'% dos leads' : '0%';
   document.getElementById('fs-v-pct').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'% dos leads' : '0%';
   
-  document.getElementById('conv-lr').textContent = totalLeads ? Math.round((totalReunioes/totalLeads)*100)+'%' : '0%';
-  document.getElementById('conv-ro').textContent = totalReunioes ? Math.round((totalOpps/totalReunioes)*100)+'%' : '0%';
-  document.getElementById('conv-ov').textContent = totalOpps ? Math.round((totalVendas/totalOpps)*100)+'%' : '0%';
+  document.getElementById('conv-lo').textContent = totalLeads ? Math.round((totalOpps/totalLeads)*100)+'%' : '0%';
+  document.getElementById('conv-or').textContent = totalOpps ? Math.round((totalReunioes/totalOpps)*100)+'%' : '0%';
+  document.getElementById('conv-rv').textContent = totalReunioes ? Math.round((totalVendas/totalReunioes)*100)+'%' : '0%';
   document.getElementById('conv-lv').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'%' : '0%';
   
   // Funil por origem
@@ -1171,8 +1171,8 @@ function renderOverview() {
         <div class="ogf-hdr"><span class="ogf-icon">${getOriginIcon(item.n)}</span><span class="ogf-name" title="${esc(item.n)}">${esc(trunc(item.n,22))}</span><span class="ogf-arrow">→</span></div>
         <div class="ogf-stages">
           <div class="ogf-row"><span class="ogf-row-label">Leads</span><div class="ogf-row-bar"><div class="ogf-row-fill s1" style="width:${wL}%"></div></div><span class="ogf-row-val">${fmt(item.leads)}</span><span class="ogf-row-pct">100%</span></div>
-          <div class="ogf-row"><span class="ogf-row-label">Reuniões</span><div class="ogf-row-bar"><div class="ogf-row-fill s2" style="width:${wR}%"></div></div><span class="ogf-row-val">${fmt(item.reunioes)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.reunioes/item.leads)*100:0)}%</span></div>
-          <div class="ogf-row"><span class="ogf-row-label">Oportunid.</span><div class="ogf-row-bar"><div class="ogf-row-fill s3" style="width:${wO}%"></div></div><span class="ogf-row-val">${fmt(item.opps)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.opps/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Oportunid.</span><div class="ogf-row-bar"><div class="ogf-row-fill s2" style="width:${wO}%"></div></div><span class="ogf-row-val">${fmt(item.opps)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.opps/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Reuniões</span><div class="ogf-row-bar"><div class="ogf-row-fill s3" style="width:${wR}%"></div></div><span class="ogf-row-val">${fmt(item.reunioes)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.reunioes/item.leads)*100:0)}%</span></div>
           <div class="ogf-row"><span class="ogf-row-label">Vendas</span><div class="ogf-row-bar"><div class="ogf-row-fill s4" style="width:${wV}%"></div></div><span class="ogf-row-val">${fmt(item.vendas)}</span><span class="ogf-row-pct">${(item.leads?(item.vendas/item.leads)*100:0).toFixed(1)}%</span></div>
         </div>
         <div class="ogf-footer"><span class="ogf-receita">💰 ${fmtBRshort(item.receita)}</span><span class="ogf-conv">${taxaConv}% conv.</span></div>
