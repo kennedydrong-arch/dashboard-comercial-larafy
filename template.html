@@ -137,6 +137,12 @@ input,select,textarea{font-family:inherit}
 /* ━━━ FILTERS BAR ━━━ */
 .filters-bar{background:var(--card);border-bottom:1px solid var(--border);padding:18px 32px;position:sticky;top:74px;z-index:100;box-shadow:var(--shadow-xs)}
 .filters-wrap{max-width:1480px;margin:0 auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+/* Toggle mobile — escondido no desktop por default */
+.filters-toggle{display:none}
+.filters-toggle-l{display:inline-flex;align-items:center;gap:8px}
+.filters-toggle-icon{font-size:14px}
+.filters-toggle-count{background:var(--cyan);color:var(--navy-deep);font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:999px}
+.filters-toggle-arr{font-size:12px;color:var(--cyan-deep);transition:transform .25s ease}
 .flt{display:flex;flex-direction:column;gap:6px;min-width:140px}
 .flt-l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
 .flt-grp{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px}
@@ -422,8 +428,13 @@ svg.origin-svg{fill:currentColor}
   .hmini-v{font-size:24px}
   .hmini-l{font-size:9px}
   
-  .filters-bar{padding:14px 14px;top:62px}
-  .filters-wrap{gap:12px;flex-direction:column;align-items:stretch}
+  .filters-bar{padding:10px 14px;top:62px}
+  .filters-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;gap:10px;transition:all .2s;letter-spacing:.01em}
+  .filters-toggle:active{background:var(--cyan-pale);border-color:var(--cyan)}
+  .filters-bar.open .filters-toggle{border-color:var(--cyan);background:var(--cyan-pale);color:var(--cyan-deep)}
+  .filters-bar.open .filters-toggle-arr{transform:rotate(180deg)}
+  .filters-wrap{display:none}
+  .filters-bar.open .filters-wrap{display:flex;gap:12px;flex-direction:column;align-items:stretch;margin-top:12px;animation:fadeIn .25s ease}
   .flt{flex:none;min-width:0;width:100%}
   .flt-l{font-size:10px}
   .flt-grp{padding:3px;width:100%}
@@ -532,7 +543,7 @@ svg.origin-svg{fill:currentColor}
 </div>
 </div>
 
-<div class="filters-bar"><div class="filters-wrap">
+<div class="filters-bar"><button class="filters-toggle" id="filtersToggle" type="button" aria-label="Mostrar/ocultar filtros"><span class="filters-toggle-l"><span class="filters-toggle-icon">⚙️</span> Filtros <span class="filters-toggle-count" id="filtToggleCount" style="display:none">0</span></span><span class="filters-toggle-arr">▾</span></button><div class="filters-wrap">
 <div class="flt"><span class="flt-l">🏢 Pipeline</span><div class="flt-grp" id="fg-pipe">
 <button class="fbtn active" data-pipe="todos">Todos</button>
 <button class="fbtn" data-pipe="LaraTAX">LaraTAX</button>
@@ -1005,8 +1016,14 @@ function updateFilterCount() {
   if (F.vimpl !== 'todos') c++;
   if (F.vstatus !== 'todos') c++;
   const el = document.getElementById('fltCount');
-  if (c > 0) { el.style.display = 'inline-block'; el.textContent = c; }
-  else el.style.display = 'none';
+  const elMobile = document.getElementById('filtToggleCount');
+  if (c > 0) {
+    el.style.display = 'inline-block'; el.textContent = c;
+    if (elMobile) { elMobile.style.display = 'inline-block'; elMobile.textContent = c; }
+  } else {
+    el.style.display = 'none';
+    if (elMobile) elMobile.style.display = 'none';
+  }
 }
 
 // ═══ AGRUPADORES ═══
@@ -1712,6 +1729,14 @@ function init() {
     if (btn) setVImpl(btn.dataset.impl);
   });
   document.getElementById('btnReset').addEventListener('click', resetFilters);
+  
+  // Toggle filtros mobile
+  const filtToggle = document.getElementById('filtersToggle');
+  if (filtToggle) {
+    filtToggle.addEventListener('click', () => {
+      document.querySelector('.filters-bar').classList.toggle('open');
+    });
+  }
   
   // Tabs
   document.querySelectorAll('.tab').forEach(t => {
