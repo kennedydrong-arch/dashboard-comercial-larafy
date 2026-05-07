@@ -267,7 +267,7 @@ input,select,textarea{font-family:inherit}
 .bl{display:flex;flex-direction:column;gap:9px;max-height:380px;overflow-y:auto}
 .bi{padding:10px 12px;border-radius:10px;background:var(--bg);transition:all .2s;border:1px solid transparent;cursor:pointer}
 .bi:hover{background:var(--cyan-pale);border-color:var(--border-cyan)}
-.bi-name{font-size:12px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;margin-bottom:5px;align-items:center}
+.bi-name{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-bottom:0}
 .bi-count{font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--cyan-deep)}
 .bi-track{height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
 .bi-fill{height:100%;border-radius:3px;background:var(--cyan);transition:width 1s cubic-bezier(.22,1,.36,1)}
@@ -326,7 +326,7 @@ input,select,textarea{font-family:inherit}
 .ogf-row-fill{height:100%;background:var(--cyan);border-radius:4px;transition:width 1s cubic-bezier(.22,1,.36,1)}
 .ogf-row-val{font-size:12px;font-weight:800;color:var(--text);font-family:'JetBrains Mono',monospace;min-width:42px;text-align:right}
 .ogf-row-pct{font-size:10px;color:var(--text3);font-weight:600;min-width:38px;text-align:right;font-family:'JetBrains Mono',monospace}
-.ogf-receita{font-size:13px;color:var(--text);font-weight:700;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+.ogf-receita{font-size:13px;color:var(--text);font-weight:800;margin:0;padding:0;border:none}
 
 /* ━━━ CHART ━━━ */
 .chart{display:flex;align-items:flex-end;gap:6px;height:200px;padding:8px 0}
@@ -338,6 +338,19 @@ input,select,textarea{font-family:inherit}
 .cc-bar.gold{background:var(--gold)}
 .cc-bar.purple{background:var(--purple)}
 .cc-lbl{font-size:9px;color:var(--text3);font-weight:600;text-align:center;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+
+/* ━━━ FIXES — wrappers gerados pelo JS sem CSS prévio ━━━ */
+.bi-hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.bi-right{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bi.bi-click{cursor:pointer}
+.bi.active{background:var(--cyan-pale);border-color:var(--cyan)}
+.cc-bwrap{width:100%;flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:4px;align-self:stretch}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;color:var(--text3);font-size:12px;font-weight:500;gap:10px;min-height:120px;width:100%}
+.empty-icon{font-size:32px;opacity:.45;line-height:1}
+.ogf-arrow{font-size:14px;color:var(--cyan-deep);font-weight:700;margin-left:auto}
+.ogf-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);gap:10px}
+.rank-item.click{cursor:pointer}
+.rank-item.click.active{background:var(--cyan-pale);border-color:var(--cyan)}
 
 /* ━━━ TABELA ━━━ */
 .tbl-wrap{max-height:480px;overflow:auto;border-radius:10px;border:1px solid var(--border)}
@@ -1006,7 +1019,7 @@ function renderBars(elId, arr, color, limit, clickType) {
   const el = document.getElementById(elId);
   if (!el) return;
   if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados no período</span></div>`; return; }
-  const max = arr[0].v || 1;
+  const max = Math.max.apply(null, arr.map(d => Number(d.v)||0)) || 1;
   const total = arr.reduce((s,a)=>s+a.v,0);
   el.innerHTML = arr.slice(0,limit).map(item => {
     const pct = total ? ((item.v/total)*100).toFixed(1) : 0;
@@ -1138,7 +1151,7 @@ function renderOverview() {
     ogfEl.innerHTML = `<div class="empty"><span class="empty-icon">🌐</span><span>Sem origens com dados</span></div>`;
   } else {
     ogfEl.innerHTML = origemArr.map(item => {
-      const wL = (item.leads/maxLeadsOrigem)*100;
+      const wL = item.leads ? 100 : 0;
       const wR = item.leads ? Math.min((item.reunioes/item.leads)*100, 100) : 0;
       const wO = item.leads ? Math.min((item.opps/item.leads)*100, 100) : 0;
       const wV = item.leads ? Math.min((item.vendas/item.leads)*100, 100) : 0;
@@ -1571,7 +1584,10 @@ function attachReveals(){
       el.dataset.stagger = String(stagger);
     }
   });
-  document.querySelectorAll('.reveal:not(.revealed)').forEach(el => revealObserver.observe(el));
+  document.querySelectorAll('.reveal:not(.revealed)').forEach(el => {
+    if (revealObserver) revealObserver.observe(el);
+    else el.classList.add('revealed');
+  });
 }
 
 // ═══ COUNTER ANIMATION ═══
