@@ -152,10 +152,10 @@ input,select,textarea{font-family:inherit}
 .flt-active-count{background:var(--cyan);color:var(--navy-deep);font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:999px;margin-left:4px}
 
 /* ━━━ TABS BAR ━━━ */
-.tabs-bar{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:148px;z-index:99}
+.tabs-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:148px;z-index:99;box-shadow:inset 0 1px 0 var(--border)}
 .tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tab{padding:18px 22px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;position:relative}
-.tab:hover{color:var(--text);background:var(--bg)}
+.tab:hover{color:var(--text);background:var(--card)}
 .tab.active{color:var(--cyan-deep);border-bottom-color:var(--cyan);background:var(--cyan-mist)}
 .tab.active .tab-icon{color:var(--cyan)}
 .tab-icon{font-size:15px;display:inline-flex;align-items:center;transition:color .2s}
@@ -539,7 +539,8 @@ input,select,textarea{font-family:inherit}
 <button class="fbtn" data-days="7">7 dias</button>
 <button class="fbtn" data-days="30">30 dias</button>
 <button class="fbtn" data-days="90">90 dias</button>
-<button class="fbtn active" data-days="0">Tudo</button>
+<button class="fbtn" data-days="-1">Este mês</button>
+<button class="fbtn" data-days="0">Tudo</button>
 </div></div>
 <div class="flt" style="margin-left:auto"><span class="flt-l">&nbsp;</span>
 <button class="flt-reset" id="btnReset">↺ Limpar filtros <span class="flt-active-count" id="fltCount" style="display:none">0</span></button>
@@ -916,6 +917,15 @@ function quickDate(days) {
     document.getElementById('dateEnd').value = '';
     F.d1 = ''; F.d2 = '';
     document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
+  } else if (days === -1) {
+    const e = new Date();
+    const s = new Date(e.getFullYear(), e.getMonth(), 1);
+    const fmtDate = (d) => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    document.getElementById('dateStart').value = fmtDate(s);
+    document.getElementById('dateEnd').value = fmtDate(e);
+    F.d1 = fmtDate(s); F.d2 = fmtDate(e);
+    const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    document.getElementById('periodoLbl').textContent = 'Período: ' + meses[e.getMonth()] + ' de ' + e.getFullYear();
   } else {
     const e = new Date();
     const s = new Date(); s.setDate(s.getDate() - days);
@@ -1151,10 +1161,11 @@ function renderOverview() {
     ogfEl.innerHTML = `<div class="empty"><span class="empty-icon">🌐</span><span>Sem origens com dados</span></div>`;
   } else {
     ogfEl.innerHTML = origemArr.map(item => {
-      const wL = item.leads ? 100 : 0;
-      const wR = item.leads ? Math.min((item.reunioes/item.leads)*100, 100) : 0;
-      const wO = item.leads ? Math.min((item.opps/item.leads)*100, 100) : 0;
-      const wV = item.leads ? Math.min((item.vendas/item.leads)*100, 100) : 0;
+      const maxFunil = Math.max(item.leads, item.reunioes, item.opps, item.vendas) || 1;
+      const wL = (item.leads/maxFunil)*100;
+      const wR = (item.reunioes/maxFunil)*100;
+      const wO = (item.opps/maxFunil)*100;
+      const wV = (item.vendas/maxFunil)*100;
       const taxaConv = item.leads ? ((item.vendas/item.leads)*100).toFixed(1) : 0;
       return `<div class="ogf-card" data-click-type="origin-goto" data-click-value="${esc(item.n)}">
         <div class="ogf-hdr"><span class="ogf-icon">${getOriginIcon(item.n)}</span><span class="ogf-name" title="${esc(item.n)}">${esc(trunc(item.n,22))}</span><span class="ogf-arrow">→</span></div>
@@ -1718,7 +1729,8 @@ function init() {
   
   updateClock();
   setInterval(updateClock, 30000);
-  render();
+  // Filtro inicial: mês atual (em vez de "Tudo")
+  quickDate(-1);
 }
 
 // Inicia quando DOM estiver pronto
