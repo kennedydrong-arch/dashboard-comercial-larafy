@@ -339,6 +339,12 @@ input,select,textarea{font-family:inherit}
 .cc-bar.purple{background:var(--purple)}
 .cc-lbl{font-size:9px;color:var(--text3);font-weight:600;text-align:center;white-space:nowrap;font-family:'JetBrains Mono',monospace}
 
+/* ━━━ ORIGIN LOGO IMAGES (substitui emoji em origens com logo real) ━━━ */
+.origin-img{display:inline-block;vertical-align:middle;object-fit:contain;border-radius:4px}
+.og-icon .origin-img{width:24px;height:24px}
+.ogf-icon .origin-img{width:26px;height:26px}
+.bi-name .origin-img,.eff-name .origin-img{width:16px;height:16px;margin-right:4px}
+
 /* ━━━ FIXES — wrappers gerados pelo JS sem CSS prévio ━━━ */
 .bi-hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
 .bi-right{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
@@ -824,7 +830,13 @@ const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'…' : (s||'');
 const esc = (s) => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
 const ORIGIN_ICONS = {'Instagram':'📸','Facebook':'👤','Site':'🌐','Google':'🔍','Indicação':'🤝','Evento':'🎤','Base de empresas Leads2b':'📋','Base Leads2b':'📋','LinkedIn':'💼','WhatsApp':'💬','YouTube':'📹','Email':'📧','Não informado':'❓','Parceiro':'🤝','Outbound':'📞','Inbound':'📥'};
-const getOriginIcon = (n) => ORIGIN_ICONS[n] || '🔹';
+const ORIGIN_IMAGES = {
+  'Site': 'https://lp-lara-tax-forms.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75'
+};
+const getOriginIcon = (n) => {
+  if (ORIGIN_IMAGES[n]) return `<img src="${ORIGIN_IMAGES[n]}" alt="${esc(n)}" class="origin-img" loading="lazy" referrerpolicy="no-referrer">`;
+  return ORIGIN_ICONS[n] || '🔹';
+};
 
 // ═══ FILTROS ═══
 function inDateRange(d) {
