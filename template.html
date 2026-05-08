@@ -93,7 +93,12 @@ input,select,textarea{font-family:inherit}
 .navbar{background:var(--navy-darkest);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--navy-line)}
 .nav-wrap{max-width:1480px;margin:0 auto;padding:0 32px;height:74px;display:flex;align-items:center;justify-content:space-between}
 .nav-brand{display:flex;align-items:center;gap:16px;text-decoration:none}
-.nav-logo{height:30px;filter:brightness(0) invert(1);opacity:.95}
+.nav-logos{display:inline-flex;align-items:center;gap:12px}
+.nav-logo{height:30px;filter:brightness(0) invert(1);opacity:.95;transition:opacity .25s,transform .3s ease}
+.nav-logo-grupo,.nav-logo-fy,.nav-logo-tax{display:none}
+.nav-brand.pipe-todos .nav-logo-grupo{display:inline-block}
+.nav-brand.pipe-LaraFy .nav-logo-fy{display:inline-block}
+.nav-brand.pipe-LaraTAX .nav-logo-tax{display:inline-block}
 .nav-sep{width:1px;height:26px;background:var(--navy-line-strong)}
 .nav-tag{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
 .nav-right{display:flex;align-items:center;gap:16px}
@@ -137,12 +142,6 @@ input,select,textarea{font-family:inherit}
 /* ━━━ FILTERS BAR ━━━ */
 .filters-bar{background:var(--card);border-bottom:1px solid var(--border);padding:18px 32px;position:sticky;top:74px;z-index:100;box-shadow:var(--shadow-xs)}
 .filters-wrap{max-width:1480px;margin:0 auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-/* Toggle mobile — escondido no desktop por default */
-.filters-toggle{display:none}
-.filters-toggle-l{display:inline-flex;align-items:center;gap:8px}
-.filters-toggle-icon{font-size:14px}
-.filters-toggle-count{background:var(--cyan);color:var(--navy-deep);font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:999px}
-.filters-toggle-arr{font-size:12px;color:var(--cyan-deep);transition:transform .25s ease}
 .flt{display:flex;flex-direction:column;gap:6px;min-width:140px}
 .flt-l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
 .flt-grp{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px}
@@ -158,10 +157,10 @@ input,select,textarea{font-family:inherit}
 .flt-active-count{background:var(--cyan);color:var(--navy-deep);font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:999px;margin-left:4px}
 
 /* ━━━ TABS BAR ━━━ */
-.tabs-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:12px 32px 0 32px;position:sticky;top:148px;z-index:99;box-shadow:inset 0 1px 0 var(--border)}
-.tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tab{padding:18px 22px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;position:relative;border-radius:10px 10px 0 0}
-.tab:hover{color:var(--text);background:var(--card)}
+.tabs-bar{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:148px;z-index:99}
+.tabs-wrap{max-width:1480px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:18px 22px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;position:relative}
+.tab:hover{color:var(--text);background:var(--bg)}
 .tab.active{color:var(--cyan-deep);border-bottom-color:var(--cyan);background:var(--cyan-mist)}
 .tab.active .tab-icon{color:var(--cyan)}
 .tab-icon{font-size:15px;display:inline-flex;align-items:center;transition:color .2s}
@@ -273,7 +272,7 @@ input,select,textarea{font-family:inherit}
 .bl{display:flex;flex-direction:column;gap:9px;max-height:380px;overflow-y:auto}
 .bi{padding:10px 12px;border-radius:10px;background:var(--bg);transition:all .2s;border:1px solid transparent;cursor:pointer}
 .bi:hover{background:var(--cyan-pale);border-color:var(--border-cyan)}
-.bi-name{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-bottom:0}
+.bi-name{font-size:12px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;margin-bottom:5px;align-items:center}
 .bi-count{font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--cyan-deep)}
 .bi-track{height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
 .bi-fill{height:100%;border-radius:3px;background:var(--cyan);transition:width 1s cubic-bezier(.22,1,.36,1)}
@@ -332,7 +331,7 @@ input,select,textarea{font-family:inherit}
 .ogf-row-fill{height:100%;background:var(--cyan);border-radius:4px;transition:width 1s cubic-bezier(.22,1,.36,1)}
 .ogf-row-val{font-size:12px;font-weight:800;color:var(--text);font-family:'JetBrains Mono',monospace;min-width:42px;text-align:right}
 .ogf-row-pct{font-size:10px;color:var(--text3);font-weight:600;min-width:38px;text-align:right;font-family:'JetBrains Mono',monospace}
-.ogf-receita{font-size:13px;color:var(--text);font-weight:800;margin:0;padding:0;border:none}
+.ogf-receita{font-size:13px;color:var(--text);font-weight:700;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
 
 /* ━━━ CHART ━━━ */
 .chart{display:flex;align-items:flex-end;gap:6px;height:200px;padding:8px 0}
@@ -344,29 +343,6 @@ input,select,textarea{font-family:inherit}
 .cc-bar.gold{background:var(--gold)}
 .cc-bar.purple{background:var(--purple)}
 .cc-lbl{font-size:9px;color:var(--text3);font-weight:600;text-align:center;white-space:nowrap;font-family:'JetBrains Mono',monospace}
-
-/* ━━━ ORIGIN LOGO IMAGES (substitui emoji em origens com logo real) ━━━ */
-.origin-img{display:inline-block;vertical-align:middle;object-fit:contain;color:var(--cyan-deep)}
-.og-icon .origin-img{width:28px;height:28px}
-.ogf-icon .origin-img{width:30px;height:30px}
-.bi-name .origin-img,.eff-name .origin-img{width:18px;height:18px;margin-right:4px}
-/* PNG/JPG: tingir tudo em cyan-deep via filter (independente da cor original do logo) */
-img.origin-img-tinted{filter:brightness(0) saturate(100%) invert(58%) sepia(63%) saturate(610%) hue-rotate(155deg) brightness(92%) contrast(86%)}
-/* SVG inline: já usa currentColor (cyan-deep aplicado acima) */
-svg.origin-svg{fill:currentColor}
-
-/* ━━━ FIXES — wrappers gerados pelo JS sem CSS prévio ━━━ */
-.bi-hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
-.bi-right{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
-.bi.bi-click{cursor:pointer}
-.bi.active{background:var(--cyan-pale);border-color:var(--cyan)}
-.cc-bwrap{width:100%;flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:4px;align-self:stretch}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;color:var(--text3);font-size:12px;font-weight:500;gap:10px;min-height:120px;width:100%}
-.empty-icon{font-size:32px;opacity:.45;line-height:1}
-.ogf-arrow{font-size:14px;color:var(--cyan-deep);font-weight:700;margin-left:auto}
-.ogf-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);gap:10px}
-.rank-item.click{cursor:pointer}
-.rank-item.click.active{background:var(--cyan-pale);border-color:var(--cyan)}
 
 /* ━━━ TABELA ━━━ */
 .tbl-wrap{max-height:480px;overflow:auto;border-radius:10px;border:1px solid var(--border)}
@@ -428,13 +404,8 @@ svg.origin-svg{fill:currentColor}
   .hmini-v{font-size:24px}
   .hmini-l{font-size:9px}
   
-  .filters-bar{padding:10px 14px;top:62px}
-  .filters-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;gap:10px;transition:all .2s;letter-spacing:.01em}
-  .filters-toggle:active{background:var(--cyan-pale);border-color:var(--cyan)}
-  .filters-bar.open .filters-toggle{border-color:var(--cyan);background:var(--cyan-pale);color:var(--cyan-deep)}
-  .filters-bar.open .filters-toggle-arr{transform:rotate(180deg)}
-  .filters-wrap{display:none}
-  .filters-bar.open .filters-wrap{display:flex;gap:12px;flex-direction:column;align-items:stretch;margin-top:12px;animation:fadeIn .25s ease}
+  .filters-bar{padding:14px 14px;top:62px}
+  .filters-wrap{gap:12px;flex-direction:column;align-items:stretch}
   .flt{flex:none;min-width:0;width:100%}
   .flt-l{font-size:10px}
   .flt-grp{padding:3px;width:100%}
@@ -444,7 +415,7 @@ svg.origin-svg{fill:currentColor}
   .flt-date .flt-input{flex:1}
   .flt-reset{width:100%;justify-content:center;padding:10px}
   
-  .tabs-bar{padding:8px 8px 0 8px;top:auto}
+  .tabs-bar{padding:0 8px;top:auto}
   .tab{padding:14px 12px;font-size:11px;letter-spacing:.04em;gap:6px}
   .tab-icon{font-size:13px}
   .tab-count{font-size:9px;padding:2px 7px}
@@ -515,10 +486,14 @@ svg.origin-svg{fill:currentColor}
 <body>
 
 <nav class="navbar"><div class="nav-wrap">
-<a href="https://www.larafy.com.br/" class="nav-brand">
-<img src="https://www.larafy.com.br/assets/images/larafy.png" class="nav-logo" alt="LaraFy">
+<a href="https://www.larafy.com.br/" class="nav-brand pipe-todos" id="navBrand">
+<span class="nav-logos">
+<img src="https://www.larafy.com.br/assets/images/larafy.png" class="nav-logo nav-logo-grupo" alt="LFY" id="navLogoGrupo">
+<img src="https://www.larafy.com.br/assets/images/larafy.png" class="nav-logo nav-logo-fy" alt="LaraFy">
+<img src="https://lp-lara-tax-forms.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75" class="nav-logo nav-logo-tax" alt="LaraTAX">
+</span>
 <div class="nav-sep"></div>
-<span class="nav-tag">Dashboard Comercial</span>
+<span class="nav-tag" id="navTag">Dashboard Comercial</span>
 </a>
 <div class="nav-right">
 <span class="nav-clock" id="navClock">--:--</span>
@@ -543,7 +518,7 @@ svg.origin-svg{fill:currentColor}
 </div>
 </div>
 
-<div class="filters-bar"><button class="filters-toggle" id="filtersToggle" type="button" aria-label="Mostrar/ocultar filtros"><span class="filters-toggle-l"><span class="filters-toggle-icon">⚙️</span> Filtros <span class="filters-toggle-count" id="filtToggleCount" style="display:none">0</span></span><span class="filters-toggle-arr">▾</span></button><div class="filters-wrap">
+<div class="filters-bar"><div class="filters-wrap">
 <div class="flt"><span class="flt-l">🏢 Pipeline</span><div class="flt-grp" id="fg-pipe">
 <button class="fbtn active" data-pipe="todos">Todos</button>
 <button class="fbtn" data-pipe="LaraTAX">LaraTAX</button>
@@ -560,8 +535,7 @@ svg.origin-svg{fill:currentColor}
 <button class="fbtn" data-days="7">7 dias</button>
 <button class="fbtn" data-days="30">30 dias</button>
 <button class="fbtn" data-days="90">90 dias</button>
-<button class="fbtn" data-days="-1">Este mês</button>
-<button class="fbtn" data-days="0">Tudo</button>
+<button class="fbtn active" data-days="0">Tudo</button>
 </div></div>
 <div class="flt" style="margin-left:auto"><span class="flt-l">&nbsp;</span>
 <button class="flt-reset" id="btnReset">↺ Limpar filtros <span class="flt-active-count" id="fltCount" style="display:none">0</span></button>
@@ -575,6 +549,7 @@ svg.origin-svg{fill:currentColor}
 <button class="tab" data-tab="vendas"><span class="tab-icon">💰</span> Vendas <span class="tab-count" id="tc-vendas">0</span></button>
 <button class="tab" data-tab="reunioes"><span class="tab-icon">📅</span> Reuniões <span class="tab-count" id="tc-reunioes">0</span></button>
 <button class="tab" data-tab="atividades"><span class="tab-icon">⚡</span> Atividades <span class="tab-count" id="tc-atividades">0</span></button>
+<button class="tab tab-larafy" data-tab="larafy"><span class="tab-icon">💎</span> LaraFy <span class="tab-count" id="tc-larafy">0</span></button>
 </div></div>
 
 <div class="wrap">
@@ -595,14 +570,14 @@ svg.origin-svg{fill:currentColor}
 <div class="card" style="padding:0;overflow:hidden">
 <div class="funnel-stages">
 <div class="fs-stage" data-goto="leads"><div class="fs-icon">📊</div><div class="fs-label">Leads</div><div class="fs-value" id="fs-l">0</div><div class="fs-pct">100%</div></div>
-<div class="fs-stage" data-goto="opps"><div class="fs-icon">🎯</div><div class="fs-label">Oportunidades</div><div class="fs-value" id="fs-o">0</div><div class="fs-pct" id="fs-o-pct">0%</div></div>
 <div class="fs-stage" data-goto="reunioes"><div class="fs-icon">📅</div><div class="fs-label">Reuniões</div><div class="fs-value" id="fs-r">0</div><div class="fs-pct" id="fs-r-pct">0%</div></div>
+<div class="fs-stage" data-goto="opps"><div class="fs-icon">🎯</div><div class="fs-label">Oportunidades</div><div class="fs-value" id="fs-o">0</div><div class="fs-pct" id="fs-o-pct">0%</div></div>
 <div class="fs-stage" data-goto="vendas"><div class="fs-icon">💰</div><div class="fs-label">Vendas</div><div class="fs-value" id="fs-v">0</div><div class="fs-pct" id="fs-v-pct">0%</div></div>
 </div>
 <div class="fs-arrow-line">
-<div class="fs-arrow-item">Lead → Oportunidade <span id="conv-lo">0%</span></div>
-<div class="fs-arrow-item">Oportunidade → Reunião <span id="conv-or">0%</span></div>
-<div class="fs-arrow-item">Reunião → Venda <span id="conv-rv">0%</span></div>
+<div class="fs-arrow-item">Lead → Reunião <span id="conv-lr">0%</span></div>
+<div class="fs-arrow-item">Reunião → Oportunidade <span id="conv-ro">0%</span></div>
+<div class="fs-arrow-item">Oportunidade → Venda <span id="conv-ov">0%</span></div>
 <div class="fs-arrow-item">Lead → Venda <span id="conv-lv">0%</span></div>
 </div>
 </div>
@@ -813,6 +788,32 @@ svg.origin-svg{fill:currentColor}
 <div class="card"><div class="ct">👤 Percentual de Atividades Concluídas <span class="ct-info">mínimo 3 atividades</span></div><div class="bl" id="a-vend-taxa"></div></div>
 </div>
 
+<!-- ============ LARAFY ============ -->
+<div class="tab-pane" id="pane-larafy">
+<div class="kpi-grid">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🤝</div></div><div class="kpi-label">Total de Parceiros</div><div class="kpi-value purple" id="lf-parceiros">0</div><div class="kpi-sub">cadastrados</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💎</div></div><div class="kpi-label">Vendas LaraFy</div><div class="kpi-value cyan" id="lf-vendas">0</div><div class="kpi-sub">no período</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">📊</div></div><div class="kpi-label">% Médio de Êxito</div><div class="kpi-value green" id="lf-pctmedio">0%</div><div class="kpi-sub">média ponderada</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📅</div></div><div class="kpi-label">Reuniões LaraFy</div><div class="kpi-value gold" id="lf-reunioes">0</div><div class="kpi-sub" id="lf-reunioes-s">do Calendar</div></div>
+</div>
+
+<div class="section-title">Top Parceiros · por Volume de Vendas</div>
+<div class="card"><div class="ct">🏆 Quem mais fechou no período</div><div class="ranking" id="lf-top-volume"></div></div>
+
+<div class="section-title">Top Parceiros · por % Médio</div>
+<div class="card"><div class="ct">📈 Maior êxito médio nas vendas <span class="ct-info">mínimo 1 venda</span></div><div class="ranking" id="lf-top-pct"></div></div>
+
+<div class="section-title">Vendas LaraFy · Detalhamento</div>
+<div class="card"><div class="ct">💎 Vendas no período</div>
+<div class="tbl-wrap"><table class="tbl" id="lf-tabela"><thead><tr><th>Data</th><th>Grupo</th><th>Parceiro</th><th>Vendedor</th><th>% Êxito</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<div class="section-title">Lista Completa de Parceiros</div>
+<div class="card"><div class="ct">🤝 Todos os parceiros cadastrados</div>
+<div class="tbl-wrap"><table class="tbl" id="lf-parceiros-tbl"><thead><tr><th>Sigla</th><th>Nome</th><th>% Padrão</th><th>Responsável</th><th>Contato</th></tr></thead><tbody></tbody></table></div>
+</div>
+</div>
+
 </div>
 
 <footer class="footer"><div class="fi">
@@ -845,14 +846,7 @@ const trunc = (s,n) => s && s.length>n ? s.slice(0,n)+'…' : (s||'');
 const esc = (s) => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
 const ORIGIN_ICONS = {'Instagram':'📸','Facebook':'👤','Site':'🌐','Google':'🔍','Indicação':'🤝','Evento':'🎤','Base de empresas Leads2b':'📋','Base Leads2b':'📋','LinkedIn':'💼','WhatsApp':'💬','YouTube':'📹','Email':'📧','Não informado':'❓','Parceiro':'🤝','Outbound':'📞','Inbound':'📥'};
-const ORIGIN_IMAGES = {
-  'Site': '<img src="https://lp-lara-tax-forms.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75" alt="Site (LaraTAX)" class="origin-img origin-img-tinted" loading="lazy" referrerpolicy="no-referrer">',
-  'Instagram': '<svg class="origin-img origin-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Instagram"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.585-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.205 0-3.585-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'
-};
-const getOriginIcon = (n) => {
-  if (ORIGIN_IMAGES[n]) return ORIGIN_IMAGES[n];
-  return ORIGIN_ICONS[n] || '🔹';
-};
+const getOriginIcon = (n) => ORIGIN_ICONS[n] || '🔹';
 
 // ═══ FILTROS ═══
 function inDateRange(d) {
@@ -889,6 +883,36 @@ function filterVendas(arr) {
   });
 }
 
+// Vendas LaraFy (vendem em % de êxito, não em R$). Estrutura: {d, grupo, pct, parceiroNome, parceiroSigla, parceiroNomeCanonico, vendedor}
+function filterVendasLaraFy() {
+  if (F.pipe === 'LaraTAX') return [];
+  return (DASH_DATA.vendasLaraFy || []).filter(v => {
+    if (!inDateRange(v.d)) return false;
+    if (F.vend !== 'todos' && v.vendedor !== F.vend) return false;
+    return true;
+  });
+}
+
+// Total de vendas (soma das 2 fontes em "Todos")
+function getVendasCount() {
+  if (F.pipe === 'LaraTAX') return filterVendas(DASH_DATA.vendas).length;
+  if (F.pipe === 'LaraFy') return filterVendasLaraFy().length;
+  return filterVendas(DASH_DATA.vendas).length + filterVendasLaraFy().length;
+}
+
+// Parceiros - filtra pelo responsável quando filtro vendedor está aplicado
+function filterParceiros() {
+  return (DASH_DATA.parceiros || []).filter(p => {
+    if (F.vend !== 'todos') {
+      const respKey = String(p.resp||'').toLowerCase();
+      const vendKey = String(F.vend||'').toLowerCase();
+      // Match por substring (resp pode ser "Andrey" e vend "Andrey Iunskovski")
+      if (!respKey || (!respKey.includes(vendKey) && !vendKey.includes(respKey))) return false;
+    }
+    return true;
+  });
+}
+
 // ═══ FUNÇÕES DE INTERAÇÃO ═══
 function setPipe(val) {
   F.pipe = val;
@@ -899,33 +923,50 @@ function setPipe(val) {
   render();
 }
 
-// Esconde a aba Vendas quando filtro = LaraFy (LaraFy não comercializa contratos)
+// Mostra/esconde aba LaraFy conforme filtro
+// Atualiza logos do nav e tag
 function applyPipelineVisibility() {
-  const tabVendas = document.querySelector('.tab[data-tab="vendas"]');
+  const tabLaraFy = document.querySelector('.tab[data-tab="larafy"]');
   const isLaraFy = F.pipe === 'LaraFy';
+  const isLaraTAX = F.pipe === 'LaraTAX';
   
-  if (tabVendas) {
-    tabVendas.style.display = isLaraFy ? 'none' : '';
-  }
+  // LaraFy aparece em Todos e LaraFy. Some em LaraTAX.
+  if (tabLaraFy) tabLaraFy.style.display = isLaraTAX ? 'none' : '';
+  // Aba Vendas (LaraTAX) some quando filtro = LaraFy (LaraFy tem aba própria)
+  const tabVendas = document.querySelector('.tab[data-tab="vendas"]');
+  if (tabVendas) tabVendas.style.display = isLaraFy ? 'none' : '';
   
-  // Se a aba Vendas está ativa e o filtro virou LaraFy, redireciona para Visão Geral
-  if (isLaraFy && activeTab === 'vendas') {
-    setTab('overview');
-  }
+  // Redirecionamento quando aba ativa fica invisível
+  if (isLaraFy && activeTab === 'vendas') setTab('larafy');
+  if (isLaraTAX && activeTab === 'larafy') setTab('overview');
   
-  // Esconde KPI de Receita Anual e card "Vendas" da Visão Geral também
+  // Em LaraFy, esconde KPI de Receita Anual da Visão Geral (LaraFy não fatura R$)
   document.querySelectorAll('.ov-kpi[data-goto="vendas"]').forEach(el => {
     el.style.display = isLaraFy ? 'none' : '';
   });
   
-  // Esconde a etapa "Vendas" do funil geral
+  // Em LaraFy, esconde a etapa "Vendas" do funil geral (mas em "Todos" mantém — soma das duas)
   const fsVendas = document.querySelector('.fs-stage[data-goto="vendas"]');
   if (fsVendas) fsVendas.style.display = isLaraFy ? 'none' : '';
   
-  // Esconde botão CTA de Vendas
+  // Em LaraFy, esconde botão CTA de Vendas
   document.querySelectorAll('.nav-cta-btn[data-goto="vendas"]').forEach(el => {
     el.style.display = isLaraFy ? 'none' : '';
   });
+  
+  // Atualiza logos do nav (3 estados: todos/LaraFy/LaraTAX)
+  const navBrand = document.getElementById('navBrand');
+  if (navBrand) {
+    navBrand.classList.remove('pipe-todos','pipe-LaraTAX','pipe-LaraFy');
+    navBrand.classList.add('pipe-' + F.pipe);
+  }
+  // Atualiza tag
+  const navTag = document.getElementById('navTag');
+  if (navTag) {
+    if (F.pipe === 'LaraTAX') navTag.textContent = 'Dashboard Comercial · LaraTAX';
+    else if (F.pipe === 'LaraFy') navTag.textContent = 'Dashboard Comercial · LaraFy';
+    else navTag.textContent = 'Dashboard Comercial';
+  }
 }
 
 function setVImpl(val) {
@@ -945,15 +986,6 @@ function quickDate(days) {
     document.getElementById('dateEnd').value = '';
     F.d1 = ''; F.d2 = '';
     document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
-  } else if (days === -1) {
-    const e = new Date();
-    const s = new Date(e.getFullYear(), e.getMonth(), 1);
-    const fmtDate = (d) => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    document.getElementById('dateStart').value = fmtDate(s);
-    document.getElementById('dateEnd').value = fmtDate(e);
-    F.d1 = fmtDate(s); F.d2 = fmtDate(e);
-    const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-    document.getElementById('periodoLbl').textContent = 'Período: ' + meses[e.getMonth()] + ' de ' + e.getFullYear();
   } else {
     const e = new Date();
     const s = new Date(); s.setDate(s.getDate() - days);
@@ -1016,14 +1048,8 @@ function updateFilterCount() {
   if (F.vimpl !== 'todos') c++;
   if (F.vstatus !== 'todos') c++;
   const el = document.getElementById('fltCount');
-  const elMobile = document.getElementById('filtToggleCount');
-  if (c > 0) {
-    el.style.display = 'inline-block'; el.textContent = c;
-    if (elMobile) { elMobile.style.display = 'inline-block'; elMobile.textContent = c; }
-  } else {
-    el.style.display = 'none';
-    if (elMobile) elMobile.style.display = 'none';
-  }
+  if (c > 0) { el.style.display = 'inline-block'; el.textContent = c; }
+  else el.style.display = 'none';
 }
 
 // ═══ AGRUPADORES ═══
@@ -1063,7 +1089,7 @@ function renderBars(elId, arr, color, limit, clickType) {
   const el = document.getElementById(elId);
   if (!el) return;
   if (!arr.length) { el.innerHTML = `<div class="empty"><span class="empty-icon">📭</span><span>Sem dados no período</span></div>`; return; }
-  const max = Math.max.apply(null, arr.map(d => Number(d.v)||0)) || 1;
+  const max = arr[0].v || 1;
   const total = arr.reduce((s,a)=>s+a.v,0);
   el.innerHTML = arr.slice(0,limit).map(item => {
     const pct = total ? ((item.v/total)*100).toFixed(1) : 0;
@@ -1134,11 +1160,12 @@ function renderOverview() {
   const opps = filterArr(DASH_DATA.opps);
   const vendas = filterVendas(DASH_DATA.vendas);
   const reunioes = filterArr(DASH_DATA.reunioes);
+  const vendasCount = getVendasCount();  // soma LaraTAX + LaraFy quando filtro=Todos
   
   document.getElementById('ov-leads').textContent = fmt(leads.length);
   document.getElementById('ov-opps').textContent = fmt(opps.length);
   document.getElementById('ov-reunioes').textContent = fmt(reunioes.length);
-  document.getElementById('ov-vendas').textContent = fmt(vendas.length);
+  document.getElementById('ov-vendas').textContent = fmt(vendasCount);
   const receitaTotal = vendas.reduce((s,v) => s + v.va, 0);
   document.getElementById('ov-receita').textContent = fmtBRshort(receitaTotal);
   const reunFeitas = reunioes.filter(r => r.s === 'done').length;
@@ -1147,7 +1174,7 @@ function renderOverview() {
   const totalLeads = leads.length;
   const totalReunioes = reunioes.length;
   const totalOpps = opps.length;
-  const totalVendas = vendas.length;
+  const totalVendas = vendasCount;
   
   document.getElementById('fs-l').textContent = fmt(totalLeads);
   document.getElementById('fs-r').textContent = fmt(totalReunioes);
@@ -1158,9 +1185,9 @@ function renderOverview() {
   document.getElementById('fs-o-pct').textContent = totalLeads ? Math.round((totalOpps/totalLeads)*100)+'% dos leads' : '0%';
   document.getElementById('fs-v-pct').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'% dos leads' : '0%';
   
-  document.getElementById('conv-lo').textContent = totalLeads ? Math.round((totalOpps/totalLeads)*100)+'%' : '0%';
-  document.getElementById('conv-or').textContent = totalOpps ? Math.round((totalReunioes/totalOpps)*100)+'%' : '0%';
-  document.getElementById('conv-rv').textContent = totalReunioes ? Math.round((totalVendas/totalReunioes)*100)+'%' : '0%';
+  document.getElementById('conv-lr').textContent = totalLeads ? Math.round((totalReunioes/totalLeads)*100)+'%' : '0%';
+  document.getElementById('conv-ro').textContent = totalReunioes ? Math.round((totalOpps/totalReunioes)*100)+'%' : '0%';
+  document.getElementById('conv-ov').textContent = totalOpps ? Math.round((totalVendas/totalOpps)*100)+'%' : '0%';
   document.getElementById('conv-lv').textContent = totalLeads ? ((totalVendas/totalLeads)*100).toFixed(1)+'%' : '0%';
   
   // Funil por origem
@@ -1195,18 +1222,17 @@ function renderOverview() {
     ogfEl.innerHTML = `<div class="empty"><span class="empty-icon">🌐</span><span>Sem origens com dados</span></div>`;
   } else {
     ogfEl.innerHTML = origemArr.map(item => {
-      const maxFunil = Math.max(item.leads, item.reunioes, item.opps, item.vendas) || 1;
-      const wL = (item.leads/maxFunil)*100;
-      const wR = (item.reunioes/maxFunil)*100;
-      const wO = (item.opps/maxFunil)*100;
-      const wV = (item.vendas/maxFunil)*100;
+      const wL = (item.leads/maxLeadsOrigem)*100;
+      const wR = item.leads ? Math.min((item.reunioes/item.leads)*100, 100) : 0;
+      const wO = item.leads ? Math.min((item.opps/item.leads)*100, 100) : 0;
+      const wV = item.leads ? Math.min((item.vendas/item.leads)*100, 100) : 0;
       const taxaConv = item.leads ? ((item.vendas/item.leads)*100).toFixed(1) : 0;
       return `<div class="ogf-card" data-click-type="origin-goto" data-click-value="${esc(item.n)}">
         <div class="ogf-hdr"><span class="ogf-icon">${getOriginIcon(item.n)}</span><span class="ogf-name" title="${esc(item.n)}">${esc(trunc(item.n,22))}</span><span class="ogf-arrow">→</span></div>
         <div class="ogf-stages">
           <div class="ogf-row"><span class="ogf-row-label">Leads</span><div class="ogf-row-bar"><div class="ogf-row-fill s1" style="width:${wL}%"></div></div><span class="ogf-row-val">${fmt(item.leads)}</span><span class="ogf-row-pct">100%</span></div>
-          <div class="ogf-row"><span class="ogf-row-label">Oportunid.</span><div class="ogf-row-bar"><div class="ogf-row-fill s2" style="width:${wO}%"></div></div><span class="ogf-row-val">${fmt(item.opps)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.opps/item.leads)*100:0)}%</span></div>
-          <div class="ogf-row"><span class="ogf-row-label">Reuniões</span><div class="ogf-row-bar"><div class="ogf-row-fill s3" style="width:${wR}%"></div></div><span class="ogf-row-val">${fmt(item.reunioes)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.reunioes/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Reuniões</span><div class="ogf-row-bar"><div class="ogf-row-fill s2" style="width:${wR}%"></div></div><span class="ogf-row-val">${fmt(item.reunioes)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.reunioes/item.leads)*100:0)}%</span></div>
+          <div class="ogf-row"><span class="ogf-row-label">Oportunid.</span><div class="ogf-row-bar"><div class="ogf-row-fill s3" style="width:${wO}%"></div></div><span class="ogf-row-val">${fmt(item.opps)}</span><span class="ogf-row-pct">${Math.round(item.leads?(item.opps/item.leads)*100:0)}%</span></div>
           <div class="ogf-row"><span class="ogf-row-label">Vendas</span><div class="ogf-row-bar"><div class="ogf-row-fill s4" style="width:${wV}%"></div></div><span class="ogf-row-val">${fmt(item.vendas)}</span><span class="ogf-row-pct">${(item.leads?(item.vendas/item.leads)*100:0).toFixed(1)}%</span></div>
         </div>
         <div class="ogf-footer"><span class="ogf-receita">💰 ${fmtBRshort(item.receita)}</span><span class="ogf-conv">${taxaConv}% conv.</span></div>
@@ -1575,13 +1601,87 @@ function renderAtividades() {
   }
 }
 
+// ═══ RENDER LARAFY ═══
+function renderLaraFy() {
+  const parceiros = filterParceiros();
+  const vendas = filterVendasLaraFy();
+  const reunioesLaraFy = (DASH_DATA.reunioes || []).filter(r => {
+    if (r.p !== 'LaraFy') return false;
+    if (!inDateRange(r.d)) return false;
+    if (F.vend !== 'todos' && r.u !== F.vend) return false;
+    return true;
+  });
+  
+  document.getElementById('lf-parceiros').textContent = fmt(parceiros.length);
+  document.getElementById('lf-vendas').textContent = fmt(vendas.length);
+  document.getElementById('lf-reunioes').textContent = fmt(reunioesLaraFy.length);
+  const reunDone = reunioesLaraFy.filter(r => r.s === 'done').length;
+  document.getElementById('lf-reunioes-s').textContent = reunDone + ' realizadas';
+  
+  // % médio: média simples do pct das vendas
+  const pctMedio = vendas.length 
+    ? (vendas.reduce((s,v) => s + (Number(v.pct)||0), 0) / vendas.length).toFixed(1)
+    : '0.0';
+  document.getElementById('lf-pctmedio').textContent = pctMedio + '%';
+  
+  // Top parceiros: agrega por parceiroNomeCanonico
+  const aggParceiro = {};
+  vendas.forEach(v => {
+    const k = v.parceiroNomeCanonico || v.parceiroNome || '—';
+    if (!aggParceiro[k]) aggParceiro[k] = { count: 0, somaPct: 0, sigla: v.parceiroSigla || '' };
+    aggParceiro[k].count++;
+    aggParceiro[k].somaPct += (Number(v.pct)||0);
+  });
+  
+  // Top por VOLUME (qtd vendas)
+  const topVolume = Object.keys(aggParceiro).map(n => ({
+    n,
+    v: aggParceiro[n].count,
+    pctMedio: aggParceiro[n].count ? (aggParceiro[n].somaPct/aggParceiro[n].count).toFixed(1) : '0.0',
+    sigla: aggParceiro[n].sigla
+  })).sort((a,b) => b.v - a.v);
+  renderRanking('lf-top-volume', topVolume,
+    item => fmt(item.v) + ' venda' + (item.v !== 1 ? 's' : ''),
+    item => (item.sigla ? `[${esc(item.sigla)}] ` : '') + 'média ' + item.pctMedio + '%',
+    10);
+  
+  // Top por % MÉDIO
+  const topPct = Object.keys(aggParceiro).map(n => ({
+    n,
+    v: aggParceiro[n].count ? aggParceiro[n].somaPct/aggParceiro[n].count : 0,
+    count: aggParceiro[n].count,
+    sigla: aggParceiro[n].sigla
+  })).filter(x => x.count >= 1).sort((a,b) => b.v - a.v);
+  renderRanking('lf-top-pct', topPct,
+    item => item.v.toFixed(1) + '%',
+    item => (item.sigla ? `[${esc(item.sigla)}] ` : '') + fmt(item.count) + ' venda' + (item.count !== 1 ? 's' : ''),
+    10);
+  
+  // Tabela de Vendas LaraFy
+  const tblV = document.querySelector('#lf-tabela tbody');
+  const rowsV = vendas.slice().sort((a,b) => b.d.localeCompare(a.d)).slice(0, 100);
+  tblV.innerHTML = rowsV.length ? rowsV.map(v => {
+    const p = v.d.split('-');
+    const pctClass = v.pct >= 30 ? 'green' : v.pct >= 15 ? 'gold' : v.pct > 0 ? 'cyan' : 'red';
+    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(v.grupo, 32))}</td><td>${esc(trunc(v.parceiroNomeCanonico || v.parceiroNome, 24))}</td><td>${esc(trunc(v.vendedor, 18))}</td><td><span class="tbl-badge ${pctClass}">${(Number(v.pct)||0).toFixed(1)}%</span></td></tr>`;
+  }).join('') : `<tr><td colspan="5" class="empty">Sem vendas LaraFy no período</td></tr>`;
+  
+  // Tabela de Parceiros (lista completa)
+  const tblP = document.querySelector('#lf-parceiros-tbl tbody');
+  const rowsP = parceiros.slice().sort((a,b) => String(a.nome||'').localeCompare(String(b.nome||'')));
+  tblP.innerHTML = rowsP.length ? rowsP.map(p => {
+    const pctDisp = p.pct !== null ? p.pct.toFixed(0) + '%' : `<span style="color:var(--text3)">${esc(p.pctRaw||'—')}</span>`;
+    return `<tr><td><span class="tbl-badge cyan">${esc(p.sigla||'—')}</span></td><td class="tbl-name">${esc(trunc(p.nome, 32))}</td><td>${pctDisp}</td><td>${esc(p.resp||'—')}</td><td>${esc(trunc(p.contato, 40))}</td></tr>`;
+  }).join('') : `<tr><td colspan="5" class="empty">Sem parceiros cadastrados</td></tr>`;
+}
+
 // ═══ HERO MINI ═══
 // Counter animado pros KPIs do hero (anima só na 1ª render)
 let heroAnimated = false;
 function renderHeroMini() {
   const lc = filterArr(DASH_DATA.leads).length;
   const oc = filterArr(DASH_DATA.opps).length;
-  const vc = filterVendas(DASH_DATA.vendas).length;
+  const vc = getVendasCount();  // soma LaraTAX + LaraFy quando filtro=Todos
   const rc = filterArr(DASH_DATA.reunioes).length;
   const ac = filterArr(DASH_DATA.atividades).length;
   const wasFirst = !heroAnimated;
@@ -1629,10 +1729,7 @@ function attachReveals(){
       el.dataset.stagger = String(stagger);
     }
   });
-  document.querySelectorAll('.reveal:not(.revealed)').forEach(el => {
-    if (revealObserver) revealObserver.observe(el);
-    else el.classList.add('revealed');
-  });
+  document.querySelectorAll('.reveal:not(.revealed)').forEach(el => revealObserver.observe(el));
 }
 
 // ═══ COUNTER ANIMATION ═══
@@ -1658,11 +1755,15 @@ function render() {
   else if (activeTab==='vendas') renderVendas();
   else if (activeTab==='reunioes') renderReunioes();
   else if (activeTab==='atividades') renderAtividades();
+  else if (activeTab==='larafy') renderLaraFy();
   document.getElementById('tc-leads').textContent = fmt(filterArr(DASH_DATA.leads).length);
   document.getElementById('tc-opps').textContent = fmt(filterArr(DASH_DATA.opps).length);
-  document.getElementById('tc-vendas').textContent = fmt(filterVendas(DASH_DATA.vendas).length);
+  document.getElementById('tc-vendas').textContent = fmt(getVendasCount());
   document.getElementById('tc-reunioes').textContent = fmt(filterArr(DASH_DATA.reunioes).length);
   document.getElementById('tc-atividades').textContent = fmt(filterArr(DASH_DATA.atividades).length);
+  // Counter aba LaraFy: vendas LaraFy + parceiros (em "Todos" e "LaraFy")
+  const tcLaraFy = document.getElementById('tc-larafy');
+  if (tcLaraFy) tcLaraFy.textContent = fmt(filterVendasLaraFy().length);
   renderHeroMini();
   updateFilterCount();
   attachReveals();
@@ -1730,14 +1831,6 @@ function init() {
   });
   document.getElementById('btnReset').addEventListener('click', resetFilters);
   
-  // Toggle filtros mobile
-  const filtToggle = document.getElementById('filtersToggle');
-  if (filtToggle) {
-    filtToggle.addEventListener('click', () => {
-      document.querySelector('.filters-bar').classList.toggle('open');
-    });
-  }
-  
   // Tabs
   document.querySelectorAll('.tab').forEach(t => {
     t.addEventListener('click', () => setTab(t.dataset.tab));
@@ -1771,8 +1864,7 @@ function init() {
   
   updateClock();
   setInterval(updateClock, 30000);
-  // Filtro inicial: mês atual (em vez de "Tudo")
-  quickDate(-1);
+  render();
 }
 
 // Inicia quando DOM estiver pronto
