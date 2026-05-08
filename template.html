@@ -95,10 +95,10 @@ input,select,textarea{font-family:inherit}
 .nav-brand{display:flex;align-items:center;gap:16px;text-decoration:none}
 .nav-logos{display:inline-flex;align-items:center;gap:12px}
 .nav-logo{height:30px;filter:brightness(0) invert(1);opacity:.95;transition:opacity .25s,transform .3s ease}
-.nav-logo-grupo,.nav-logo-fy,.nav-logo-tax{display:none}
-.nav-brand.pipe-todos .nav-logo-grupo{display:inline-block}
-.nav-brand.pipe-LaraFy .nav-logo-fy{display:inline-block}
-.nav-brand.pipe-LaraTAX .nav-logo-tax{display:inline-block}
+.nav-logo-grupo,.nav-logo-fy,.nav-logo-tax{display:none !important}
+.nav-brand.pipe-todos .nav-logo-grupo{display:inline-block !important}
+.nav-brand.pipe-LaraFy .nav-logo-fy{display:inline-block !important}
+.nav-brand.pipe-LaraTAX .nav-logo-tax{display:inline-block !important}
 .nav-sep{width:1px;height:26px;background:var(--navy-line-strong)}
 .nav-tag{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
 .nav-right{display:flex;align-items:center;gap:16px}
@@ -657,10 +657,10 @@ input,select,textarea{font-family:inherit}
 <div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📈</div></div><div class="kpi-label">Taxa de Conversão</div><div class="kpi-value gold" id="o-conv">0%</div><div class="kpi-sub">ganhas sobre fechadas</div></div>
 </div>
 
-<div class="section-title">Funil · Etapas do Pipeline</div>
+<div class="section-title">Funil · Quantidade de Clientes em Cada Etapa</div>
 <div class="g2">
-<div class="card"><div class="ct">🔄 Quantidade por Etapa</div><div class="bl" id="o-steps"></div></div>
-<div class="card"><div class="ct">⏱️ Tempo Médio por Etapa <span class="ct-info">em dias</span></div><div class="bl" id="o-steps-dias"></div></div>
+<div class="card"><div class="ct">🔄 Quantidade de Clientes por Etapa</div><div class="bl" id="o-steps"></div></div>
+<div class="card"><div class="ct">⏱️ Tempo Médio em Cada Etapa <span class="ct-info">em dias</span></div><div class="bl" id="o-steps-dias"></div></div>
 </div>
 
 <div class="section-title">Origens · Clique para Filtrar</div>
@@ -790,11 +790,35 @@ input,select,textarea{font-family:inherit}
 
 <!-- ============ LARAFY ============ -->
 <div class="tab-pane" id="pane-larafy">
+
+<!-- Toolbar local: filtro vendedor -->
+<div class="card" style="padding:14px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
+<span class="flt-l">👤 Vendedor LaraFy:</span>
+<select class="flt-select" id="selVendLaraFy" style="min-width:200px">
+<option value="todos">Todos os vendedores</option>
+<option value="Andrey Iunskovski">Andrey Iunskovski</option>
+<option value="Kaoana Ribas">Kaoana Ribas</option>
+</select>
+<span class="ct-info" style="margin-left:auto;font-size:11px;color:var(--text3)">Filtro local desta aba</span>
+</div>
+
+<!-- KPIs principais -->
 <div class="kpi-grid">
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🤝</div></div><div class="kpi-label">Total de Parceiros</div><div class="kpi-value purple" id="lf-parceiros">0</div><div class="kpi-sub">cadastrados</div></div>
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💎</div></div><div class="kpi-label">Vendas LaraFy</div><div class="kpi-value cyan" id="lf-vendas">0</div><div class="kpi-sub">no período</div></div>
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">📊</div></div><div class="kpi-label">% Médio de Êxito</div><div class="kpi-value green" id="lf-pctmedio">0%</div><div class="kpi-sub">média ponderada</div></div>
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📅</div></div><div class="kpi-label">Reuniões LaraFy</div><div class="kpi-value gold" id="lf-reunioes">0</div><div class="kpi-sub" id="lf-reunioes-s">do Calendar</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🤝</div></div><div class="kpi-label">Quantidade de Parceiros</div><div class="kpi-value purple" id="lf-parceiros">0</div><div class="kpi-sub" id="lf-parceiros-sub">cadastrados</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💎</div></div><div class="kpi-label">Vendas</div><div class="kpi-value cyan" id="lf-vendas">0</div><div class="kpi-sub">no período</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📅</div></div><div class="kpi-label">Reuniões</div><div class="kpi-value gold" id="lf-reunioes">0</div><div class="kpi-sub" id="lf-reunioes-s">do Calendar</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">📊</div></div><div class="kpi-label">% Médio das Vendas</div><div class="kpi-value green" id="lf-pctmedio">0%</div><div class="kpi-sub">média ponderada</div></div>
+</div>
+
+<div class="section-title">Funil · Quantidade de Clientes em Cada Etapa</div>
+<div class="g2">
+<div class="card"><div class="ct">🔄 Oportunidades por Etapa <span class="ct-info">filtradas LaraFy</span></div><div class="bl" id="lf-opp-steps"></div></div>
+<div class="card"><div class="ct">⏱️ Tempo Médio em Cada Etapa <span class="ct-info">em dias</span></div><div class="bl" id="lf-opp-steps-dias"></div></div>
+</div>
+
+<div class="section-title">Analítico de Clientes</div>
+<div class="card"><div class="ct">📋 Clientes Atendidos <span class="ct-info">agregado por grupo</span></div>
+<div class="tbl-wrap"><table class="tbl" id="lf-clientes-tbl"><thead><tr><th>Cliente (Grupo)</th><th>Vendedor</th><th>Parceiro</th><th>Qtd Vendas</th><th>% Médio</th><th>Última Venda</th></tr></thead><tbody></tbody></table></div>
 </div>
 
 <div class="section-title">Top Parceiros · por Volume de Vendas</div>
@@ -811,6 +835,8 @@ input,select,textarea{font-family:inherit}
 <div class="section-title">Lista Completa de Parceiros</div>
 <div class="card"><div class="ct">🤝 Todos os parceiros cadastrados</div>
 <div class="tbl-wrap"><table class="tbl" id="lf-parceiros-tbl"><thead><tr><th>Sigla</th><th>Nome</th><th>% Padrão</th><th>Responsável</th><th>Contato</th></tr></thead><tbody></tbody></table></div>
+</div>
+
 </div>
 </div>
 
@@ -829,7 +855,7 @@ input,select,textarea{font-family:inherit}
 
 const DASH_DATA = __DASH_DATA__;
 
-const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos', vimpl:'todos', vstatus:'todos' };
+const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos', vimpl:'todos', vstatus:'todos', vendLaraFy:'todos' };
 let activeTab = 'overview';
 
 // ═══ HELPERS ═══
@@ -883,12 +909,19 @@ function filterVendas(arr) {
   });
 }
 
+// Vendedor ativo na aba LaraFy: filtro local sobrepõe o global
+function getActiveLaraFyVend() {
+  if (F.vendLaraFy && F.vendLaraFy !== 'todos') return F.vendLaraFy;
+  return F.vend;
+}
+
 // Vendas LaraFy (vendem em % de êxito, não em R$). Estrutura: {d, grupo, pct, parceiroNome, parceiroSigla, parceiroNomeCanonico, vendedor}
 function filterVendasLaraFy() {
   if (F.pipe === 'LaraTAX') return [];
-  return (DASH_DATA.vendasLaraFy || []).filter(v => {
-    if (!inDateRange(v.d)) return false;
-    if (F.vend !== 'todos' && v.vendedor !== F.vend) return false;
+  const v = getActiveLaraFyVend();
+  return (DASH_DATA.vendasLaraFy || []).filter(x => {
+    if (!inDateRange(x.d)) return false;
+    if (v !== 'todos' && x.vendedor !== v) return false;
     return true;
   });
 }
@@ -900,15 +933,37 @@ function getVendasCount() {
   return filterVendas(DASH_DATA.vendas).length + filterVendasLaraFy().length;
 }
 
-// Parceiros - filtra pelo responsável quando filtro vendedor está aplicado
+// Parceiros - filtra pelo responsável quando vendedor está aplicado (local ou global)
 function filterParceiros() {
+  const v = getActiveLaraFyVend();
   return (DASH_DATA.parceiros || []).filter(p => {
-    if (F.vend !== 'todos') {
+    if (v !== 'todos') {
       const respKey = String(p.resp||'').toLowerCase();
-      const vendKey = String(F.vend||'').toLowerCase();
-      // Match por substring (resp pode ser "Andrey" e vend "Andrey Iunskovski")
+      const vendKey = String(v||'').toLowerCase();
       if (!respKey || (!respKey.includes(vendKey) && !vendKey.includes(respKey))) return false;
     }
+    return true;
+  });
+}
+
+// Reuniões LaraFy (filtradas pelo vendedor local também)
+function filterReunioesLaraFy() {
+  const v = getActiveLaraFyVend();
+  return (DASH_DATA.reunioes || []).filter(r => {
+    if (r.p !== 'LaraFy') return false;
+    if (!inDateRange(r.d)) return false;
+    if (v !== 'todos' && r.u !== v) return false;
+    return true;
+  });
+}
+
+// Oportunidades LaraFy (pra funil de etapas)
+function filterOppsLaraFy() {
+  const v = getActiveLaraFyVend();
+  return (DASH_DATA.opps || []).filter(o => {
+    if (o.p !== 'LaraFy') return false;
+    if (!inDateRange(o.d)) return false;
+    if (v !== 'todos' && o.r !== v) return false;
     return true;
   });
 }
@@ -998,12 +1053,14 @@ function quickDate(days) {
 }
 
 function resetFilters() {
-  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = ''; F.origin = 'todos'; F.vimpl = 'todos'; F.vstatus = 'todos';
+  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = ''; F.origin = 'todos'; F.vimpl = 'todos'; F.vstatus = 'todos'; F.vendLaraFy = 'todos';
   document.getElementById('dateStart').value = '';
   document.getElementById('dateEnd').value = '';
   document.getElementById('selVend').value = 'todos';
   document.getElementById('selOrigin').value = 'todos';
   document.getElementById('selVStatus').value = 'todos';
+  const svLF = document.getElementById('selVendLaraFy');
+  if (svLF) svLF.value = 'todos';
   document.querySelectorAll('#fg-pipe .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
   document.querySelectorAll('#fg-impl .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
   document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days)===0));
@@ -1605,26 +1662,74 @@ function renderAtividades() {
 function renderLaraFy() {
   const parceiros = filterParceiros();
   const vendas = filterVendasLaraFy();
-  const reunioesLaraFy = (DASH_DATA.reunioes || []).filter(r => {
-    if (r.p !== 'LaraFy') return false;
-    if (!inDateRange(r.d)) return false;
-    if (F.vend !== 'todos' && r.u !== F.vend) return false;
-    return true;
-  });
+  const reunioesLaraFy = filterReunioesLaraFy();
+  const oppsLaraFy = filterOppsLaraFy();
   
+  // KPIs
   document.getElementById('lf-parceiros').textContent = fmt(parceiros.length);
+  const pSub = document.getElementById('lf-parceiros-sub');
+  if (pSub) {
+    const v = getActiveLaraFyVend();
+    pSub.textContent = v !== 'todos' ? `de ${v.split(' ')[0]}` : 'cadastrados';
+  }
   document.getElementById('lf-vendas').textContent = fmt(vendas.length);
   document.getElementById('lf-reunioes').textContent = fmt(reunioesLaraFy.length);
   const reunDone = reunioesLaraFy.filter(r => r.s === 'done').length;
   document.getElementById('lf-reunioes-s').textContent = reunDone + ' realizadas';
   
-  // % médio: média simples do pct das vendas
   const pctMedio = vendas.length 
     ? (vendas.reduce((s,v) => s + (Number(v.pct)||0), 0) / vendas.length).toFixed(1)
     : '0.0';
   document.getElementById('lf-pctmedio').textContent = pctMedio + '%';
   
-  // Top parceiros: agrega por parceiroNomeCanonico
+  // ═══ Funil de Oportunidades por Etapa LaraFy ═══
+  renderBars('lf-opp-steps', groupCount(oppsLaraFy, 'step'), 'purple', 15);
+  
+  const stepDiasLF = {}; const stepCountLF = {};
+  oppsLaraFy.forEach(o => {
+    if (o.dias > 0) {
+      stepDiasLF[o.step] = (stepDiasLF[o.step] || 0) + o.dias;
+      stepCountLF[o.step] = (stepCountLF[o.step] || 0) + 1;
+    }
+  });
+  const stepsAvgLF = Object.keys(stepDiasLF).map(n => ({
+    n, v: Math.round(stepDiasLF[n]/stepCountLF[n]), count: stepCountLF[n]
+  })).sort((a,b)=>b.v-a.v);
+  
+  const elDiasLF = document.getElementById('lf-opp-steps-dias');
+  if (!stepsAvgLF.length) {
+    elDiasLF.innerHTML = `<div class="empty"><span class="empty-icon">⏱️</span><span>Sem dados de tempo</span></div>`;
+  } else {
+    const maxD = stepsAvgLF[0].v || 1;
+    elDiasLF.innerHTML = stepsAvgLF.slice(0,15).map(item => {
+      const w = (item.v/maxD)*100;
+      const colorClass = item.v > 60 ? 'red' : item.v > 30 ? 'gold' : 'green';
+      return `<div class="bi"><div class="bi-hdr"><span class="bi-name" title="${esc(item.n)}">${esc(trunc(item.n,38))}</span><div class="bi-right"><span class="bi-count">${item.v}d</span><span class="bi-pct">(${item.count} opps)</span></div></div><div class="bi-track"><div class="bi-fill ${colorClass}" style="width:${w}%"></div></div></div>`;
+    }).join('');
+  }
+  
+  // ═══ Analítico de Clientes (agrega vendas por grupo) ═══
+  const clientesAgg = {};
+  vendas.forEach(v => {
+    const k = v.grupo || '—';
+    if (!clientesAgg[k]) clientesAgg[k] = {
+      grupo: k, vendedor: v.vendedor, parceiro: v.parceiroNomeCanonico || v.parceiroNome,
+      count: 0, somaPct: 0, ultimaData: v.d
+    };
+    clientesAgg[k].count++;
+    clientesAgg[k].somaPct += (Number(v.pct)||0);
+    if (v.d > clientesAgg[k].ultimaData) clientesAgg[k].ultimaData = v.d;
+  });
+  const clientesArr = Object.values(clientesAgg).sort((a,b) => b.count - a.count || b.ultimaData.localeCompare(a.ultimaData));
+  const tblC = document.querySelector('#lf-clientes-tbl tbody');
+  tblC.innerHTML = clientesArr.length ? clientesArr.map(c => {
+    const pctMed = c.count ? (c.somaPct/c.count).toFixed(1) : '0.0';
+    const pctClass = pctMed >= 30 ? 'green' : pctMed >= 15 ? 'gold' : pctMed > 0 ? 'cyan' : 'red';
+    const p = c.ultimaData.split('-');
+    return `<tr><td class="tbl-name">${esc(trunc(c.grupo, 32))}</td><td>${esc(trunc(c.vendedor,18))}</td><td>${esc(trunc(c.parceiro,22))}</td><td><span class="tbl-badge cyan">${c.count}</span></td><td><span class="tbl-badge ${pctClass}">${pctMed}%</span></td><td>${p[2]}/${p[1]}/${p[0]}</td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="empty">Sem clientes no período</td></tr>`;
+  
+  // ═══ Top Parceiros ═══
   const aggParceiro = {};
   vendas.forEach(v => {
     const k = v.parceiroNomeCanonico || v.parceiroNome || '—';
@@ -1633,10 +1738,9 @@ function renderLaraFy() {
     aggParceiro[k].somaPct += (Number(v.pct)||0);
   });
   
-  // Top por VOLUME (qtd vendas)
+  // Top por VOLUME
   const topVolume = Object.keys(aggParceiro).map(n => ({
-    n,
-    v: aggParceiro[n].count,
+    n, v: aggParceiro[n].count,
     pctMedio: aggParceiro[n].count ? (aggParceiro[n].somaPct/aggParceiro[n].count).toFixed(1) : '0.0',
     sigla: aggParceiro[n].sigla
   })).sort((a,b) => b.v - a.v);
@@ -1647,17 +1751,15 @@ function renderLaraFy() {
   
   // Top por % MÉDIO
   const topPct = Object.keys(aggParceiro).map(n => ({
-    n,
-    v: aggParceiro[n].count ? aggParceiro[n].somaPct/aggParceiro[n].count : 0,
-    count: aggParceiro[n].count,
-    sigla: aggParceiro[n].sigla
+    n, v: aggParceiro[n].count ? aggParceiro[n].somaPct/aggParceiro[n].count : 0,
+    count: aggParceiro[n].count, sigla: aggParceiro[n].sigla
   })).filter(x => x.count >= 1).sort((a,b) => b.v - a.v);
   renderRanking('lf-top-pct', topPct,
     item => item.v.toFixed(1) + '%',
     item => (item.sigla ? `[${esc(item.sigla)}] ` : '') + fmt(item.count) + ' venda' + (item.count !== 1 ? 's' : ''),
     10);
   
-  // Tabela de Vendas LaraFy
+  // ═══ Tabela de Vendas LaraFy ═══
   const tblV = document.querySelector('#lf-tabela tbody');
   const rowsV = vendas.slice().sort((a,b) => b.d.localeCompare(a.d)).slice(0, 100);
   tblV.innerHTML = rowsV.length ? rowsV.map(v => {
@@ -1666,7 +1768,7 @@ function renderLaraFy() {
     return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(v.grupo, 32))}</td><td>${esc(trunc(v.parceiroNomeCanonico || v.parceiroNome, 24))}</td><td>${esc(trunc(v.vendedor, 18))}</td><td><span class="tbl-badge ${pctClass}">${(Number(v.pct)||0).toFixed(1)}%</span></td></tr>`;
   }).join('') : `<tr><td colspan="5" class="empty">Sem vendas LaraFy no período</td></tr>`;
   
-  // Tabela de Parceiros (lista completa)
+  // ═══ Tabela de Parceiros ═══
   const tblP = document.querySelector('#lf-parceiros-tbl tbody');
   const rowsP = parceiros.slice().sort((a,b) => String(a.nome||'').localeCompare(String(b.nome||'')));
   tblP.innerHTML = rowsP.length ? rowsP.map(p => {
@@ -1796,6 +1898,10 @@ function init() {
   });
   sst.addEventListener('change', e => { F.vstatus = e.target.value; render(); });
   
+  // Filtro de vendedor local da aba LaraFy
+  const svLF = document.getElementById('selVendLaraFy');
+  if (svLF) svLF.addEventListener('change', e => { F.vendLaraFy = e.target.value; render(); });
+  
   // Datas
   document.getElementById('dateStart').addEventListener('change', e => {
     F.d1 = e.target.value;
@@ -1864,6 +1970,7 @@ function init() {
   
   updateClock();
   setInterval(updateClock, 30000);
+  applyPipelineVisibility();  // garante estado inicial correto das logos/abas
   render();
 }
 
