@@ -94,7 +94,8 @@ input,select,textarea{font-family:inherit}
 .nav-wrap{max-width:1480px;margin:0 auto;padding:0 32px;height:74px;display:flex;align-items:center;justify-content:space-between}
 .nav-brand{display:flex;align-items:center;gap:16px;text-decoration:none}
 .nav-logos{display:inline-flex;align-items:center;gap:12px}
-.nav-logo{height:30px;filter:brightness(0) invert(1);opacity:.95;transition:opacity .25s,transform .3s ease}
+.nav-logo{height:30px;width:auto;max-width:150px;object-fit:contain;filter:brightness(0) invert(1);opacity:.95;transition:opacity .25s,transform .3s ease}
+.nav-logo-tax{height:18px;max-width:88px;object-fit:contain}
 .nav-logo-grupo,.nav-logo-fy,.nav-logo-tax{display:none !important}
 .nav-brand.pipe-todos .nav-logo-grupo{display:inline-block !important}
 .nav-brand.pipe-LaraFy .nav-logo-fy{display:inline-block !important}
@@ -371,6 +372,19 @@ input,select,textarea{font-family:inherit}
 .fi p{font-size:12px;color:rgba(255,255,255,0.5);font-weight:500}
 .fi-logo{height:26px;filter:brightness(0) invert(1);opacity:.6}
 
+/* ━━━ FIXES — wrappers gerados pelo JS sem CSS prévio ━━━ */
+.bi-hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.bi-right{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bi.bi-click{cursor:pointer}
+.bi.active{background:var(--cyan-pale);border-color:var(--cyan)}
+.cc-bwrap{width:100%;flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:4px;align-self:stretch}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;color:var(--text3);font-size:12px;font-weight:500;gap:10px;min-height:120px;width:100%}
+.empty-icon{font-size:32px;opacity:.45;line-height:1}
+.ogf-arrow{font-size:14px;color:var(--cyan-deep);font-weight:700;margin-left:auto}
+.ogf-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);gap:10px}
+.rank-item.click{cursor:pointer}
+.rank-item.click.active{background:var(--cyan-pale);border-color:var(--cyan)}
+
 /* ━━━ MOBILE ━━━ */
 @media(max-width:1200px){
   .hero-mini{grid-template-columns:repeat(3,1fr)}
@@ -564,6 +578,8 @@ input,select,textarea{font-family:inherit}
 <div class="ov-kpi" data-goto="reunioes"><div class="ov-kpi-icon c4">📅</div><div class="ov-kpi-l">Reuniões</div><div class="ov-kpi-v" id="ov-reunioes">0</div><div class="ov-kpi-s" id="ov-reunioes-s">agendadas</div></div>
 <div class="ov-kpi" data-goto="vendas"><div class="ov-kpi-icon c3">💰</div><div class="ov-kpi-l">Vendas</div><div class="ov-kpi-v" id="ov-vendas">0</div><div class="ov-kpi-s">contratos fechados</div></div>
 <div class="ov-kpi" data-goto="vendas"><div class="ov-kpi-icon c5">💵</div><div class="ov-kpi-l">Receita Anual</div><div class="ov-kpi-v" id="ov-receita" style="font-size:24px">R$ 0</div><div class="ov-kpi-s">faturamento contratado</div></div>
+<div class="ov-kpi ov-kpi-larafy" data-goto="larafy"><div class="ov-kpi-icon c2">🤝</div><div class="ov-kpi-l">Parceiros LaraFy</div><div class="ov-kpi-v" id="ov-parceiros">0</div><div class="ov-kpi-s" id="ov-parceiros-s">cadastrados</div></div>
+<div class="ov-kpi ov-kpi-larafy" data-goto="larafy"><div class="ov-kpi-icon c3">📊</div><div class="ov-kpi-l">% Médio LaraFy</div><div class="ov-kpi-v" id="ov-pctmedio">0%</div><div class="ov-kpi-s">êxito médio das vendas</div></div>
 </div>
 
 <div class="section-title">Funil de Conversão Geral</div>
@@ -791,23 +807,38 @@ input,select,textarea{font-family:inherit}
 <!-- ============ LARAFY ============ -->
 <div class="tab-pane" id="pane-larafy">
 
-<!-- Toolbar local: filtro vendedor -->
-<div class="card" style="padding:14px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
-<span class="flt-l">👤 Vendedor LaraFy:</span>
+<!-- Toolbar local: filtro vendedor + tipo contrato -->
+<div class="card" style="padding:14px 18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
+<div class="flt"><span class="flt-l">👤 Vendedor LaraFy</span>
 <select class="flt-select" id="selVendLaraFy" style="min-width:200px">
 <option value="todos">Todos os vendedores</option>
 <option value="Andrey Iunskovski">Andrey Iunskovski</option>
 <option value="Kaoana Ribas">Kaoana Ribas</option>
 </select>
-<span class="ct-info" style="margin-left:auto;font-size:11px;color:var(--text3)">Filtro local desta aba</span>
+</div>
+<div class="flt"><span class="flt-l">📄 Tipo de Contrato</span>
+<div class="flt-grp" id="fg-tipo-contrato">
+<button class="fbtn active" data-tipo="todos">Todos</button>
+<button class="fbtn" data-tipo="parceria">Parceria</button>
+<button class="fbtn" data-tipo="direta">Direta</button>
+</div>
+</div>
+<span class="ct-info" style="margin-left:auto;font-size:11px;color:var(--text3)">Filtros locais desta aba</span>
 </div>
 
-<!-- KPIs principais -->
-<div class="kpi-grid">
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🤝</div></div><div class="kpi-label">Quantidade de Parceiros</div><div class="kpi-value purple" id="lf-parceiros">0</div><div class="kpi-sub" id="lf-parceiros-sub">cadastrados</div></div>
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon">💎</div></div><div class="kpi-label">Vendas</div><div class="kpi-value cyan" id="lf-vendas">0</div><div class="kpi-sub">no período</div></div>
+<!-- KPIs principais (5) -->
+<div class="kpi-grid" style="grid-template-columns:repeat(5,1fr)">
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">🤝</div></div><div class="kpi-label">Parceiros</div><div class="kpi-value purple" id="lf-parceiros">0</div><div class="kpi-sub" id="lf-parceiros-sub">cadastrados</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon">📒</div></div><div class="kpi-label">Contabilidades</div><div class="kpi-value cyan" id="lf-contabilidades">0</div><div class="kpi-sub" id="lf-contabilidades-sub">parceiros do tipo</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">💎</div></div><div class="kpi-label">Vendas</div><div class="kpi-value green" id="lf-vendas">0</div><div class="kpi-sub" id="lf-vendas-sub">no período</div></div>
 <div class="kpi"><div class="kpi-top"><div class="kpi-icon gold">📅</div></div><div class="kpi-label">Reuniões</div><div class="kpi-value gold" id="lf-reunioes">0</div><div class="kpi-sub" id="lf-reunioes-s">do Calendar</div></div>
-<div class="kpi"><div class="kpi-top"><div class="kpi-icon green">📊</div></div><div class="kpi-label">% Médio das Vendas</div><div class="kpi-value green" id="lf-pctmedio">0%</div><div class="kpi-sub">média ponderada</div></div>
+<div class="kpi"><div class="kpi-top"><div class="kpi-icon red">📊</div></div><div class="kpi-label">% Médio das Vendas</div><div class="kpi-value red" id="lf-pctmedio">0%</div><div class="kpi-sub">êxito médio</div></div>
+</div>
+
+<!-- Linha extra: divisão Parceria vs Direta -->
+<div class="cmp-grid" style="margin-bottom:18px">
+<div class="cmp-card cyan"><div class="cmp-label">🤝 Vendas via Parceria</div><div class="cmp-value" id="lf-vendas-parceria">0</div><div class="cmp-sub" id="lf-vendas-parceria-sub">0% do total</div></div>
+<div class="cmp-card gold"><div class="cmp-label">🎯 Vendas Diretas</div><div class="cmp-value" id="lf-vendas-direta">0</div><div class="cmp-sub" id="lf-vendas-direta-sub">0% do total · sem parceiro</div></div>
 </div>
 
 <div class="section-title">Funil · Quantidade de Clientes em Cada Etapa</div>
@@ -818,7 +849,7 @@ input,select,textarea{font-family:inherit}
 
 <div class="section-title">Analítico de Clientes</div>
 <div class="card"><div class="ct">📋 Clientes Atendidos <span class="ct-info">agregado por grupo</span></div>
-<div class="tbl-wrap"><table class="tbl" id="lf-clientes-tbl"><thead><tr><th>Cliente (Grupo)</th><th>Vendedor</th><th>Parceiro</th><th>Qtd Vendas</th><th>% Médio</th><th>Última Venda</th></tr></thead><tbody></tbody></table></div>
+<div class="tbl-wrap"><table class="tbl" id="lf-clientes-tbl"><thead><tr><th>Cliente (Grupo)</th><th>Tipo</th><th>Vendedor</th><th>Parceiro</th><th>Qtd Vendas</th><th>% Médio</th><th>Última Venda</th></tr></thead><tbody></tbody></table></div>
 </div>
 
 <div class="section-title">Top Parceiros · por Volume de Vendas</div>
@@ -829,12 +860,14 @@ input,select,textarea{font-family:inherit}
 
 <div class="section-title">Vendas LaraFy · Detalhamento</div>
 <div class="card"><div class="ct">💎 Vendas no período</div>
-<div class="tbl-wrap"><table class="tbl" id="lf-tabela"><thead><tr><th>Data</th><th>Grupo</th><th>Parceiro</th><th>Vendedor</th><th>% Êxito</th></tr></thead><tbody></tbody></table></div>
+<div class="tbl-wrap"><table class="tbl" id="lf-tabela"><thead><tr><th>Data</th><th>Grupo</th><th>Tipo</th><th>Parceiro</th><th>Vendedor</th><th>% Êxito</th></tr></thead><tbody></tbody></table></div>
 </div>
 
 <div class="section-title">Lista Completa de Parceiros</div>
 <div class="card"><div class="ct">🤝 Todos os parceiros cadastrados</div>
-<div class="tbl-wrap"><table class="tbl" id="lf-parceiros-tbl"><thead><tr><th>Sigla</th><th>Nome</th><th>% Padrão</th><th>Responsável</th><th>Contato</th></tr></thead><tbody></tbody></table></div>
+<div class="tbl-wrap"><table class="tbl" id="lf-parceiros-tbl"><thead><tr><th>Sigla</th><th>Nome</th><th>Tipo</th><th>% Padrão</th><th>Responsável</th><th>Contato</th></tr></thead><tbody></tbody></table></div>
+</div>
+
 </div>
 
 </div>
@@ -855,7 +888,7 @@ input,select,textarea{font-family:inherit}
 
 const DASH_DATA = __DASH_DATA__;
 
-const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos', vimpl:'todos', vstatus:'todos', vendLaraFy:'todos' };
+const F = { pipe:'todos', vend:'todos', d1:'', d2:'', origin:'todos', vimpl:'todos', vstatus:'todos', vendLaraFy:'todos', tipoContrato:'todos' };
 let activeTab = 'overview';
 
 // ═══ HELPERS ═══
@@ -915,6 +948,22 @@ function getActiveLaraFyVend() {
   return F.vend;
 }
 
+// Identifica se um parceiro é contabilidade (pelo nome)
+function isContabilidade(nome) {
+  const norm = String(nome||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  return norm.includes('contabil') || norm.includes('contabilidade') || norm.includes('contadora') || norm.includes('contador ');
+}
+
+// Identifica se uma venda LaraFy é direta (sem parceiro) ou via parceria
+function isVendaDireta(v) {
+  const p = String(v.parceiroNome || '').trim();
+  if (!p || p === '—' || p === '-') return true;
+  const norm = p.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if (norm === 'direta' || norm === 'sem parceiro' || norm === 'nenhum') return true;
+  return false;
+}
+
 // Vendas LaraFy (vendem em % de êxito, não em R$). Estrutura: {d, grupo, pct, parceiroNome, parceiroSigla, parceiroNomeCanonico, vendedor}
 function filterVendasLaraFy() {
   if (F.pipe === 'LaraTAX') return [];
@@ -922,6 +971,9 @@ function filterVendasLaraFy() {
   return (DASH_DATA.vendasLaraFy || []).filter(x => {
     if (!inDateRange(x.d)) return false;
     if (v !== 'todos' && x.vendedor !== v) return false;
+    // Filtro tipo contrato: parceria | direta | todos
+    if (F.tipoContrato === 'parceria' && isVendaDireta(x)) return false;
+    if (F.tipoContrato === 'direta' && !isVendaDireta(x)) return false;
     return true;
   });
 }
@@ -946,22 +998,28 @@ function filterParceiros() {
   });
 }
 
-// Reuniões LaraFy (filtradas pelo vendedor local também)
+// Reuniões LaraFy (filtradas pelo vendedor local também) - match case-insensitive
 function filterReunioesLaraFy() {
   const v = getActiveLaraFyVend();
   return (DASH_DATA.reunioes || []).filter(r => {
-    if (r.p !== 'LaraFy') return false;
+    const isLF = String(r.p||'').toLowerCase().includes('larafy');
+    if (!isLF) return false;
     if (!inDateRange(r.d)) return false;
     if (v !== 'todos' && r.u !== v) return false;
     return true;
   });
 }
 
-// Oportunidades LaraFy (pra funil de etapas)
+// Oportunidades LaraFy (pra funil de etapas) - match case-insensitive
 function filterOppsLaraFy() {
   const v = getActiveLaraFyVend();
+  const LF_NAMES = ['andrey', 'kaoana', 'kaona'];
   return (DASH_DATA.opps || []).filter(o => {
-    if (o.p !== 'LaraFy') return false;
+    const pipeNorm = String(o.p||'').toLowerCase();
+    const respNorm = String(o.r||'').toLowerCase();
+    const isLF = pipeNorm.includes('larafy') 
+              || LF_NAMES.some(name => respNorm.includes(name));
+    if (!isLF) return false;
     if (!inDateRange(o.d)) return false;
     if (v !== 'todos' && o.r !== v) return false;
     return true;
@@ -980,36 +1038,58 @@ function setPipe(val) {
 
 // Mostra/esconde aba LaraFy conforme filtro
 // Atualiza logos do nav e tag
+// Em filtro=LaraFy esconde tudo relacionado a leads (LaraFy não trabalha leads)
 function applyPipelineVisibility() {
   const tabLaraFy = document.querySelector('.tab[data-tab="larafy"]');
+  const tabVendas = document.querySelector('.tab[data-tab="vendas"]');
+  const tabLeads = document.querySelector('.tab[data-tab="leads"]');
   const isLaraFy = F.pipe === 'LaraFy';
   const isLaraTAX = F.pipe === 'LaraTAX';
   
-  // LaraFy aparece em Todos e LaraFy. Some em LaraTAX.
   if (tabLaraFy) tabLaraFy.style.display = isLaraTAX ? 'none' : '';
-  // Aba Vendas (LaraTAX) some quando filtro = LaraFy (LaraFy tem aba própria)
-  const tabVendas = document.querySelector('.tab[data-tab="vendas"]');
   if (tabVendas) tabVendas.style.display = isLaraFy ? 'none' : '';
+  // Tab Leads some quando LaraFy (LaraFy não trabalha com captação de leads)
+  if (tabLeads) tabLeads.style.display = isLaraFy ? 'none' : '';
   
   // Redirecionamento quando aba ativa fica invisível
   if (isLaraFy && activeTab === 'vendas') setTab('larafy');
+  if (isLaraFy && activeTab === 'leads') setTab('larafy');
   if (isLaraTAX && activeTab === 'larafy') setTab('overview');
   
-  // Em LaraFy, esconde KPI de Receita Anual da Visão Geral (LaraFy não fatura R$)
+  // Em LaraFy, esconde KPIs/elementos de leads e vendas (LaraTAX) da Visão Geral
   document.querySelectorAll('.ov-kpi[data-goto="vendas"]').forEach(el => {
     el.style.display = isLaraFy ? 'none' : '';
   });
-  
-  // Em LaraFy, esconde a etapa "Vendas" do funil geral (mas em "Todos" mantém — soma das duas)
-  const fsVendas = document.querySelector('.fs-stage[data-goto="vendas"]');
-  if (fsVendas) fsVendas.style.display = isLaraFy ? 'none' : '';
-  
-  // Em LaraFy, esconde botão CTA de Vendas
-  document.querySelectorAll('.nav-cta-btn[data-goto="vendas"]').forEach(el => {
+  document.querySelectorAll('.ov-kpi[data-goto="leads"]').forEach(el => {
     el.style.display = isLaraFy ? 'none' : '';
   });
   
-  // Atualiza logos do nav (3 estados: todos/LaraFy/LaraTAX)
+  // Esconde etapas "Vendas" e "Leads" do funil geral em LaraFy
+  const fsVendas = document.querySelector('.fs-stage[data-goto="vendas"]');
+  if (fsVendas) fsVendas.style.display = isLaraFy ? 'none' : '';
+  const fsLeads = document.querySelector('.fs-stage[data-goto="leads"]');
+  if (fsLeads) fsLeads.style.display = isLaraFy ? 'none' : '';
+  
+  // Esconde botões CTA de Vendas e Leads em LaraFy
+  document.querySelectorAll('.nav-cta-btn[data-goto="vendas"]').forEach(el => {
+    el.style.display = isLaraFy ? 'none' : '';
+  });
+  document.querySelectorAll('.nav-cta-btn[data-goto="leads"]').forEach(el => {
+    el.style.display = isLaraFy ? 'none' : '';
+  });
+  
+  // Hero KPI de Leads (também mostra/esconde)
+  document.querySelectorAll('.hmini-leads').forEach(el => {
+    el.style.display = isLaraFy ? 'none' : '';
+  });
+  
+  // Mostra/esconde KPIs LaraFy-only na Visão Geral (Parceiros + % Médio)
+  // Aparecem em Todos e LaraFy, somem em LaraTAX
+  document.querySelectorAll('.ov-kpi-larafy').forEach(el => {
+    el.style.display = isLaraTAX ? 'none' : '';
+  });
+  
+  // Atualiza logos do nav (3 estados)
   const navBrand = document.getElementById('navBrand');
   if (navBrand) {
     navBrand.classList.remove('pipe-todos','pipe-LaraTAX','pipe-LaraFy');
@@ -1041,6 +1121,16 @@ function quickDate(days) {
     document.getElementById('dateEnd').value = '';
     F.d1 = ''; F.d2 = '';
     document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
+  } else if (days === -1) {
+    // Mês atual: do dia 1 do mês até hoje
+    const e = new Date();
+    const s = new Date(e.getFullYear(), e.getMonth(), 1);
+    const fmtDate = (d) => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    document.getElementById('dateStart').value = fmtDate(s);
+    document.getElementById('dateEnd').value = fmtDate(e);
+    F.d1 = fmtDate(s); F.d2 = fmtDate(e);
+    const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    document.getElementById('periodoLbl').textContent = 'Período: ' + meses[e.getMonth()] + ' de ' + e.getFullYear();
   } else {
     const e = new Date();
     const s = new Date(); s.setDate(s.getDate() - days);
@@ -1053,7 +1143,7 @@ function quickDate(days) {
 }
 
 function resetFilters() {
-  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = ''; F.origin = 'todos'; F.vimpl = 'todos'; F.vstatus = 'todos'; F.vendLaraFy = 'todos';
+  F.pipe = 'todos'; F.vend = 'todos'; F.d1 = ''; F.d2 = ''; F.origin = 'todos'; F.vimpl = 'todos'; F.vstatus = 'todos'; F.vendLaraFy = 'todos'; F.tipoContrato = 'todos';
   document.getElementById('dateStart').value = '';
   document.getElementById('dateEnd').value = '';
   document.getElementById('selVend').value = 'todos';
@@ -1063,9 +1153,10 @@ function resetFilters() {
   if (svLF) svLF.value = 'todos';
   document.querySelectorAll('#fg-pipe .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
   document.querySelectorAll('#fg-impl .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days)===0));
-  document.getElementById('periodoLbl').textContent = 'Período: Histórico completo';
-  render();
+  document.querySelectorAll('#fg-quick .fbtn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days)===-1));
+  document.querySelectorAll('#fg-tipo-contrato .fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  // Volta ao mês atual (default)
+  quickDate(-1);
 }
 
 function setTab(tab) {
@@ -1227,6 +1318,19 @@ function renderOverview() {
   document.getElementById('ov-receita').textContent = fmtBRshort(receitaTotal);
   const reunFeitas = reunioes.filter(r => r.s === 'done').length;
   document.getElementById('ov-reunioes-s').textContent = reunFeitas + ' realizadas e ' + (reunioes.length - reunFeitas) + ' não realizadas';
+  
+  // KPIs LaraFy (visíveis em Todos e LaraFy)
+  const parceirosOV = filterParceiros();
+  const vendasLF_OV = filterVendasLaraFy();
+  document.getElementById('ov-parceiros').textContent = fmt(parceirosOV.length);
+  const contabCount = parceirosOV.filter(p => isContabilidade(p.nome)).length;
+  document.getElementById('ov-parceiros-s').textContent = contabCount > 0 
+    ? `${contabCount} contabilidade${contabCount !== 1 ? 's' : ''}` 
+    : 'cadastrados';
+  const pctMedioOV = vendasLF_OV.length 
+    ? (vendasLF_OV.reduce((s,v) => s + (Number(v.pct)||0), 0) / vendasLF_OV.length).toFixed(1)
+    : '0.0';
+  document.getElementById('ov-pctmedio').textContent = pctMedioOV + '%';
   
   const totalLeads = leads.length;
   const totalReunioes = reunioes.length;
@@ -1665,6 +1769,17 @@ function renderLaraFy() {
   const reunioesLaraFy = filterReunioesLaraFy();
   const oppsLaraFy = filterOppsLaraFy();
   
+  // Identifica contabilidades nos parceiros
+  const contabilidades = parceiros.filter(p => isContabilidade(p.nome));
+  // Vendas via parceria vs diretas (sem aplicar filtro tipo, pra mostrar contadores reais)
+  // Pega TODAS as vendas LaraFy da janela (ignorando F.tipoContrato)
+  const tipoBkp = F.tipoContrato;
+  F.tipoContrato = 'todos';
+  const vendasFull = filterVendasLaraFy();
+  F.tipoContrato = tipoBkp;
+  const vendasParceriaCount = vendasFull.filter(v => !isVendaDireta(v)).length;
+  const vendasDiretaCount = vendasFull.filter(v => isVendaDireta(v)).length;
+  
   // KPIs
   document.getElementById('lf-parceiros').textContent = fmt(parceiros.length);
   const pSub = document.getElementById('lf-parceiros-sub');
@@ -1672,7 +1787,20 @@ function renderLaraFy() {
     const v = getActiveLaraFyVend();
     pSub.textContent = v !== 'todos' ? `de ${v.split(' ')[0]}` : 'cadastrados';
   }
+  document.getElementById('lf-contabilidades').textContent = fmt(contabilidades.length);
+  const cSub = document.getElementById('lf-contabilidades-sub');
+  if (cSub) cSub.textContent = parceiros.length 
+    ? Math.round((contabilidades.length/parceiros.length)*100) + '% do total' 
+    : 'parceiros do tipo';
+  
   document.getElementById('lf-vendas').textContent = fmt(vendas.length);
+  const vSub = document.getElementById('lf-vendas-sub');
+  if (vSub) {
+    if (F.tipoContrato === 'parceria') vSub.textContent = 'apenas via parceria';
+    else if (F.tipoContrato === 'direta') vSub.textContent = 'apenas vendas diretas';
+    else vSub.textContent = 'no período (todos os tipos)';
+  }
+  
   document.getElementById('lf-reunioes').textContent = fmt(reunioesLaraFy.length);
   const reunDone = reunioesLaraFy.filter(r => r.s === 'done').length;
   document.getElementById('lf-reunioes-s').textContent = reunDone + ' realizadas';
@@ -1681,6 +1809,17 @@ function renderLaraFy() {
     ? (vendas.reduce((s,v) => s + (Number(v.pct)||0), 0) / vendas.length).toFixed(1)
     : '0.0';
   document.getElementById('lf-pctmedio').textContent = pctMedio + '%';
+  
+  // Divisão Parceria vs Direta
+  document.getElementById('lf-vendas-parceria').textContent = fmt(vendasParceriaCount);
+  document.getElementById('lf-vendas-direta').textContent = fmt(vendasDiretaCount);
+  const totalVF = vendasFull.length;
+  document.getElementById('lf-vendas-parceria-sub').textContent = totalVF 
+    ? Math.round((vendasParceriaCount/totalVF)*100) + '% do total'
+    : '0% do total';
+  document.getElementById('lf-vendas-direta-sub').textContent = totalVF 
+    ? Math.round((vendasDiretaCount/totalVF)*100) + '% do total · sem parceiro'
+    : '0% do total · sem parceiro';
   
   // ═══ Funil de Oportunidades por Etapa LaraFy ═══
   renderBars('lf-opp-steps', groupCount(oppsLaraFy, 'step'), 'purple', 15);
@@ -1713,7 +1852,9 @@ function renderLaraFy() {
   vendas.forEach(v => {
     const k = v.grupo || '—';
     if (!clientesAgg[k]) clientesAgg[k] = {
-      grupo: k, vendedor: v.vendedor, parceiro: v.parceiroNomeCanonico || v.parceiroNome,
+      grupo: k, vendedor: v.vendedor, 
+      parceiro: isVendaDireta(v) ? '—' : (v.parceiroNomeCanonico || v.parceiroNome),
+      tipo: isVendaDireta(v) ? 'Direta' : 'Parceria',
       count: 0, somaPct: 0, ultimaData: v.d
     };
     clientesAgg[k].count++;
@@ -1725,20 +1866,22 @@ function renderLaraFy() {
   tblC.innerHTML = clientesArr.length ? clientesArr.map(c => {
     const pctMed = c.count ? (c.somaPct/c.count).toFixed(1) : '0.0';
     const pctClass = pctMed >= 30 ? 'green' : pctMed >= 15 ? 'gold' : pctMed > 0 ? 'cyan' : 'red';
+    const tipoBadge = c.tipo === 'Direta' 
+      ? '<span class="tbl-badge gold">Direta</span>'
+      : '<span class="tbl-badge cyan">Parceria</span>';
     const p = c.ultimaData.split('-');
-    return `<tr><td class="tbl-name">${esc(trunc(c.grupo, 32))}</td><td>${esc(trunc(c.vendedor,18))}</td><td>${esc(trunc(c.parceiro,22))}</td><td><span class="tbl-badge cyan">${c.count}</span></td><td><span class="tbl-badge ${pctClass}">${pctMed}%</span></td><td>${p[2]}/${p[1]}/${p[0]}</td></tr>`;
-  }).join('') : `<tr><td colspan="6" class="empty">Sem clientes no período</td></tr>`;
+    return `<tr><td class="tbl-name">${esc(trunc(c.grupo, 32))}</td><td>${tipoBadge}</td><td>${esc(trunc(c.vendedor,18))}</td><td>${esc(trunc(c.parceiro,22))}</td><td><span class="tbl-badge cyan">${c.count}</span></td><td><span class="tbl-badge ${pctClass}">${pctMed}%</span></td><td>${p[2]}/${p[1]}/${p[0]}</td></tr>`;
+  }).join('') : `<tr><td colspan="7" class="empty">Sem clientes no período</td></tr>`;
   
-  // ═══ Top Parceiros ═══
+  // ═══ Top Parceiros (apenas vendas via parceria, ignora diretas) ═══
   const aggParceiro = {};
-  vendas.forEach(v => {
+  vendas.filter(v => !isVendaDireta(v)).forEach(v => {
     const k = v.parceiroNomeCanonico || v.parceiroNome || '—';
     if (!aggParceiro[k]) aggParceiro[k] = { count: 0, somaPct: 0, sigla: v.parceiroSigla || '' };
     aggParceiro[k].count++;
     aggParceiro[k].somaPct += (Number(v.pct)||0);
   });
   
-  // Top por VOLUME
   const topVolume = Object.keys(aggParceiro).map(n => ({
     n, v: aggParceiro[n].count,
     pctMedio: aggParceiro[n].count ? (aggParceiro[n].somaPct/aggParceiro[n].count).toFixed(1) : '0.0',
@@ -1749,7 +1892,6 @@ function renderLaraFy() {
     item => (item.sigla ? `[${esc(item.sigla)}] ` : '') + 'média ' + item.pctMedio + '%',
     10);
   
-  // Top por % MÉDIO
   const topPct = Object.keys(aggParceiro).map(n => ({
     n, v: aggParceiro[n].count ? aggParceiro[n].somaPct/aggParceiro[n].count : 0,
     count: aggParceiro[n].count, sigla: aggParceiro[n].sigla
@@ -1759,22 +1901,31 @@ function renderLaraFy() {
     item => (item.sigla ? `[${esc(item.sigla)}] ` : '') + fmt(item.count) + ' venda' + (item.count !== 1 ? 's' : ''),
     10);
   
-  // ═══ Tabela de Vendas LaraFy ═══
+  // ═══ Tabela de Vendas LaraFy (com tipo) ═══
   const tblV = document.querySelector('#lf-tabela tbody');
-  const rowsV = vendas.slice().sort((a,b) => b.d.localeCompare(a.d)).slice(0, 100);
+  const rowsV = vendas.slice().sort((a,b) => b.d.localeCompare(a.d)).slice(0, 200);
   tblV.innerHTML = rowsV.length ? rowsV.map(v => {
     const p = v.d.split('-');
     const pctClass = v.pct >= 30 ? 'green' : v.pct >= 15 ? 'gold' : v.pct > 0 ? 'cyan' : 'red';
-    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(v.grupo, 32))}</td><td>${esc(trunc(v.parceiroNomeCanonico || v.parceiroNome, 24))}</td><td>${esc(trunc(v.vendedor, 18))}</td><td><span class="tbl-badge ${pctClass}">${(Number(v.pct)||0).toFixed(1)}%</span></td></tr>`;
-  }).join('') : `<tr><td colspan="5" class="empty">Sem vendas LaraFy no período</td></tr>`;
+    const direta = isVendaDireta(v);
+    const tipoBadge = direta 
+      ? '<span class="tbl-badge gold">Direta</span>' 
+      : '<span class="tbl-badge cyan">Parceria</span>';
+    const parceiroDisp = direta ? '—' : esc(trunc(v.parceiroNomeCanonico || v.parceiroNome, 24));
+    return `<tr><td>${p[2]}/${p[1]}/${p[0]}</td><td class="tbl-name">${esc(trunc(v.grupo, 32))}</td><td>${tipoBadge}</td><td>${parceiroDisp}</td><td>${esc(trunc(v.vendedor, 18))}</td><td><span class="tbl-badge ${pctClass}">${(Number(v.pct)||0).toFixed(1)}%</span></td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="empty">Sem vendas LaraFy no período</td></tr>`;
   
-  // ═══ Tabela de Parceiros ═══
+  // ═══ Tabela de Parceiros (com tipo) ═══
   const tblP = document.querySelector('#lf-parceiros-tbl tbody');
   const rowsP = parceiros.slice().sort((a,b) => String(a.nome||'').localeCompare(String(b.nome||'')));
   tblP.innerHTML = rowsP.length ? rowsP.map(p => {
     const pctDisp = p.pct !== null ? p.pct.toFixed(0) + '%' : `<span style="color:var(--text3)">${esc(p.pctRaw||'—')}</span>`;
-    return `<tr><td><span class="tbl-badge cyan">${esc(p.sigla||'—')}</span></td><td class="tbl-name">${esc(trunc(p.nome, 32))}</td><td>${pctDisp}</td><td>${esc(p.resp||'—')}</td><td>${esc(trunc(p.contato, 40))}</td></tr>`;
-  }).join('') : `<tr><td colspan="5" class="empty">Sem parceiros cadastrados</td></tr>`;
+    const isCont = isContabilidade(p.nome);
+    const tipoBadge = isCont 
+      ? '<span class="tbl-badge purple">📒 Contabilidade</span>' 
+      : '<span class="tbl-badge gray" style="background:var(--bg-warm);color:var(--text2)">Outros</span>';
+    return `<tr><td><span class="tbl-badge cyan">${esc(p.sigla||'—')}</span></td><td class="tbl-name">${esc(trunc(p.nome, 32))}</td><td>${tipoBadge}</td><td>${pctDisp}</td><td>${esc(p.resp||'—')}</td><td>${esc(trunc(p.contato, 40))}</td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="empty">Sem parceiros cadastrados</td></tr>`;
 }
 
 // ═══ HERO MINI ═══
@@ -1788,7 +1939,7 @@ function renderHeroMini() {
   const ac = filterArr(DASH_DATA.atividades).length;
   const wasFirst = !heroAnimated;
   document.getElementById('heroMini').innerHTML = 
-    `<div class="hmini"><div class="hmini-l">📊 Leads</div><div class="hmini-v cyan" data-target="${lc}">${wasFirst?0:fmt(lc)}</div><div class="hmini-s">na base</div></div>`+
+    `<div class="hmini hmini-leads"><div class="hmini-l">📊 Leads</div><div class="hmini-v cyan" data-target="${lc}">${wasFirst?0:fmt(lc)}</div><div class="hmini-s">na base</div></div>`+
     `<div class="hmini"><div class="hmini-l">🎯 Oportunidades</div><div class="hmini-v" data-target="${oc}">${wasFirst?0:fmt(oc)}</div><div class="hmini-s">no pipeline</div></div>`+
     `<div class="hmini"><div class="hmini-l">💰 Vendas</div><div class="hmini-v" data-target="${vc}">${wasFirst?0:fmt(vc)}</div><div class="hmini-s">contratos</div></div>`+
     `<div class="hmini"><div class="hmini-l">📅 Reuniões</div><div class="hmini-v" data-target="${rc}">${wasFirst?0:fmt(rc)}</div><div class="hmini-s">agendadas</div></div>`+
@@ -1801,6 +1952,10 @@ function renderHeroMini() {
       });
     }, 200);
   }
+  // Atualiza visibilidade do KPI Leads conforme filtro
+  document.querySelectorAll('.hmini-leads').forEach(el => {
+    el.style.display = F.pipe === 'LaraFy' ? 'none' : '';
+  });
 }
 
 // ═══ RENDER PRINCIPAL ═══
@@ -1902,6 +2057,16 @@ function init() {
   const svLF = document.getElementById('selVendLaraFy');
   if (svLF) svLF.addEventListener('change', e => { F.vendLaraFy = e.target.value; render(); });
   
+  // Filtro tipo contrato (Parceria/Direta) na aba LaraFy
+  const fgTipo = document.getElementById('fg-tipo-contrato');
+  if (fgTipo) fgTipo.addEventListener('click', e => {
+    const btn = e.target.closest('.fbtn');
+    if (!btn) return;
+    F.tipoContrato = btn.dataset.tipo;
+    fgTipo.querySelectorAll('.fbtn').forEach(b => b.classList.toggle('active', b === btn));
+    render();
+  });
+  
   // Datas
   document.getElementById('dateStart').addEventListener('change', e => {
     F.d1 = e.target.value;
@@ -1971,7 +2136,8 @@ function init() {
   updateClock();
   setInterval(updateClock, 30000);
   applyPipelineVisibility();  // garante estado inicial correto das logos/abas
-  render();
+  // Filtro inicial: mês atual (em vez de "Tudo")
+  quickDate(-1);
 }
 
 // Inicia quando DOM estiver pronto
