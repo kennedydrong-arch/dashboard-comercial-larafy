@@ -583,42 +583,63 @@ svg.origin-svg{fill:currentColor}
 .tv-ftr-r{font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.55)}
 
 /* ━━━ ENTREGAS MKT (faixa horizontal sob o split) ━━━ */
-.tv-deliveries{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px 24px;margin-top:8px}
-.tv-deliveries-hdr{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap}
-.tv-deliveries-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
-.tv-deliveries-sub{font-size:11px;color:rgba(255,255,255,0.45);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
-.tv-deliveries-body{display:grid;grid-template-columns:1.2fr 1fr;gap:22px}
+.tv-deliveries{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px 26px;margin-top:8px}
+.tv-deliveries-hdr{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap}
+.tv-deliveries-title{font-size:15px;font-weight:800;color:#fff;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.tv-deliveries-sub{font-size:11px;color:rgba(255,255,255,0.5);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase;font-weight:700;background:rgba(53,185,215,0.08);padding:4px 10px;border-radius:999px;border:1px solid rgba(53,185,215,0.18)}
+.tv-deliveries-body{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center}
 
-.tv-deliv-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.tv-deliv-stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:13px 15px}
-.tv-deliv-stat-l{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:7px;display:flex;align-items:center;gap:4px}
-.tv-deliv-stat-v{font-size:28px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;letter-spacing:-.02em}
-.tv-deliv-stat-v.tv-deliv-green{color:#5ee08f}
-.tv-deliv-stat-v.tv-deliv-red{color:#ff8a87}
-.tv-deliv-stat-s{font-size:10px;color:rgba(255,255,255,0.4);margin-top:5px;font-weight:500}
+/* Gauge "% no prazo" */
+.tv-deliv-gauge-col{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:200px}
+.tv-deliv-gauge-wrap{position:relative;width:200px;height:130px}
+.tv-deliv-gauge{width:100%;height:100%;display:block}
+.tv-deliv-gauge .gauge-track{fill:none;stroke:rgba(255,255,255,0.08);stroke-width:18;stroke-linecap:round}
+.tv-deliv-gauge .gauge-fill{fill:none;stroke-width:18;stroke-linecap:round;transition:stroke-dasharray .8s, stroke .3s}
+.tv-deliv-gauge-center{position:absolute;left:0;right:0;top:55%;transform:translateY(-50%);text-align:center;pointer-events:none}
+.tv-deliv-gauge-v{font-size:38px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;letter-spacing:-.02em}
+.tv-deliv-gauge-l{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-top:4px}
+.tv-deliv-gauge-foot{font-size:11px;color:rgba(255,255,255,0.5);font-family:'JetBrains Mono',monospace;font-weight:600}
 
-.tv-deliv-marcas{display:flex;flex-direction:column;gap:10px}
-.tv-deliv-marcas-title{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.tv-deliv-marcas-hint{margin-left:auto;font-weight:500;text-transform:none;letter-spacing:.04em;color:rgba(255,255,255,0.35);font-size:10px}
-.tv-deliv-marcas-bars{display:flex;flex-direction:column;gap:8px}
-.tv-deliv-marca{display:flex;align-items:center;gap:10px}
-.tv-deliv-marca-name{font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);min-width:120px;letter-spacing:.02em}
-.tv-deliv-marca-bar{flex:1;height:14px;background:rgba(255,255,255,0.05);border-radius:7px;overflow:hidden;position:relative}
-.tv-deliv-marca-fill{height:100%;border-radius:7px;transition:width .8s;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:10px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;min-width:24px}
-.tv-deliv-marca-fill.cyan{background:linear-gradient(90deg,var(--cyan-deep),var(--cyan))}
-.tv-deliv-marca-fill.white{background:linear-gradient(90deg,rgba(255,255,255,0.4),rgba(255,255,255,0.8))}
-.tv-deliv-marca-fill.purple{background:linear-gradient(90deg,#5a3fdc,var(--purple))}
-.tv-deliv-marca-fill.pink{background:linear-gradient(90deg,#c93874,var(--pink))}
-.tv-deliv-marca-fill.orange{background:linear-gradient(90deg,#c0541b,var(--orange))}
-.tv-deliv-marca-fill.gray{background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.4))}
-.tv-deliv-marca-val{font-size:12px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;min-width:32px;text-align:right}
+/* Mini KPI cards (coluna do meio) */
+.tv-deliv-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tv-deliv-mini-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:11px;padding:13px 16px;transition:all .2s}
+.tv-deliv-mini-card:hover{background:rgba(255,255,255,0.06);transform:translateY(-1px)}
+.tv-deliv-mini-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tv-deliv-mini-cyan{background:rgba(53,185,215,0.15);border:1px solid rgba(53,185,215,0.3)}
+.tv-deliv-mini-red{background:rgba(239,83,80,0.15);border:1px solid rgba(239,83,80,0.3)}
+.tv-deliv-mini-blue{background:rgba(123,97,255,0.15);border:1px solid rgba(123,97,255,0.3)}
+.tv-deliv-mini-orange{background:rgba(255,112,67,0.15);border:1px solid rgba(255,112,67,0.3)}
+.tv-deliv-mini-body{flex:1;min-width:0}
+.tv-deliv-mini-l{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:3px}
+.tv-deliv-mini-v{font-size:26px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;letter-spacing:-.02em}
 
-@media(max-width:1024px){
-  .tv-deliveries-body{grid-template-columns:1fr;gap:18px}
+/* Donut chart de marcas */
+.tv-deliv-donut-col{display:flex;flex-direction:column;align-items:center;gap:14px;min-width:280px}
+.tv-deliv-donut-title{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-align:center}
+.tv-deliv-donut-wrap{position:relative;width:180px;height:180px}
+.tv-deliv-donut{width:100%;height:100%;display:block;transform:rotate(-90deg)}
+.tv-deliv-donut .donut-slice{fill:none;stroke-width:32;transition:stroke-dasharray .8s}
+.tv-deliv-donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.tv-deliv-donut-total{font-size:34px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;letter-spacing:-.02em}
+.tv-deliv-donut-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:4px}
+.tv-deliv-donut-legend{display:flex;flex-direction:column;gap:6px;width:100%;max-width:280px}
+.tv-deliv-legend-item{display:flex;align-items:center;gap:9px;font-size:11.5px;color:rgba(255,255,255,0.8);padding:5px 9px;background:rgba(255,255,255,0.03);border-radius:7px}
+.tv-deliv-legend-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.tv-deliv-legend-name{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv-deliv-legend-val{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:11px;color:#fff;min-width:38px;text-align:right}
+.tv-deliv-legend-pct{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;color:rgba(255,255,255,0.45);min-width:36px;text-align:right}
+
+@media(max-width:1280px){
+  .tv-deliveries-body{grid-template-columns:1fr 1fr;gap:22px}
+  .tv-deliv-gauge-col{grid-column:1}
+  .tv-deliv-mini{grid-column:2}
+  .tv-deliv-donut-col{grid-column:1/-1;flex-direction:row;justify-content:center;gap:30px}
 }
-@media(max-width:640px){
-  .tv-deliv-stats{grid-template-columns:1fr}
-  .tv-deliv-marca-name{min-width:90px;font-size:11px}
+@media(max-width:768px){
+  .tv-deliveries-body{grid-template-columns:1fr}
+  .tv-deliv-mini{grid-column:1}
+  .tv-deliv-donut-col{grid-column:1;flex-direction:column}
+  .tv-deliv-mini{grid-template-columns:1fr}
 }
 
 /* Modo TV ativo (aba selecionada): esconde filtros e tabs pra dar mais espaço */
@@ -1300,37 +1321,66 @@ svg.origin-svg{fill:currentColor}
 <!-- ════════════════ ENTREGAS MKT (largura total) ════════════════ -->
 <div class="tv-deliveries">
 <div class="tv-deliveries-hdr">
-<div class="tv-deliveries-title">📦 Entregas MKT do Mês</div>
+<div class="tv-deliveries-title">📦 Entregas MKT</div>
 <div class="tv-deliveries-sub" id="tv-deliv-mes">—</div>
 </div>
 <div class="tv-deliveries-body">
 
-<div class="tv-deliv-stats">
-<div class="tv-deliv-stat">
-<div class="tv-deliv-stat-l">📥 Total no Mês</div>
-<div class="tv-deliv-stat-v" id="tv-deliv-total">0</div>
-<div class="tv-deliv-stat-s" id="tv-deliv-total-s">entregas concluídas</div>
+<!-- Coluna 1: Gauge % no prazo -->
+<div class="tv-deliv-gauge-col">
+<div class="tv-deliv-gauge-wrap">
+<svg viewBox="0 0 200 130" class="tv-deliv-gauge" id="tv-deliv-gauge"></svg>
+<div class="tv-deliv-gauge-center">
+<div class="tv-deliv-gauge-v" id="tv-deliv-pct">0%</div>
+<div class="tv-deliv-gauge-l">no prazo</div>
 </div>
-<div class="tv-deliv-stat">
-<div class="tv-deliv-stat-l">✅ No Prazo</div>
-<div class="tv-deliv-stat-v tv-deliv-green" id="tv-deliv-pct">0%</div>
-<div class="tv-deliv-stat-s" id="tv-deliv-pct-s">0 de 0 com prazo</div>
 </div>
-<div class="tv-deliv-stat">
-<div class="tv-deliv-stat-l">⚠️ Atrasadas</div>
-<div class="tv-deliv-stat-v tv-deliv-red" id="tv-deliv-atr">0</div>
-<div class="tv-deliv-stat-s">demandas em andamento</div>
+<div class="tv-deliv-gauge-foot" id="tv-deliv-pct-s">0 de 0</div>
 </div>
-<div class="tv-deliv-stat">
-<div class="tv-deliv-stat-l">🔄 Em Andamento</div>
-<div class="tv-deliv-stat-v" id="tv-deliv-andamento">0</div>
-<div class="tv-deliv-stat-s">workflow ativo</div>
+
+<!-- Coluna 2: Mini KPIs em coluna -->
+<div class="tv-deliv-mini">
+<div class="tv-deliv-mini-card">
+<div class="tv-deliv-mini-icon tv-deliv-mini-cyan">📥</div>
+<div class="tv-deliv-mini-body">
+<div class="tv-deliv-mini-l">Total Entregues</div>
+<div class="tv-deliv-mini-v" id="tv-deliv-total">0</div>
+</div>
+</div>
+<div class="tv-deliv-mini-card">
+<div class="tv-deliv-mini-icon tv-deliv-mini-red">⚠️</div>
+<div class="tv-deliv-mini-body">
+<div class="tv-deliv-mini-l">Atrasadas</div>
+<div class="tv-deliv-mini-v" id="tv-deliv-atr">0</div>
+</div>
+</div>
+<div class="tv-deliv-mini-card">
+<div class="tv-deliv-mini-icon tv-deliv-mini-blue">🔄</div>
+<div class="tv-deliv-mini-body">
+<div class="tv-deliv-mini-l">Em Andamento</div>
+<div class="tv-deliv-mini-v" id="tv-deliv-andamento">0</div>
+</div>
+</div>
+<div class="tv-deliv-mini-card">
+<div class="tv-deliv-mini-icon tv-deliv-mini-orange">⏳</div>
+<div class="tv-deliv-mini-body">
+<div class="tv-deliv-mini-l">Backlog</div>
+<div class="tv-deliv-mini-v" id="tv-deliv-backlog">0</div>
+</div>
 </div>
 </div>
 
-<div class="tv-deliv-marcas">
-<div class="tv-deliv-marcas-title">Distribuição por Marca <span class="tv-deliv-marcas-hint">entregas no mês</span></div>
-<div class="tv-deliv-marcas-bars" id="tv-deliv-marcas"></div>
+<!-- Coluna 3: Donut chart de marcas -->
+<div class="tv-deliv-donut-col">
+<div class="tv-deliv-donut-title">Distribuição por Marca</div>
+<div class="tv-deliv-donut-wrap">
+<svg viewBox="0 0 200 200" class="tv-deliv-donut" id="tv-deliv-donut"></svg>
+<div class="tv-deliv-donut-center">
+<div class="tv-deliv-donut-total" id="tv-deliv-donut-total">0</div>
+<div class="tv-deliv-donut-label">entregas</div>
+</div>
+</div>
+<div class="tv-deliv-donut-legend" id="tv-deliv-donut-legend"></div>
 </div>
 
 </div>
@@ -2871,83 +2921,148 @@ function render() {
 }
 
 // ═══════════════════════════════════════════════
-// ENTREGAS MKT — painel TV (mês corrente)
+// ENTREGAS MKT — painel TV (respeita filtro de data)
 // ═══════════════════════════════════════════════
+const MARCA_COLORS = {
+  'LaraTAX': '#35b9d7',
+  'LaraFy': '#ffffff',
+  'PodFy': '#ff5a92',
+  'Institucional / Brand': '#7b61ff',
+  'Endomarketing': '#ff7043',
+  'A definir': 'rgba(255,255,255,0.35)'
+};
+
 function renderEntregasTV() {
   const all = DASH_DATA.entregasMkt || [];
+  const wrap = document.querySelector('.tv-deliveries');
   if (!all.length) {
-    const wrap = document.querySelector('.tv-deliveries');
     if (wrap) wrap.style.display = 'none';
     return;
   }
-  const wrap = document.querySelector('.tv-deliveries');
   if (wrap) wrap.style.display = '';
   
+  // ─── Filtro de data: usa F.d1/F.d2 se setados, senão pega o mês atual ───
   const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const ano = hoje.getFullYear();
-  const mes = hoje.getMonth();
-  const ymdMes = ano + '-' + String(mes+1).padStart(2,'0');
+  let d1, d2, periodoLabel;
+  if (F.d1 && F.d2) {
+    d1 = F.d1; d2 = F.d2;
+    const fmtD = (d) => { const p = d.split('-'); return p[2]+'/'+p[1]; };
+    periodoLabel = fmtD(d1) + ' → ' + fmtD(d2);
+  } else {
+    // Mês atual
+    const ano = hoje.getFullYear();
+    const mes = hoje.getMonth();
+    const ymd = (d) => d.toISOString().slice(0,10);
+    d1 = ymd(new Date(ano, mes, 1));
+    d2 = ymd(new Date(ano, mes+1, 0));
+    const mesesNomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    periodoLabel = mesesNomes[mes] + ' ' + ano;
+  }
+  const dentroPeriodo = (prazo) => prazo && prazo >= d1 && prazo <= d2;
   
-  // Filtros: ENTREGUES no mês atual (prazo dentro do mês)
-  const entreguesNoMes = all.filter(e => 
-    e.status === 'Entregue' && e.prazo && e.prazo.startsWith(ymdMes)
-  );
-  // Em andamento (sem importar mês)
+  document.getElementById('tv-deliv-mes').textContent = '📅 ' + periodoLabel;
+  
+  // ─── Classificação ───
+  // Entregues no período (prazo dentro do range, status=Entregue)
+  const entreguesPeriodo = all.filter(e => e.status === 'Entregue' && dentroPeriodo(e.prazo));
+  // Em andamento - todos com status Em andamento
   const emAndamento = all.filter(e => e.status === 'Em andamento');
-  // Atrasadas (em andamento + entregue no prazo = "Atrasada")
-  const atrasadas = all.filter(e => e['noPrazo'] === 'Atrasada');
-  // No prazo (entregue no prazo dentro do mês corrente)
-  const comPrazo = entreguesNoMes.filter(e => e.noPrazo === 'No prazo' || e.noPrazo === 'Atrasada' || e.noPrazo === 'A confirmar');
-  const noPrazo = entreguesNoMes.filter(e => e.noPrazo === 'No prazo').length;
-  // Pra %: considera "no prazo" / (no prazo + atrasada) dentro de entregues no mês
-  const baseConferiveis = entreguesNoMes.filter(e => e.noPrazo === 'No prazo' || e.noPrazo === 'Atrasada').length;
-  const pctPrazo = baseConferiveis > 0 ? Math.round((noPrazo / baseConferiveis) * 100) : 0;
+  // Backlog
+  const backlog = all.filter(e => e.status === 'Backlog');
+  // Atrasadas no período (entregue ou em andamento, com flag Atrasada e prazo no período)
+  const atrasadasPeriodo = all.filter(e => 
+    (e['noPrazo'] === 'Atrasada' || String(e['noPrazo']||'').toLowerCase() === 'atrasada')
+    && dentroPeriodo(e.prazo)
+  );
+  // Para % no prazo: das entregues confirmáveis (No prazo + Atrasada) no período
+  const noPrazo = entreguesPeriodo.filter(e => e.noPrazo === 'No prazo').length;
+  const conferiveis = entreguesPeriodo.filter(e => e.noPrazo === 'No prazo' || e.noPrazo === 'Atrasada').length;
+  const pctPrazo = conferiveis > 0 ? Math.round((noPrazo / conferiveis) * 100) : 0;
   
-  const mesesNomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  document.getElementById('tv-deliv-mes').textContent = mesesNomes[mes] + ' ' + ano;
-  document.getElementById('tv-deliv-total').textContent = fmt(entreguesNoMes.length);
-  document.getElementById('tv-deliv-total-s').textContent = entreguesNoMes.length === 1 ? 'entrega concluída' : 'entregas concluídas';
-  document.getElementById('tv-deliv-pct').textContent = pctPrazo + '%';
-  document.getElementById('tv-deliv-pct-s').textContent = noPrazo + ' de ' + baseConferiveis + ' confirmáveis';
-  document.getElementById('tv-deliv-atr').textContent = fmt(atrasadas.length);
+  // ─── Renderiza KPIs ───
+  document.getElementById('tv-deliv-total').textContent = fmt(entreguesPeriodo.length);
+  document.getElementById('tv-deliv-atr').textContent = fmt(atrasadasPeriodo.length);
   document.getElementById('tv-deliv-andamento').textContent = fmt(emAndamento.length);
+  document.getElementById('tv-deliv-backlog').textContent = fmt(backlog.length);
+  document.getElementById('tv-deliv-pct').textContent = pctPrazo + '%';
+  document.getElementById('tv-deliv-pct-s').textContent = noPrazo + ' de ' + conferiveis + ' confirmáveis';
   
-  // Distribuição por marca (entregas no mês)
+  // ─── Gauge SVG (% no prazo) ───
+  renderGaugeSVG(pctPrazo);
+  
+  // ─── Donut SVG (distribuição por marca) ───
   const porMarca = {};
-  entreguesNoMes.forEach(e => {
+  entreguesPeriodo.forEach(e => {
     const m = e.marca || 'A definir';
     porMarca[m] = (porMarca[m] || 0) + 1;
   });
   const marcaArr = Object.keys(porMarca).map(n => ({n, v: porMarca[n]})).sort((a,b) => b.v - a.v);
-  const totalMarca = marcaArr.reduce((s,m) => s + m.v, 0) || 1;
-  const maxMarca = Math.max(...marcaArr.map(m=>m.v), 1);
+  const totalDonut = marcaArr.reduce((s,m) => s + m.v, 0);
   
-  const colorMap = {
-    'LaraTAX': 'cyan',
-    'LaraFy': 'white',
-    'PodFy': 'pink',
-    'Institucional / Brand': 'purple',
-    'Endomarketing': 'orange',
-    'A definir': 'gray'
-  };
-  
-  const el = document.getElementById('tv-deliv-marcas');
-  if (el) {
-    if (!marcaArr.length) {
-      el.innerHTML = '<div class="tv-rank-empty">Nenhuma entrega no mês ainda</div>';
-    } else {
-      el.innerHTML = marcaArr.map(m => {
-        const w = Math.round((m.v / maxMarca) * 100);
-        const pct = Math.round((m.v / totalMarca) * 100);
-        const c = colorMap[m.n] || 'gray';
-        return `<div class="tv-deliv-marca">
-          <div class="tv-deliv-marca-name">${esc(m.n)}</div>
-          <div class="tv-deliv-marca-bar"><div class="tv-deliv-marca-fill ${c}" style="width:${w}%">${pct}%</div></div>
-          <div class="tv-deliv-marca-val">${fmt(m.v)}</div>
-        </div>`;
-      }).join('');
-    }
+  document.getElementById('tv-deliv-donut-total').textContent = fmt(totalDonut);
+  renderDonutSVG(marcaArr, totalDonut);
+  renderDonutLegend(marcaArr, totalDonut);
+}
+
+// Renderiza o gauge semicircular
+function renderGaugeSVG(pct) {
+  const el = document.getElementById('tv-deliv-gauge');
+  if (!el) return;
+  // Arco semi-circular: do (20, 110) ao (180, 110), raio 80, passando pelo topo
+  // Comprimento do arco = π × r = π × 80 ≈ 251.33
+  const arcLen = Math.PI * 80;
+  const fillLen = (pct / 100) * arcLen;
+  let color = '#5ee08f'; // verde (default >=80)
+  if (pct < 60) color = '#ff8a87'; // vermelho
+  else if (pct < 80) color = '#f0c674'; // amarelo
+  el.innerHTML = `
+    <path class="gauge-track" d="M 20 110 A 80 80 0 0 1 180 110"></path>
+    <path class="gauge-fill" d="M 20 110 A 80 80 0 0 1 180 110"
+      stroke="${color}"
+      stroke-dasharray="${fillLen} ${arcLen}"></path>
+  `;
+}
+
+// Renderiza o donut chart de marcas
+function renderDonutSVG(arr, total) {
+  const el = document.getElementById('tv-deliv-donut');
+  if (!el) return;
+  if (!total) {
+    el.innerHTML = '<circle cx="100" cy="100" r="68" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="32"></circle>';
+    return;
   }
+  const r = 68;
+  const circ = 2 * Math.PI * r;
+  let acc = 0;
+  let html = '';
+  // Background ring (caso sobre alguma falha)
+  html += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="32"></circle>`;
+  arr.forEach(m => {
+    const frac = m.v / total;
+    const dash = circ * frac;
+    const offset = circ * acc;
+    const color = MARCA_COLORS[m.n] || MARCA_COLORS['A definir'];
+    html += `<circle cx="100" cy="100" r="${r}" class="donut-slice" stroke="${color}" stroke-dasharray="${dash} ${circ - dash}" stroke-dashoffset="${-offset}"></circle>`;
+    acc += frac;
+  });
+  el.innerHTML = html;
+}
+
+// Legenda do donut
+function renderDonutLegend(arr, total) {
+  const el = document.getElementById('tv-deliv-donut-legend');
+  if (!el) return;
+  if (!total) { el.innerHTML = '<div class="tv-rank-empty">Sem entregas no período</div>'; return; }
+  el.innerHTML = arr.map(m => {
+    const pct = Math.round((m.v / total) * 100);
+    const color = MARCA_COLORS[m.n] || MARCA_COLORS['A definir'];
+    return `<div class="tv-deliv-legend-item">
+      <span class="tv-deliv-legend-dot" style="background:${color}"></span>
+      <span class="tv-deliv-legend-name">${esc(m.n)}</span>
+      <span class="tv-deliv-legend-val">${fmt(m.v)}</span>
+      <span class="tv-deliv-legend-pct">${pct}%</span>
+    </div>`;
+  }).join('');
 }
 
 // ═══════════════════════════════════════════════
