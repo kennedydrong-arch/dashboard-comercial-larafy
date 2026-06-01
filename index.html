@@ -489,10 +489,16 @@ svg.origin-svg{fill:currentColor}
 .tv-btn:hover{border-color:var(--cyan);background:var(--cyan-mist);color:var(--cyan-deep)}
 
 .tv-stage{background:linear-gradient(135deg,#04111a 0%,#0a2638 55%,#0c3450 100%);border-radius:18px;padding:32px;min-height:80vh;display:flex;flex-direction:column;gap:22px;color:#fff;box-shadow:0 16px 64px rgba(10,38,56,0.25);position:relative;overflow:hidden}
-.tv-stage::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 25% 25%,rgba(53,185,215,0.08) 0%,transparent 50%),radial-gradient(circle at 75% 75%,rgba(232,168,56,0.06) 0%,transparent 50%);pointer-events:none}
+.tv-stage::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 25% 25%,rgba(53,185,215,0.08) 0%,transparent 50%),radial-gradient(circle at 75% 75%,rgba(52,211,153,0.06) 0%,transparent 50%);pointer-events:none}
 .tv-stage > *{position:relative;z-index:1}
-.tv-stage-hdr{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:18px;border-bottom:1px solid rgba(53,185,215,0.18)}
-.tv-stage-hdr-l{display:flex;align-items:center;gap:18px}
+.tv-stage-hdr{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:18px;border-bottom:1px solid rgba(53,185,215,0.18);flex-wrap:wrap}
+.tv-stage-hdr-l{display:flex;align-items:center;gap:18px;flex-shrink:0}
+.tv-stage-hdr-c{display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1;justify-content:center}
+.tv-stage-hdr-c .tv-filter-group{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:3px}
+.tv-stage-hdr-c .tv-filter-label{font-size:13px;padding:0 8px;color:rgba(255,255,255,0.6)}
+.tv-stage-hdr-c .tv-filter-btn{padding:7px 12px;border:none;border-radius:6px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;background:transparent;color:rgba(255,255,255,0.55);white-space:nowrap;letter-spacing:.04em}
+.tv-stage-hdr-c .tv-filter-btn:hover{color:#fff;background:rgba(53,185,215,0.1)}
+.tv-stage-hdr-c .tv-filter-btn.active{background:var(--cyan);color:var(--navy-darkest)}
 .tv-stage-logo{height:32px;filter:brightness(0) invert(1);opacity:.95}
 .tv-stage-title{font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
 .tv-stage-hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
@@ -506,32 +512,32 @@ svg.origin-svg{fill:currentColor}
 
 .tv-side-brand{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .tv-side-emblem{width:auto;min-width:120px;height:64px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(53,185,215,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;padding:0 18px;flex-shrink:0}
-.tv-side-larafy .tv-side-emblem{background:rgba(255,255,255,0.05);border-color:rgba(232,168,56,0.4)}
+.tv-side-larafy .tv-side-emblem{background:rgba(255,255,255,0.05);border-color:rgba(52,211,153,0.45)}
 .tv-emblem-txt{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.02em;color:#fff;line-height:1}
 .tv-emblem-accent{font-weight:400}
 .tv-emblem-tax .tv-emblem-accent{color:var(--cyan)}
-.tv-emblem-fy .tv-emblem-accent{color:#f0c674}
+.tv-emblem-fy .tv-emblem-accent{color:#34d399}
 .tv-side-name{flex:1;display:flex;flex-direction:column;gap:2px}
 .tv-side-name{font-size:24px;font-weight:800;letter-spacing:-.01em;line-height:1.2;flex:1}
 .tv-side-tag{font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
 
 .tv-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .tv-kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(53,185,215,0.12);border-radius:12px;padding:16px 18px;transition:all .25s}
-.tv-side-larafy .tv-kpi{border-color:rgba(232,168,56,0.15)}
+.tv-side-larafy .tv-kpi{border-color:rgba(52,211,153,0.18)}
 .tv-kpi:hover{background:rgba(255,255,255,0.07);transform:translateY(-2px)}
 .tv-kpi-l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px}
 .tv-kpi-v{font-size:38px;font-weight:900;color:#fff;line-height:1;font-family:'JetBrains Mono',monospace;letter-spacing:-.02em}
 .tv-side-laratax .tv-kpi-v{color:var(--cyan)}
-.tv-side-larafy .tv-kpi-v{color:#f0c674}
+.tv-side-larafy .tv-kpi-v{color:#34d399}
 .tv-kpi-s{font-size:11px;color:rgba(255,255,255,0.4);font-weight:500;margin-top:6px}
 .tv-kpi-spark{margin-top:10px;height:32px;width:100%;opacity:.85}
 .tv-kpi-spark svg{display:block;width:100%;height:100%;overflow:visible}
 .tv-kpi-spark .spark-line{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tv-side-laratax .tv-kpi-spark .spark-line{stroke:var(--cyan)}
-.tv-side-larafy .tv-kpi-spark .spark-line{stroke:#f0c674}
+.tv-side-larafy .tv-kpi-spark .spark-line{stroke:#34d399}
 .tv-kpi-spark .spark-fill{opacity:.15}
 .tv-side-laratax .tv-kpi-spark .spark-fill{fill:var(--cyan)}
-.tv-side-larafy .tv-kpi-spark .spark-fill{fill:#f0c674}
+.tv-side-larafy .tv-kpi-spark .spark-fill{fill:#34d399}
 .tv-kpi-spark .spark-dot{fill:#fff}
 
 .tv-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
@@ -543,10 +549,10 @@ svg.origin-svg{fill:currentColor}
 .tv-rank-name{flex:1;font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tv-rank-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:#fff;min-width:60px;text-align:right}
 .tv-side-laratax .tv-rank-val{color:var(--cyan)}
-.tv-side-larafy .tv-rank-val{color:#f0c674}
+.tv-side-larafy .tv-rank-val{color:#34d399}
 .tv-rank-bar{flex:0 0 80px;height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
 .tv-rank-bar-fill{height:100%;background:var(--cyan);border-radius:3px;transition:width .8s}
-.tv-side-larafy .tv-rank-bar-fill{background:var(--gold)}
+.tv-side-larafy .tv-rank-bar-fill{background:#34d399}
 .tv-rank-empty{font-size:12px;color:rgba(255,255,255,0.3);padding:14px 0;text-align:center}
 
 /* ━━━ FORECAST ━━━ */
@@ -554,14 +560,14 @@ svg.origin-svg{fill:currentColor}
 .tv-fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tv-fc-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:13px 14px;display:flex;flex-direction:column;gap:5px;position:relative;overflow:hidden}
 .tv-fc-card::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.4}
-.tv-side-larafy .tv-fc-card::after{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.tv-side-larafy .tv-fc-card::after{background:linear-gradient(90deg,transparent,#34d399,transparent)}
 .tv-fc-label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:space-between;gap:4px}
 .tv-fc-current{font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:5px}
 .tv-fc-current-v{color:rgba(255,255,255,0.7);font-weight:700}
 .tv-fc-arrow{display:flex;align-items:baseline;gap:4px;margin-top:2px}
 .tv-fc-proj{font-size:24px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;line-height:1;letter-spacing:-.02em}
 .tv-side-laratax .tv-fc-proj{color:var(--cyan)}
-.tv-side-larafy .tv-fc-proj{color:#f0c674}
+.tv-side-larafy .tv-fc-proj{color:#34d399}
 .tv-fc-sub{font-size:9.5px;color:rgba(255,255,255,0.35);font-weight:500;display:flex;align-items:center;gap:5px;line-height:1.3}
 .tv-fc-trend{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
 .tv-fc-trend.up{background:rgba(0,200,83,0.18);color:#5ee08f;border:1px solid rgba(0,200,83,0.3)}
@@ -1145,22 +1151,7 @@ svg.origin-svg{fill:currentColor}
 <div class="tv-toolbar-l">
 <button class="tv-btn tv-btn-back" id="tvBack">← Voltar</button>
 <span class="tv-toolbar-label">📺 Modo Painel TV</span>
-</div>
-<div class="tv-toolbar-mid">
-<div class="tv-filter-group">
-<span class="tv-filter-label">🏢</span>
-<button class="tv-filter-btn active" data-tvpipe="todos">Todos</button>
-<button class="tv-filter-btn" data-tvpipe="LaraTAX">LaraTAX</button>
-<button class="tv-filter-btn" data-tvpipe="LaraFy">LaraFy</button>
-</div>
-<div class="tv-filter-group">
-<span class="tv-filter-label">📅</span>
-<button class="tv-filter-btn" data-tvquick="7">7 dias</button>
-<button class="tv-filter-btn" data-tvquick="30">30 dias</button>
-<button class="tv-filter-btn" data-tvquick="90">90 dias</button>
-<button class="tv-filter-btn active" data-tvquick="-1">Mês atual</button>
-<button class="tv-filter-btn" data-tvquick="0">Tudo</button>
-</div>
+<span class="tv-toolbar-hint">Os filtros estão dentro do painel ▼</span>
 </div>
 <div class="tv-toolbar-r">
 <button class="tv-btn" id="tvFullscreen">⛶ Tela cheia</button>
@@ -1173,6 +1164,22 @@ svg.origin-svg{fill:currentColor}
 <div class="tv-stage-hdr-l">
 <img src="https://www.larafy.com.br/assets/images/larafy.png" class="tv-stage-logo" alt="LaraFy">
 <span class="tv-stage-title">Painel Comercial · Tempo Real</span>
+</div>
+<div class="tv-stage-hdr-c">
+<div class="tv-filter-group">
+<span class="tv-filter-label">🏢</span>
+<button class="tv-filter-btn active" data-tvpipe="todos">Todos</button>
+<button class="tv-filter-btn" data-tvpipe="LaraTAX">LaraTAX</button>
+<button class="tv-filter-btn" data-tvpipe="LaraFy">LaraFy</button>
+</div>
+<div class="tv-filter-group">
+<span class="tv-filter-label">📅</span>
+<button class="tv-filter-btn" data-tvquick="7">7d</button>
+<button class="tv-filter-btn" data-tvquick="30">30d</button>
+<button class="tv-filter-btn" data-tvquick="90">90d</button>
+<button class="tv-filter-btn active" data-tvquick="-1">Mês</button>
+<button class="tv-filter-btn" data-tvquick="0">Tudo</button>
+</div>
 </div>
 <div class="tv-stage-hdr-r">
 <span class="tv-stage-clock" id="tvClock">--:--</span>
