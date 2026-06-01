@@ -473,7 +473,9 @@ svg.origin-svg{fill:currentColor}
 
 /* ━━━ PAINEL TV (full-screen split) ━━━ */
 .tv-toolbar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px;box-shadow:var(--shadow-xs)}
-.tv-toolbar-l{display:flex;flex-direction:column;gap:4px}
+.tv-toolbar-l{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tv-btn-back{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.tv-btn-back:hover{background:var(--cyan-deep);border-color:var(--cyan-deep);color:#fff}
 .tv-toolbar-label{font-size:13px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px}
 .tv-toolbar-hint{font-size:11px;color:var(--text3)}
 .tv-toolbar-r{display:flex;gap:8px}
@@ -497,8 +499,11 @@ svg.origin-svg{fill:currentColor}
 .tv-side-laratax::before{content:'';position:absolute;left:50%;top:80px;bottom:50px;width:1px;background:linear-gradient(180deg,transparent 0%,rgba(53,185,215,0.25) 50%,transparent 100%);transform:translateX(-50%);pointer-events:none}
 
 .tv-side-brand{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.tv-side-emblem{font-size:32px;width:54px;height:54px;background:rgba(53,185,215,0.12);border:1.5px solid rgba(53,185,215,0.3);border-radius:14px;display:flex;align-items:center;justify-content:center}
-.tv-side-larafy .tv-side-emblem{background:rgba(232,168,56,0.12);border-color:rgba(232,168,56,0.4)}
+.tv-side-emblem{font-size:32px;width:64px;height:64px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(53,185,215,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;padding:8px;flex-shrink:0}
+.tv-side-larafy .tv-side-emblem{background:rgba(255,255,255,0.05);border-color:rgba(232,168,56,0.4)}
+.tv-side-logo{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.tv-side-logo-tax{filter:brightness(0) invert(1)}
+.tv-side-logo-fy{filter:brightness(0) invert(1)}
 .tv-side-name{flex:1;display:flex;flex-direction:column;gap:2px}
 .tv-side-name{font-size:24px;font-weight:800;letter-spacing:-.01em;line-height:1.2;flex:1}
 .tv-side-tag{font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
@@ -512,6 +517,15 @@ svg.origin-svg{fill:currentColor}
 .tv-side-laratax .tv-kpi-v{color:var(--cyan)}
 .tv-side-larafy .tv-kpi-v{color:#f0c674}
 .tv-kpi-s{font-size:11px;color:rgba(255,255,255,0.4);font-weight:500;margin-top:6px}
+.tv-kpi-spark{margin-top:10px;height:32px;width:100%;opacity:.85}
+.tv-kpi-spark svg{display:block;width:100%;height:100%;overflow:visible}
+.tv-kpi-spark .spark-line{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tv-side-laratax .tv-kpi-spark .spark-line{stroke:var(--cyan)}
+.tv-side-larafy .tv-kpi-spark .spark-line{stroke:#f0c674}
+.tv-kpi-spark .spark-fill{opacity:.15}
+.tv-side-laratax .tv-kpi-spark .spark-fill{fill:var(--cyan)}
+.tv-side-larafy .tv-kpi-spark .spark-fill{fill:#f0c674}
+.tv-kpi-spark .spark-dot{fill:#fff}
 
 .tv-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
 .tv-block-title{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06)}
@@ -549,6 +563,11 @@ svg.origin-svg{fill:currentColor}
 
 .tv-stage-ftr{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(53,185,215,0.18);font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.06em}
 .tv-ftr-r{font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.55)}
+
+/* Modo TV ativo (aba selecionada): esconde filtros e tabs pra dar mais espaço */
+.tv-mode .filters-bar,
+.tv-mode .tabs-bar{display:none !important}
+.tv-mode .wrap{padding-top:20px}
 
 /* Fullscreen state — esconde tudo exceto a stage */
 .tv-fullscreen .navbar,
@@ -1113,8 +1132,9 @@ svg.origin-svg{fill:currentColor}
 <div class="tab-pane" id="pane-tv">
 <div class="tv-toolbar">
 <div class="tv-toolbar-l">
+<button class="tv-btn tv-btn-back" id="tvBack">← Voltar ao Dashboard</button>
 <span class="tv-toolbar-label">📺 Modo Painel TV</span>
-<span class="tv-toolbar-hint">Tela cheia recomendada · F11 ou botão →</span>
+<span class="tv-toolbar-hint">Filtros ocultos · ideal pra exibição em monitor</span>
 </div>
 <div class="tv-toolbar-r">
 <button class="tv-btn" id="tvFullscreen">⛶ Tela cheia</button>
@@ -1140,16 +1160,16 @@ svg.origin-svg{fill:currentColor}
 <!-- ════════════════ LADO LARATAX ════════════════ -->
 <div class="tv-side tv-side-laratax">
 <div class="tv-side-brand">
-<div class="tv-side-emblem">💻</div>
+<div class="tv-side-emblem"><img src="https://lp-lara-tax-forms.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75" alt="LaraTAX" class="tv-side-logo tv-side-logo-tax"></div>
 <div class="tv-side-name">LaraTAX</div>
 <div class="tv-side-tag">Tecnologia Tributária</div>
 </div>
 
 <div class="tv-kpis">
-<div class="tv-kpi"><div class="tv-kpi-l">Vendas</div><div class="tv-kpi-v" id="tv-tax-vendas">0</div><div class="tv-kpi-s" id="tv-tax-vendas-s">R$ 0</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Leads</div><div class="tv-kpi-v" id="tv-tax-leads">0</div><div class="tv-kpi-s">na base</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Reuniões</div><div class="tv-kpi-v" id="tv-tax-reunioes">0</div><div class="tv-kpi-s" id="tv-tax-reunioes-s">0 realizadas</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Oportunidades</div><div class="tv-kpi-v" id="tv-tax-opps">0</div><div class="tv-kpi-s">ativas</div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Vendas</div><div class="tv-kpi-v" id="tv-tax-vendas">0</div><div class="tv-kpi-s" id="tv-tax-vendas-s">R$ 0</div><div class="tv-kpi-spark" id="tv-tax-vendas-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Leads</div><div class="tv-kpi-v" id="tv-tax-leads">0</div><div class="tv-kpi-s">na base</div><div class="tv-kpi-spark" id="tv-tax-leads-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Reuniões</div><div class="tv-kpi-v" id="tv-tax-reunioes">0</div><div class="tv-kpi-s" id="tv-tax-reunioes-s">0 realizadas</div><div class="tv-kpi-spark" id="tv-tax-reunioes-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Oportunidades</div><div class="tv-kpi-v" id="tv-tax-opps">0</div><div class="tv-kpi-s">ativas</div><div class="tv-kpi-spark" id="tv-tax-opps-spark"></div></div>
 </div>
 
 <div class="tv-block">
@@ -1171,16 +1191,16 @@ svg.origin-svg{fill:currentColor}
 <!-- ════════════════ LADO LARAFY ════════════════ -->
 <div class="tv-side tv-side-larafy">
 <div class="tv-side-brand">
-<div class="tv-side-emblem">🌾</div>
+<div class="tv-side-emblem"><img src="https://www.larafy.com.br/assets/images/larafy.png" alt="LaraFy" class="tv-side-logo tv-side-logo-fy"></div>
 <div class="tv-side-name">LaraFy</div>
 <div class="tv-side-tag">Consultoria Tributária</div>
 </div>
 
 <div class="tv-kpis">
-<div class="tv-kpi"><div class="tv-kpi-l">Vendas</div><div class="tv-kpi-v" id="tv-fy-vendas">0</div><div class="tv-kpi-s" id="tv-fy-vendas-s">parcerias</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Reuniões</div><div class="tv-kpi-v" id="tv-fy-reunioes">0</div><div class="tv-kpi-s">agendadas</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Oportunidades</div><div class="tv-kpi-v" id="tv-fy-opps">0</div><div class="tv-kpi-s">ativas</div></div>
-<div class="tv-kpi"><div class="tv-kpi-l">Parceiros</div><div class="tv-kpi-v" id="tv-fy-parc">0</div><div class="tv-kpi-s" id="tv-fy-parc-s">0 contabilidades</div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Vendas</div><div class="tv-kpi-v" id="tv-fy-vendas">0</div><div class="tv-kpi-s" id="tv-fy-vendas-s">parcerias</div><div class="tv-kpi-spark" id="tv-fy-vendas-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Reuniões</div><div class="tv-kpi-v" id="tv-fy-reunioes">0</div><div class="tv-kpi-s">agendadas</div><div class="tv-kpi-spark" id="tv-fy-reunioes-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Oportunidades</div><div class="tv-kpi-v" id="tv-fy-opps">0</div><div class="tv-kpi-s">ativas</div><div class="tv-kpi-spark" id="tv-fy-opps-spark"></div></div>
+<div class="tv-kpi"><div class="tv-kpi-l">Parceiros</div><div class="tv-kpi-v" id="tv-fy-parc">0</div><div class="tv-kpi-s" id="tv-fy-parc-s">0 contabilidades</div><div class="tv-kpi-spark" id="tv-fy-parc-spark"></div></div>
 </div>
 
 <div class="tv-block">
@@ -1735,6 +1755,8 @@ function setTab(tab) {
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   const pane = document.getElementById('pane-'+tab);
   if (pane) pane.classList.add('active');
+  // Modo TV: esconde filtros e tabs quando aba TV está ativa
+  document.body.classList.toggle('tv-mode', tab === 'tv');
   render();
 }
 
@@ -2735,6 +2757,45 @@ function render() {
 }
 
 // ═══════════════════════════════════════════════
+// SPARKLINE — mini gráfico de linha últimos 30 dias
+// ═══════════════════════════════════════════════
+function renderSparkline(elId, items) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const N = 30;
+  // Bucket por dia
+  const buckets = new Array(N).fill(0);
+  const ymd = (d) => d.toISOString().slice(0,10);
+  const dias = [];
+  for (let i = N-1; i >= 0; i--) {
+    const d = new Date(hoje); d.setDate(d.getDate() - i);
+    dias.push(ymd(d));
+  }
+  const idx = {};
+  dias.forEach((d,i) => idx[d] = i);
+  (items||[]).forEach(it => {
+    if (it && it.d && idx[it.d] !== undefined) buckets[idx[it.d]]++;
+  });
+  const max = Math.max(...buckets, 1);
+  const W = 100, H = 32;
+  // pontos
+  const pts = buckets.map((v,i) => {
+    const x = (i/(N-1)) * W;
+    const y = H - (v/max) * (H-4) - 2;
+    return [x, y];
+  });
+  const pathLine = pts.map((p,i) => (i===0?'M':'L') + p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ');
+  const pathFill = pathLine + ' L'+W+','+H+' L0,'+H+' Z';
+  const last = pts[pts.length-1];
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <path class="spark-fill" d="${pathFill}"></path>
+    <path class="spark-line" d="${pathLine}"></path>
+    <circle class="spark-dot" cx="${last[0].toFixed(2)}" cy="${last[1].toFixed(2)}" r="2.5"></circle>
+  </svg>`;
+}
+
+// ═══════════════════════════════════════════════
 // FORECAST — projeção fim do mês com base nos últimos 90 dias
 // ═══════════════════════════════════════════════
 // Recebe array de itens (cada item precisa ter campo `d` = "YYYY-MM-DD")
@@ -2915,6 +2976,18 @@ function renderTV() {
   document.getElementById('tv-tax-opps').textContent = fmt(oppsLaraTAXAtivas);
   renderRankRows('tv-tax-vend', vendTaxArr);
   renderRankRows('tv-tax-origem', origemTaxArr);
+  // Sparklines LaraTAX (últimos 30 dias - todos dados, ignora filtro)
+  const oppsLaraTAXFull = (DASH_DATA.opps||[]).filter(o => {
+    const pipeNorm = String(o.p||'').toLowerCase();
+    const respNorm = String(o.r||'').toLowerCase();
+    const isLF = pipeNorm.includes('larafy') || ['andrey','kaoana','kaona'].some(n => respNorm.includes(n));
+    return !isLF;
+  });
+  const reunsLaraTAXFull = (DASH_DATA.reunioes || []).filter(r => r.p !== 'LaraFy');
+  renderSparkline('tv-tax-vendas-spark', DASH_DATA.vendas || []);
+  renderSparkline('tv-tax-leads-spark', DASH_DATA.leads || []);
+  renderSparkline('tv-tax-reunioes-spark', reunsLaraTAXFull);
+  renderSparkline('tv-tax-opps-spark', oppsLaraTAXFull);
   
   // LaraFy
   document.getElementById('tv-fy-vendas').textContent = fmt(vendasFy.length);
@@ -2926,6 +2999,18 @@ function renderTV() {
   document.getElementById('tv-fy-parc-s').textContent = contabCountFy + ' contabilidade' + (contabCountFy !== 1 ? 's' : '');
   renderRankRows('tv-fy-vend', vendFyArr);
   renderRankRows('tv-fy-parceiros', parcArr);
+  // Sparklines LaraFy
+  const reunsLaraFyFull = (DASH_DATA.reunioes || []).filter(r => r.p === 'LaraFy');
+  const oppsLaraFyFull = (DASH_DATA.opps||[]).filter(o => {
+    const pipeNorm = String(o.p||'').toLowerCase();
+    const respNorm = String(o.r||'').toLowerCase();
+    return pipeNorm.includes('larafy') || ['andrey','kaoana','kaona'].some(n => respNorm.includes(n));
+  });
+  renderSparkline('tv-fy-vendas-spark', DASH_DATA.vendasLaraFy || []);
+  renderSparkline('tv-fy-reunioes-spark', reunsLaraFyFull);
+  renderSparkline('tv-fy-opps-spark', oppsLaraFyFull);
+  // Parceiros: usa a data da venda em que aparecem
+  renderSparkline('tv-fy-parc-spark', (DASH_DATA.vendasLaraFy || []).filter(v => !isVendaDireta(v)));
   
   // ─── FORECAST ───
   // Considera TODOS os dados (não respeita filtro de data, pra ter 90 dias completos)
@@ -3220,6 +3305,7 @@ function init() {
       if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
     }
   });
+  document.getElementById('tvBack')?.addEventListener('click', () => setTab('overview'));
   // Se sair do fullscreen pela tecla Esc, remove a classe
   document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) document.body.classList.remove('tv-fullscreen');
