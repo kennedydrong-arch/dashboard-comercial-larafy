@@ -2969,10 +2969,10 @@ function renderTV() {
   // Vendas LaraTAX (do dataset principal)
   const vendasLaraTAX = filterVendas(DASH_DATA.vendas || []);
   const valorTaxTotal = vendasLaraTAX.reduce((s,v) => s + (Number(v.va)||0), 0);
-  // Vendas por vendedor LaraTAX
+  // Vendas por vendedor LaraTAX (campo `cl` = Closer no processador)
   const vendPorVendTAX = {};
   vendasLaraTAX.forEach(v => {
-    const n = safeName(v.r);
+    const n = safeName(v.cl);
     vendPorVendTAX[n] = (vendPorVendTAX[n] || 0) + 1;
   });
   const vendTaxArr = Object.keys(vendPorVendTAX).map(n => ({n, v:vendPorVendTAX[n]})).sort((a,b)=>b.v-a.v);
