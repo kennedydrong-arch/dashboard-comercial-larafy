@@ -1168,7 +1168,7 @@ svg.origin-svg{fill:currentColor}
 <div class="tv-stage-hdr">
 <div class="tv-stage-hdr-l">
 <img src="https://www.larafy.com.br/assets/images/larafy.png" class="tv-stage-logo" alt="LaraFy">
-<span class="tv-stage-title">Painel Comercial · Tempo Real</span>
+<span class="tv-stage-title">Painel Comercial</span>
 </div>
 <div class="tv-stage-hdr-c">
 <div class="tv-filter-group">
@@ -1187,7 +1187,6 @@ svg.origin-svg{fill:currentColor}
 </div>
 </div>
 <div class="tv-stage-hdr-r">
-<span class="tv-stage-clock" id="tvClock">--:--</span>
 <span class="tv-stage-date" id="tvDate">—</span>
 <span class="tv-stage-period" id="tvPeriod">—</span>
 </div>
@@ -1261,7 +1260,6 @@ svg.origin-svg{fill:currentColor}
 
 <div class="tv-stage-ftr">
 <span class="tv-ftr-l">Dashboard Comercial · A Alcateia LaraFy</span>
-<span class="tv-ftr-r" id="tv-ftr-updated">Atualizado —</span>
 </div>
 </div>
 </div>
@@ -3092,11 +3090,6 @@ function renderTV() {
   ]);
   
   // Header
-  const tvClock = document.getElementById('tvClock');
-  if (tvClock) {
-    const d = new Date();
-    tvClock.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-  }
   const tvDate = document.getElementById('tvDate');
   if (tvDate) tvDate.textContent = new Date().toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
   const tvPeriod = document.getElementById('tvPeriod');
@@ -3107,8 +3100,6 @@ function renderTV() {
       tvPeriod.textContent = '📅 ' + fmtD(F.d1) + ' → ' + fmtD(F.d2);
     }
   }
-  const tvFtrUpd = document.getElementById('tv-ftr-updated');
-  if (tvFtrUpd && DASH_DATA.dataAtualizacao) tvFtrUpd.textContent = 'Atualizado ' + DASH_DATA.dataAtualizacao;
 }
 
 function updateClock() {
@@ -3405,14 +3396,6 @@ function init() {
   document.getElementById('tvRefresh')?.addEventListener('click', () => {
     if (activeTab === 'tv') renderTV();
   });
-  // Tick do relógio TV a cada 1s (só quando aba TV ativa)
-  setInterval(() => {
-    if (activeTab !== 'tv') return;
-    const el = document.getElementById('tvClock');
-    if (!el) return;
-    const d = new Date();
-    el.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-  }, 1000);
   
   // ═══ MODAL DE DETALHAMENTO — listeners ═══
   // Fechar modal
