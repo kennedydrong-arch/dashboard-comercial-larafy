@@ -846,7 +846,6 @@ svg.origin-svg{fill:currentColor}
 <span class="nav-tag" id="navTag">Dashboard Comercial</span>
 </a>
 <div class="nav-right">
-<div class="nav-live"><div class="nav-dot"></div><span class="nav-live-txt">Atualizado</span></div>
 <span class="nav-update" id="navUpdate">—</span>
 <span class="nav-date" id="navDate"></span>
 </div></div></nav>
@@ -2990,14 +2989,13 @@ function renderEntregasTV() {
   document.getElementById('tv-deliv-mes').textContent = '📅 ' + periodoLabel;
   
   // ─── Classificação ───
-  // Entregue = status === 'Entregue' E tem data de conclusão dentro do período
-  // (data de conclusão é a fonte da verdade — quando o trabalho foi realmente concluído)
-  const entreguesPeriodo = all.filter(e => 
-    e.status === 'Entregue' && 
-    e.dataConclusao && 
-    e.dataConclusao >= d1 && 
-    e.dataConclusao <= d2
-  );
+  // Entregue = status === 'Entregue' E (dataConclusao OU prazo) dentro do período
+  // Prioriza dataConclusao (data real); cai no prazo se conclusão não estiver preenchida
+  const entreguesPeriodo = all.filter(e => {
+    if (e.status !== 'Entregue') return false;
+    const dataRef = e.dataConclusao || e.prazo;
+    return dataRef && dataRef >= d1 && dataRef <= d2;
+  });
   // Em aberto = Em andamento + Backlog (qualquer prazo)
   const emAberto = all.filter(e => e.status === 'Em andamento' || e.status === 'Backlog');
   const emAndamento = all.filter(e => e.status === 'Em andamento');
