@@ -251,7 +251,7 @@ function fs(){const el=document.documentElement;if(!document.fullscreenElement){
 document.addEventListener('dblclick',fs);
 
 // ─── dados crus + cálculo por período ───
-let DASH=null,TAX=null,FY=null,ANIM=false;
+let DASH=null,TAX=null,FY=null,ANIM=false,CURD1=null,CURD2=null;
 const isFY=x=>String(x&&x.p||'').toLowerCase().includes('larafy');
 const ATIVA=o=>{const s=String(o.s||'').toLowerCase();return !(s==='ganha'||s==='won'||s==='perdida'||s==='lost');};
 const pad=n=>String(n).padStart(2,'0');
@@ -276,6 +276,7 @@ function byField(arr,d1,d2,fld,onlyDone){const agg={};
   return Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,4);}
 function put(id,v,f){const e=document.getElementById(id);if(!e)return;ANIM?countUp(e,v,900,f||fmt):e.textContent=(f||fmt)(v);}
 function render(d1,d2){
+  CURD1=d1;CURD2=d2;
   const t=side(TAX,d1,d2,'cl'),f=side(FY,d1,d2,'vendedor');
   const[pd1,pd2]=prevRange(d1,d2),tp=side(TAX,pd1,pd2,'cl'),fp=side(FY,pd1,pd2,'vendedor');
   const totParc=(DASH.parceiros||[]).length,totLeads=(DASH.leads||[]).length;
@@ -323,5 +324,18 @@ function boot(){
 }
 fetch('./dados.json').then(r=>r.json()).then(d=>{DASH=d;boot();})
   .catch(e=>{document.getElementById('ftUpd').textContent='erro ao carregar dados.json';console.error(e);});
+
+// auto-refresh a cada 5 min: rebusca o dados.json e repinta o MESMO período, sem recarregar a página
+function autoRefresh(){
+  fetch('./dados.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
+    DASH=d; splitData();
+    const prev=ANIM; ANIM=false;
+    if(CURD1&&CURD2) render(CURD1,CURD2);
+    ANIM=prev;
+    document.getElementById('ftUpd').textContent=DASH.dataAtualizacao||'';
+  }).catch(e=>console.warn('[refresh] falhou:',e&&e.message));
+}
+setInterval(autoRefresh, 5*60*1000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')autoRefresh();});
 </script>
 </body></html>
