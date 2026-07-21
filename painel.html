@@ -77,6 +77,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 /* meta strip */
 .meta{display:flex;gap:1.6vw;padding:.7vw 0 1vw;font-size:.82vw;color:var(--muted);border-bottom:1px solid var(--line-2);margin-bottom:1vw}
 .meta b{font-family:'Montserrat';font-weight:800;color:var(--ink);font-size:1vw}
+.meta b.hot{color:var(--cyan-ink)}
 .meta span{display:flex;align-items:center;gap:.45vw}
 
 /* section */
@@ -169,6 +170,7 @@ body.nostatic *{transition:none !important;animation:none !important}
         <span>Atividades <b class="mono" data-c id="taxAtiv">0</b></span>
         <span>Ticket médio <b class="mono" id="taxTicket">R$ 0</b></span>
         <span>Faturamento <b class="mono" id="taxValor">R$ 0</b></span>
+        <span>Em assinatura <b class="mono hot" id="taxAssin">0</b></span>
       </div>
       <div class="slab rv">Funil do período</div>
       <div class="funnel rv" id="taxFunnel"></div>
@@ -194,6 +196,7 @@ body.nostatic *{transition:none !important;animation:none !important}
       <div class="meta rv">
         <span>Contratos <b class="mono" data-c id="fyVendAno">0</b></span>
         <span>Atividades <b class="mono" data-c id="fyAtiv">0</b></span>
+        <span>Em assinatura <b class="mono hot" id="fyAssin">0</b></span>
       </div>
       <div class="slab rv">Funil do período</div>
       <div class="funnel rv" id="fyFunnel"></div>
@@ -266,6 +269,7 @@ function side(S,d1,d2,rk){
   vp.forEach(x=>{const k=((x[rk]||'')+'').trim();if(k)agg[k]=(agg[k]||0)+1;});
   return {vendas:vp.length,leads:S.l.filter(inR).length,reun:S.r.filter(x=>inR(x)&&x.s==='done').length,
     ativ:S.a.filter(inR).length,pipe:S.o.filter(ATIVA).length,
+    assin:S.o.filter(o=>ATIVA(o)&&/assinatur/i.test(String(o.step||''))).length,
     valor:vp.reduce((s,x)=>s+(+x.va||0),0),top:Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,5)};
 }
 function prevRange(d1,d2){const a=new Date(d1+'T00:00'),b=new Date(d2+'T00:00');
@@ -282,6 +286,7 @@ function render(d1,d2){
   const totParc=(DASH.parceiros||[]).length,totLeads=(DASH.leads||[]).length;
   put('taxLeads',t.leads);put('taxReun',t.reun);put('taxVend',t.vendas);put('taxPipe',t.pipe);put('taxAtiv',t.ativ);
   put('fyReun',f.reun);put('fyVend',f.vendas);put('fyPipe',f.pipe);put('fyParc',totParc);put('fyAtiv',f.ativ);put('fyVendAno',f.vendas);
+  put('taxAssin',t.assin);put('fyAssin',f.assin);
   put('ftLeads',totLeads);put('ftParc',totParc);
   document.getElementById('taxTicket').textContent=brl(t.valor/Math.max(t.vendas,1));
   document.getElementById('taxValor').textContent=brl(t.valor);
