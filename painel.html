@@ -211,7 +211,6 @@ body.nostatic *{transition:none !important;animation:none !important}
     <div class="ft-l">
       <span>Leads na base <b class="mono" id="ftLeads">0</b></span>
       <span>Parceiros ativos <b class="mono" id="ftParc">0</b></span>
-      <span id="ftUpd">—</span>
     </div>
     <div></div>
   </div>
@@ -319,7 +318,7 @@ function bootFilter(){
 }
 function boot(){
   splitData(); bootFilter();
-  document.getElementById('ftUpd').textContent=DASH.dataAtualizacao||'';
+  
   [...document.querySelectorAll('.rv')].forEach((el,i)=>ST?el.classList.add('in'):setTimeout(()=>el.classList.add('in'),100+i*70));
   const now=new Date(),d1=iso(new Date(now.getFullYear(),now.getMonth(),1)),d2=iso(now);
   document.getElementById('fd1').value=d1;document.getElementById('fd2').value=d2;
@@ -327,7 +326,7 @@ function boot(){
   ST?render(d1,d2):setTimeout(()=>render(d1,d2),380);
 }
 fetch('./dados.json').then(r=>r.json()).then(d=>{DASH=d;boot();})
-  .catch(e=>{document.getElementById('ftUpd').textContent='erro ao carregar dados.json';console.error(e);});
+  .catch(e=>{console.error('erro ao carregar dados.json');console.error(e);});
 
 // auto-refresh a cada 5 min: rebusca o dados.json e repinta o MESMO período, sem recarregar a página
 function autoRefresh(){
@@ -336,7 +335,7 @@ function autoRefresh(){
     const prev=ANIM; ANIM=false;
     if(CURD1&&CURD2) render(CURD1,CURD2);
     ANIM=prev;
-    document.getElementById('ftUpd').textContent=DASH.dataAtualizacao||'';
+    
   }).catch(e=>console.warn('[refresh] falhou:',e&&e.message));
 }
 setInterval(autoRefresh, 5*60*1000);
