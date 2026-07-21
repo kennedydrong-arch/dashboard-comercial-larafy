@@ -338,7 +338,9 @@ function autoRefresh(){
     
   }).catch(e=>console.warn('[refresh] falhou:',e&&e.message));
 }
-setInterval(autoRefresh, 5*60*1000);
+setInterval(autoRefresh, 3*60*1000);   // dado novo a cada 3 min (sem recarregar)
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')autoRefresh();});
+// rede de segurança: recarrega a página inteira a cada 30 min (pega código novo e evita travar em TV 24/7)
+setTimeout(function(){ location.reload(); }, 30*60*1000);
 </script>
 </body></html>
