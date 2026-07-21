@@ -1,0 +1,49 @@
+name: Atualiza dashboard (Leads2b)
+
+# Roda de 15 em 15 min (o GitHub pode atrasar alguns min em horario de pico)
+# e tambem da pra rodar na mao pelo botao "Run workflow".
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # deixa o robo commitar o dados.json
+
+concurrency:
+  group: build-dashboard
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependencias
+        run: pip install requests
+
+      - name: Gera dados.json
+        env:
+          LEADS2B_TOKEN: ${{ secrets.LEADS2B_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # opcional (liga a IA das reunioes)
+          MONTHS_BACK: "12"     # janela rolante de 12 meses (rapido). Historico completo = pesado.
+        run: python build_dashboard.py
+
+      - name: Commit se mudou
+        run: |
+          git config user.name  "dashboard-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if [ -n "$(git status --porcelain dados.json)" ]; then
+            git add dados.json
+            git commit -m "dados: atualiza [skip ci]"
+            git push
+          else
+            echo "sem mudanca no dados.json"
+          fi
