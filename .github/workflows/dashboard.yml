@@ -33,6 +33,8 @@ jobs:
         env:
           LEADS2B_TOKEN: ${{ secrets.LEADS2B_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # opcional (liga a IA das reunioes)
+          B4_KEY_LARATAX: ${{ secrets.B4_KEY_LARATAX }}         # vendas = contrato assinado no B4 (jun/2026+)
+          B4_KEY_LARAFY: ${{ secrets.B4_KEY_LARAFY }}
           MONTHS_BACK: "12"     # janela rolante de 12 meses (rapido). Historico completo = pesado.
         run: python build_dashboard.py
 
