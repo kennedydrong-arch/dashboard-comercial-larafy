@@ -46,9 +46,23 @@ def _match(cli, opps):
             if not best or sc > best[0]: best = (sc, o)
     return best[1] if best else None
 
+def _nome_vendedor(s):
+    # "ANDREY IUNSKOVSKI"/"Bárbara Barbosa" -> "Andrey Iunskovski"/"Barbara Barbosa"
+    s = unicodedata.normalize("NFKD", str(s or "")).encode("ascii", "ignore").decode()
+    return " ".join(w.capitalize() for w in s.split())
+
+def _created_by(doc_id, key):
+    """Quem criou/enviou o contrato no B4 = o vendedor (fonte confiável)."""
+    try:
+        H = {"X-Api-Key": key, "Accept": "application/json"}
+        det = requests.get(BASE + f"/api/documents/{doc_id}/signatures-details", headers=H, timeout=30).json()
+        return _nome_vendedor((det.get("createdBy") or {}).get("name"))
+    except Exception:
+        return ""
+
 def contratos(key, marca, desde, opps):
     """marca: 'LaraTAX'|'LaraFy'. desde: 'YYYY-MM-DD'. opps: lista compacta do CRM p/ cruzar.
-    Retorna [{d, cliente, op(=oportunidade casada ou None)}]."""
+    Retorna [{d, cliente, vendedor(=createdBy do B4), op(=oportunidade casada p/ valor, ou None)}]."""
     if not key: return []
     out = []
     for d in _concluidos(key):
@@ -56,5 +70,6 @@ def contratos(key, marca, desde, opps):
         dt = str(d.get("updateDate") or "")[:10]
         if not dt or dt < desde or _excl(name): continue
         if marca == "LaraTAX" and "contrato laratax" not in name.lower(): continue
-        out.append({"d": dt, "cliente": _cliente(name), "op": _match(_cliente(name), opps)})
+        cli = _cliente(name)
+        out.append({"d": dt, "cliente": cli, "vendedor": _created_by(d.get("id"), key), "op": _match(cli, opps)})
     return out

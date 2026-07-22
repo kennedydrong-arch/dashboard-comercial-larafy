@@ -168,7 +168,7 @@ if B4_TAX or B4_FY:
             for c in b4_vendas.contratos(B4_TAX, "LaraTAX", B4_CUTOFF, opps):
                 o = c["op"]; val = fnum(o.get("v")) if o else 0.0
                 vendas.append({
-                    "d": c["d"], "cl": (o.get("r") if o else "") or "", "v": val, "va": round(val * 12),
+                    "d": c["d"], "cl": c["vendedor"] or (o.get("r") if o else "") or "", "v": val, "va": round(val * 12),
                     "o": (o.get("o") if o else "") or "", "tl": "", "i": "", "s": "Ativo",
                     "c": (o.get("c") if o else c["cliente"]), "cnpj": "", "uf": "", "pl": "", "df": "",
                 })
@@ -179,7 +179,7 @@ if B4_TAX or B4_FY:
                 vendasLaraFy.append({
                     "d": c["d"], "grupo": (o.get("c") if o else c["cliente"]), "pct": None,
                     "parceiroNome": "Sem parceria", "parceiroSigla": "", "parceiroNomeCanonico": "Sem parceria",
-                    "vendedor": (o.get("r") if o else "") or "", "tipo": "Consultoria",
+                    "vendedor": c["vendedor"] or (o.get("r") if o else "") or "", "tipo": "Consultoria",
                 })
         print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)} (contratos assinados >= {B4_CUTOFF})")
     except Exception as e:
