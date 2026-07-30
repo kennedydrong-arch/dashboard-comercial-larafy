@@ -20,7 +20,8 @@ def _concluidos(key):
 
 def _excl(n):
     n = n.lower()
-    return any(x in n for x in ["nda", "teste", "aditivo", "modelo"])
+    # parceria/parceiro NAO contam como venda no painel (contrato de parceria, nao de cliente)
+    return any(x in n for x in ["nda", "teste", "aditivo", "modelo", "parceria", "parceiro"])
 
 def _cliente(name):
     parts = [p.strip() for p in re.split(r"\s[-–]\s", name)]
