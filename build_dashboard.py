@@ -161,29 +161,34 @@ B4_TAX = os.environ.get("B4_KEY_LARATAX")
 B4_FY = os.environ.get("B4_KEY_LARAFY")
 B4_CUTOFF = os.environ.get("B4_CUTOFF", "2026-06-01")
 if B4_TAX or B4_FY:
-    try:
-        import b4_vendas
-        if B4_TAX:
-            vendas = [v for v in vendas if v["d"] < B4_CUTOFF]  # mantém histórico CRM (< jun)
+    import b4_vendas
+    if B4_TAX:
+        try:  # monta o B4 num temporário; só troca se der certo (senão mantém o CRM, NUNCA zera)
+            novos = []
             for c in b4_vendas.contratos(B4_TAX, "LaraTAX", B4_CUTOFF, opps):
                 o = c["op"]; val = fnum(o.get("v")) if o else 0.0
-                vendas.append({
+                novos.append({
                     "d": c["d"], "cl": c["vendedor"] or (o.get("r") if o else "") or "", "v": val, "va": round(val * 12),
                     "o": (o.get("o") if o else "") or "", "tl": "", "i": "", "s": "Ativo",
                     "c": (o.get("c") if o else c["cliente"]), "cnpj": "", "uf": "", "pl": "", "df": "",
                 })
-        if B4_FY:
-            vendasLaraFy = [v for v in vendasLaraFy if v["d"] < B4_CUTOFF]
+            vendas = [v for v in vendas if v["d"] < B4_CUTOFF] + novos
+        except Exception as e:
+            print("[build] B4 LaraTAX falhou -> mantém vendas do CRM:", str(e)[:150])
+    if B4_FY:
+        try:
+            novosfy = []
             for c in b4_vendas.contratos(B4_FY, "LaraFy", B4_CUTOFF, opps):
                 o = c["op"]
-                vendasLaraFy.append({
+                novosfy.append({
                     "d": c["d"], "grupo": (o.get("c") if o else c["cliente"]), "pct": None,
                     "parceiroNome": "Sem parceria", "parceiroSigla": "", "parceiroNomeCanonico": "Sem parceria",
                     "vendedor": c["vendedor"] or (o.get("r") if o else "") or "", "tipo": "Consultoria",
                 })
-        print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)} (contratos assinados >= {B4_CUTOFF})")
-    except Exception as e:
-        print("[build] B4 falhou, mantém vendas do CRM:", str(e)[:150])
+            vendasLaraFy = [v for v in vendasLaraFy if v["d"] < B4_CUTOFF] + novosfy
+        except Exception as e:
+            print("[build] B4 LaraFy falhou -> mantém vendas do CRM:", str(e)[:150])
+    print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)}")
 
 # leads
 leads = []

@@ -7,12 +7,21 @@ import os, re, unicodedata, requests
 
 BASE = os.environ.get("B4_BASE", "https://assinador.somosb4.com.br").rstrip("/")
 
+def _get(url, H, params):
+    import time as _t
+    ult = None
+    for tent in range(4):   # B4 às vezes fica lento -> tenta de novo antes de desistir
+        try:
+            return requests.get(url, headers=H, params=params, timeout=90).json()
+        except Exception as e:
+            ult = e; _t.sleep(3 * (tent + 1))
+    raise ult
+
 def _concluidos(key):
     H = {"X-Api-Key": key, "Accept": "application/json"}
     out, off = [], 0
     while True:
-        d = requests.get(BASE + "/api/documents", headers=H,
-                         params={"Status": "Concluded", "Limit": 100, "Offset": off}, timeout=60).json()
+        d = _get(BASE + "/api/documents", H, {"Status": "Concluded", "Limit": 100, "Offset": off})
         its = d.get("items", []); out += its
         if len(out) >= d.get("totalCount", 0) or not its: break
         off += 100
