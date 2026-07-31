@@ -10,6 +10,7 @@ import re, json, requests
 # ─────────────── heuristica ───────────────
 _INTERNO = re.compile(r"registro das reuni|follow-?ups? comerciais|atualiza[çc][aã]o de fluxo|"
                       r"\binterno\b|reuni[aã]o interna|equipe|alinhamento|1:1|onboarding|treinamento|"
+                      r"\bscrum\b|marketing\s*[&e]\s*vendas|revis[aã]o roteiro|revis[aã]o.*\bppt\b|roteiro e ppt|"
                       r"ajustes crm|caf[eé] com dire[çc][aã]o|technology talk|fotos \(|reserva de sala|"
                       r"reserva reuni|relat[oó]rio|cronograma|criar grupo|contratos? (e termos|oliveto)", re.I)
 _PESSOAL = re.compile(r"almo[çc]o|m[eé]dic|dentista|bucomaxil|anivers|niver|p[aá]scoa|feriado|f[eé]rias|"
@@ -20,10 +21,11 @@ def heuristica(sub, entity):
     s = (sub or "").strip(); sl = s.lower()
     if not s: return "ambiguo"
     if sl in ("teste", "test") or sl.startswith("teste "): return "descartar"
-    if str(entity) == "OPPORTUNITY": return "cliente"
-    if "<>" in s or "&lt;>" in s: return "cliente"          # padrao "Empresa <> LaraFy"
+    # interno/pessoal vem ANTES do "<>" (senao "SCRUM <> Marketing" passava como cliente)
     if _PESSOAL.search(sl): return "pessoal"
     if _INTERNO.search(sl): return "interno"
+    if str(entity) == "OPPORTUNITY": return "cliente"
+    if "<>" in s or "&lt;>" in s: return "cliente"          # padrao "Empresa <> LaraFy"
     return "ambiguo"
 
 # ─────────────── IA (Claude) para os ambiguos ───────────────
