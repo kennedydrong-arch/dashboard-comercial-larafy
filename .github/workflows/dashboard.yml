@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: build-dashboard
-  cancel-in-progress: true
+  cancel-in-progress: false   # ENFILEIRA (nao mata o build em andamento) — B4 lento faz build durar ~7min
 
 jobs:
   build:
