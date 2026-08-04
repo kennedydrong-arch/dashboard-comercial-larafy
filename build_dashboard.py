@@ -190,6 +190,30 @@ if B4_TAX or B4_FY:
             print("[build] B4 LaraFy falhou -> mantém vendas do CRM:", str(e)[:150])
     print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)}")
 
+# ───── VENDAS MANUAIS: vendas ganhas FORA do B4 (fechadas por fora). Ficam num arquivo commitado. ─────
+# Formato vendas_manuais.json: {"laratax":[{"d":"2026-08-01","cl":"Vendedor","v":1000,"c":"Cliente","o":"origem"}],
+#                               "larafy":[{"d":"2026-08-01","vendedor":"Vendedor","grupo":"Cliente"}]}
+if os.path.exists("vendas_manuais.json"):
+    try:
+        man = json.load(open("vendas_manuais.json", encoding="utf-8"))
+        for m in man.get("laratax", []):
+            val = fnum(m.get("v"))
+            vendas.append({
+                "d": d10(m.get("d")), "cl": m.get("cl") or m.get("vendedor") or "", "v": val,
+                "va": round(val * 12), "o": m.get("o") or "", "tl": "", "i": "", "s": "Ativo",
+                "c": m.get("c") or m.get("cliente") or "", "cnpj": m.get("cnpj") or "",
+                "uf": m.get("uf") or "", "pl": "", "df": "", "manual": True,
+            })
+        for m in man.get("larafy", []):
+            vendasLaraFy.append({
+                "d": d10(m.get("d")), "grupo": m.get("grupo") or m.get("cliente") or "", "pct": None,
+                "parceiroNome": "Sem parceria", "parceiroSigla": "", "parceiroNomeCanonico": "Sem parceria",
+                "vendedor": m.get("vendedor") or m.get("cl") or "", "tipo": "Consultoria", "manual": True,
+            })
+        print(f"[build] vendas manuais: TAX+={len(man.get('laratax', []))} FY+={len(man.get('larafy', []))}")
+    except Exception as e:
+        print("[build] vendas_manuais.json falhou:", str(e)[:150])
+
 # leads
 leads = []
 for l in leads_raw.values():
