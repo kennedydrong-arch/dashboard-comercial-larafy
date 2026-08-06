@@ -95,6 +95,21 @@ def brand_resp(r):
     r = str(r or "").lower()
     return "LaraFy" if any(n in r for n in ["andrey", "kaoana", "kaona"]) else "LaraTAX"
 
+# ── nomes: junta grafias diferentes da MESMA pessoa (maiuscula/encoding/apelido) ──
+def _semacento(s):
+    return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+_ALIAS_NOME = {   # chave = nome em minuscula sem acento -> nome canonico exibido
+    "kaoana": "Kaoana Ribas", "kaoana ribas": "Kaoana Ribas", "kaoana guiessman": "Kaoana Ribas",
+    "nelson mocelin": "Nelson Mocelin",
+}
+def canon_nome(s):
+    s = re.sub(r"\s+", " ", str(s or "").strip())
+    if not s: return s
+    key = _semacento(s.lower())
+    if "luan fran" in key: return "Luan França"     # conserta encoding quebrado (fran�a)
+    if key in _ALIAS_NOME: return _ALIAS_NOME[key]
+    return s.title()                                 # 'nelson mocelin' e 'Nelson Mocelin' -> mesmo
+
 di = dt.datetime.strptime(START, "%Y-%m-%d")
 df = dt.datetime(TODAY.year, TODAY.month, TODAY.day)
 print(f"[build] janela {START} -> {TODAY}  base={BASE}")
@@ -271,6 +286,13 @@ reun_fy_ok, resumo_ia = classificar_reunioes(reun_fy_raw, os.environ.get("ANTHRO
 reunioes += reun_fy_ok
 entregasMkt = entregasMkt_src
 print(f"[build] reunioes LaraFy: {len(reun_fy_raw)} -> {len(reun_fy_ok)} cliente | IA: {resumo_ia}")
+
+# ── normaliza nomes de pessoas em TODAS as fontes (rankings/filtros) ──
+for v in vendas:        v["cl"] = canon_nome(v.get("cl"))
+for v in vendasLaraFy:  v["vendedor"] = canon_nome(v.get("vendedor"))
+for r in reunioes:      r["u"] = canon_nome(r.get("u"))
+for o in opps:          o["r"] = canon_nome(o.get("r"))
+for l in leads:         l["r"] = canon_nome(l.get("r"))
 
 # ───────────────────────── counts/filtros/meta ─────────────────────────
 def uniq_sorted(vals): return sorted({v for v in vals if v})
