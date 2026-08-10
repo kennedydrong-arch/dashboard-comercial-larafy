@@ -42,10 +42,18 @@ jobs:
         run: |
           git config user.name  "dashboard-bot"
           git config user.email "bot@users.noreply.github.com"
-          if [ -n "$(git status --porcelain dados.json)" ]; then
-            git add dados.json
-            git commit -m "dados: atualiza [skip ci]"
-            git push
-          else
-            echo "sem mudanca no dados.json"
+          if [ -z "$(git status --porcelain dados.json)" ]; then
+            echo "sem mudanca no dados.json"; exit 0
           fi
+          git add dados.json
+          git commit -m "dados: atualiza [skip ci]"
+          # push resiliente: outro build pode ter empurrado antes (corrida) -> rebase e tenta de novo.
+          # -X theirs mantem NOSSO dados.json recem-gerado no conflito.
+          for i in $(seq 1 6); do
+            if git push origin HEAD:main; then echo "push ok ($i)"; exit 0; fi
+            echo "push perdeu a corrida, rebase e tenta de novo ($i/6)"
+            git fetch origin main
+            git rebase -X theirs origin/main || git rebase --abort
+            sleep $((RANDOM % 6 + 3))
+          done
+          echo "nao conseguiu push apos 6 tentativas"; exit 1
