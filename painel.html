@@ -325,7 +325,7 @@ function boot(){
   ANIM=!ST;
   ST?render(d1,d2):setTimeout(()=>render(d1,d2),380);
 }
-fetch('./dados.json').then(r=>r.json()).then(d=>{DASH=d;boot();})
+fetch('./dados.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DASH=d;boot();})
   .catch(e=>{console.error('erro ao carregar dados.json');console.error(e);});
 
 // auto-refresh a cada 5 min: rebusca o dados.json e repinta o MESMO período, sem recarregar a página
