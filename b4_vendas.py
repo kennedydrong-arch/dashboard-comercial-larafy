@@ -29,8 +29,11 @@ def _concluidos(key):
 
 def _excl(n):
     n = n.lower()
-    # parceria/parceiro NAO contam como venda no painel (contrato de parceria, nao de cliente)
-    return any(x in n for x in ["nda", "teste", "aditivo", "modelo", "parceria", "parceiro"])
+    # NAO contam como venda no painel:
+    #  - parceria/parceiro: contrato de parceria, nao de cliente
+    #  - rescis/distrato/cancel: CANCELAMENTO (distrato assinado tambem vira doc "concluido" no B4)
+    return any(x in n for x in ["nda", "teste", "aditivo", "modelo", "parceria", "parceiro",
+                                "rescis", "distrato", "cancelamento", "cancelacao"])
 
 def _cliente(name):
     parts = [p.strip() for p in re.split(r"\s[-–]\s", name)]
