@@ -38,17 +38,21 @@ jobs:
           MONTHS_BACK: "12"     # janela rolante de 12 meses (rapido). Historico completo = pesado.
         run: python build_dashboard.py
 
+      - name: Raiz redireciona pro painel ao vivo (auto-cura)
+        run: |
+          printf '%s' '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel Comercial - LaraFy</title><meta http-equiv="refresh" content="0; url=./painel.html"><link rel="canonical" href="./painel.html"><script>location.replace("./painel.html"+location.search+location.hash)</script><style>html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font-family:system-ui,Segoe UI,sans-serif;display:flex;align-items:center;justify-content:center}</style></head><body><p>Abrindo o painel ao vivo... <a href="./painel.html" style="color:#22d3ee">clique aqui</a> se nao for automatico.</p></body></html>' > index.html
+
       - name: Commit se mudou
         run: |
           git config user.name  "dashboard-bot"
           git config user.email "bot@users.noreply.github.com"
-          if [ -z "$(git status --porcelain dados.json)" ]; then
-            echo "sem mudanca no dados.json"; exit 0
+          git add dados.json index.html
+          if git diff --cached --quiet; then
+            echo "nada mudou"; exit 0
           fi
-          git add dados.json
-          git commit -m "dados: atualiza [skip ci]"
-          # push resiliente: outro build pode ter empurrado antes (corrida) -> rebase e tenta de novo.
-          # -X theirs mantem NOSSO dados.json recem-gerado no conflito.
+          git commit -m "dados: atualiza + raiz->painel [skip ci]"
+          # push resiliente: outro processo pode ter empurrado antes (corrida) -> rebase e tenta.
+          # -X theirs mantem NOSSAS versoes (dados.json novo + index redirect) no conflito.
           for i in $(seq 1 6); do
             if git push origin HEAD:main; then echo "push ok ($i)"; exit 0; fi
             echo "push perdeu a corrida, rebase e tenta de novo ($i/6)"
