@@ -287,6 +287,23 @@ reunioes += reun_fy_ok
 entregasMkt = entregasMkt_src
 print(f"[build] reunioes LaraFy: {len(reun_fy_raw)} -> {len(reun_fy_ok)} cliente | IA: {resumo_ia}")
 
+# ── reuniao LaraTAX "realizada": o time agenda no Leads2b mas nao marca 'finalizada' (done).
+#    Contamos como feita se: ja passou da data E teve MOVIMENTO no negocio depois (atividade/reuniao)
+#    = evidencia de que aconteceu (nao so a agenda). Vira s='done' pra contar no painel. ──
+_HOJE = TODAY.strftime("%Y-%m-%d")
+_ev_negocio = {}
+for _x in atividades + reunioes:
+    _e = _x.get("idEnt")
+    if _e:
+        _ev_negocio.setdefault(_e, []).append(_x.get("d") or "")
+_realiz = 0
+for r in reunioes:
+    if str(r.get("p")) == "LaraTAX" and r.get("s") != "done":
+        _dia = r.get("d") or ""
+        if _dia and _dia < _HOJE and any(e > _dia for e in _ev_negocio.get(r.get("idEnt"), [])):
+            r["s"] = "done"; _realiz += 1
+print(f"[build] reunioes LaraTAX realizadas por follow-up (viraram done): {_realiz}")
+
 # ── normaliza nomes de pessoas em TODAS as fontes (rankings/filtros) ──
 for v in vendas:        v["cl"] = canon_nome(v.get("cl"))
 for v in vendasLaraFy:  v["vendedor"] = canon_nome(v.get("vendedor"))
