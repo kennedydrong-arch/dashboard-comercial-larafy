@@ -1,0 +1,9 @@
+{
+  "_nota": "MESMO cliente escrito diferente no Leads2b e no B4. Sem isso o painel conta a mesma venda duas vezes. Cada linha e' uma lista de nomes que sao a MESMA empresa. Nao precisa ser o nome exato: basta um pedaco que apareca no nome.",
+  "_como_usar": "Achou venda repetida no painel? Adicione os dois nomes numa linha nova abaixo. Nao mexe em codigo, so neste arquivo.",
+  "mesma_empresa": [
+    ["Roseloane", "Rose"],
+    ["A & S CONSULTORIA", "ANDRE ABRAO", "ABRAO E SILVA", "ABRAO & SILVA"],
+    ["FSP ADVOGADOS", "FARIAS APOIO ADMINISTRATIVO"]
+  ]
+}

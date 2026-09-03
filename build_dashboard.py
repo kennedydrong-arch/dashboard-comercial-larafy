@@ -203,6 +203,49 @@ if B4_TAX or B4_FY:
             vendasLaraFy = [v for v in vendasLaraFy if v["d"] < B4_CUTOFF] + novosfy
         except Exception as e:
             print("[build] B4 LaraFy falhou -> mantém vendas do CRM:", str(e)[:150])
+    # ── RESCISAO/DISTRATO: cliente que saiu para de contar como venda ──
+    # O CRM mantem a oportunidade como "ganha" depois da saida. O painel que vai pra TV
+    # e' o painel.html (index.html no repo so redireciona pra ele) e ele conta
+    # vendas.length direto, sem olhar o campo 's' -> marcar "Inativo" nao descontaria
+    # nada, a unica forma e' tirar da lista.
+    # O casamento aqui e' ESTRITO de proposito (b4_vendas.mesmo_cliente): um falso
+    # positivo apaga a venda de quem nao rescindiu, e sobrenome em comum e' comum.
+    try:
+        fora = []
+        for _k in (B4_TAX, B4_FY):
+            if _k:
+                fora += b4_vendas.rescindidos(_k)
+        if fora:
+            _g = b4_vendas.grupos_apelidos()
+            def _saiu(nome):
+                return any(b4_vendas.mesmo_cliente(nome, f["cliente"], _g) for f in fora)
+            _fica_tax = [(v, _saiu(v.get("c"))) for v in vendas]
+            _fica_fy = [(v, _saiu(v.get("grupo"))) for v in vendasLaraFy]
+            _tirados = ([v.get("c") for v, s in _fica_tax if s] +
+                        [v.get("grupo") for v, s in _fica_fy if s])
+            # so reatribui depois que os dois lados foram calculados: se estourar no
+            # meio, nada foi alterado e a mensagem do except continua verdadeira
+            vendas = [v for v, s in _fica_tax if not s]
+            vendasLaraFy = [v for v, s in _fica_fy if not s]
+            _sem_par = [f["cliente"] for f in fora
+                        if not any(b4_vendas.mesmo_cliente(c, f["cliente"], _g) for c in _tirados)]
+            print(f"[build] rescisoes no B4: {len(fora)} | vendas descontadas: {len(_tirados)} {_tirados}")
+            if _sem_par:
+                # rescindiu mas nao achei a venda: nome diferente entre B4 e CRM.
+                # Conserto sem codigo: cadastrar os dois nomes no clientes_apelidos.json.
+                print(f"[build] rescisao SEM venda correspondente (confira o apelido): {_sem_par}")
+        else:
+            print("[build] rescisoes no B4: nenhuma")
+    except Exception as e:
+        print("[build] rescisoes falharam -> nada foi descontado:", str(e)[:150])
+
+    # quem ficou sem valor: o valor do contrato so existe no CRM. Se o nome nao casou,
+    # entra como R$ 0 e o faturamento do painel fica menor que a realidade.
+    # Conserto sem codigo: cadastrar os dois nomes numa linha do clientes_apelidos.json.
+    _sv = [v.get("c") for v in vendas if v["d"] >= B4_CUTOFF and not v.get("v")]
+    if _sv:
+        print(f"[build] ATENCAO: {len(_sv)} venda(s) sem valor (nome nao casou com o CRM) -> {_sv}")
+
     print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)}")
 
 # ───── VENDAS MANUAIS: vendas ganhas FORA do B4 (fechadas por fora). Ficam num arquivo commitado. ─────
