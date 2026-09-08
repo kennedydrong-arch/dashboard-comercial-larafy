@@ -78,6 +78,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .meta{display:flex;gap:1.6cqw;padding:.7cqw 0 1cqw;font-size:.82cqw;color:var(--muted);border-bottom:1px solid var(--line-2);margin-bottom:1cqw}
 .meta b{font-family:'Montserrat';font-weight:800;color:var(--ink);font-size:1cqw}
 .meta b.hot{color:var(--cyan-ink)}
+.meta b.warn{color:var(--bad);margin-left:.5cqw;font-size:.82cqw}
 .meta span{display:flex;align-items:center;gap:.45cqw}
 
 /* section */
@@ -170,7 +171,7 @@ body.nostatic *{transition:none !important;animation:none !important}
         <span>Atividades <b class="mono" data-c id="taxAtiv">0</b></span>
         <span>Ticket médio <b class="mono" id="taxTicket">R$ 0</b></span>
         <span>Faturamento <b class="mono" id="taxValor">R$ 0</b></span>
-        <span>Em assinatura <b class="mono hot" id="taxAssin">0</b></span>
+        <span>Em assinatura <b class="mono hot" id="taxAssin">0</b><b class="mono warn" id="taxParado"></b></span>
       </div>
       <div class="slab rv">Funil do período</div>
       <div class="funnel rv" id="taxFunnel"></div>
@@ -196,7 +197,7 @@ body.nostatic *{transition:none !important;animation:none !important}
       <div class="meta rv">
         <span>Contratos <b class="mono" data-c id="fyVendAno">0</b></span>
         <span>Atividades <b class="mono" data-c id="fyAtiv">0</b></span>
-        <span>Em assinatura <b class="mono hot" id="fyAssin">0</b></span>
+        <span>Em assinatura <b class="mono hot" id="fyAssin">0</b><b class="mono warn" id="fyParado"></b></span>
       </div>
       <div class="slab rv">Funil do período</div>
       <div class="funnel rv" id="fyFunnel"></div>
@@ -259,15 +260,16 @@ const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 function splitData(){
   const l=DASH.leads||[],r=DASH.reunioes||[],a=DASH.atividades||[],o=DASH.opps||[];
-  TAX={v:DASH.vendas||[],l:l.filter(x=>!isFY(x)),r:r.filter(x=>!isFY(x)),a:a.filter(x=>!isFY(x)),o:o.filter(x=>!isFY(x))};
-  FY ={v:DASH.vendasLaraFy||[],l:l.filter(isFY),r:r.filter(isFY),a:a.filter(isFY),o:o.filter(isFY)};
+  const pend=DASH.pendentes||[];
+  TAX={v:DASH.vendas||[],l:l.filter(x=>!isFY(x)),r:r.filter(x=>!isFY(x)),a:a.filter(x=>!isFY(x)),o:o.filter(x=>!isFY(x)),p:pend.filter(x=>String(x&&x.marca||'')==='LaraTAX')};
+  FY ={v:DASH.vendasLaraFy||[],l:l.filter(isFY),r:r.filter(isFY),a:a.filter(isFY),o:o.filter(isFY),p:pend.filter(x=>String(x&&x.marca||'')==='LaraFy')};
 }
 function side(S,d1,d2,rk){
   const inR=x=>x.d&&x.d>=d1&&x.d<=d2, vp=S.v.filter(inR), agg={};
   vp.forEach(x=>{const k=((x[rk]||'')+'').trim();if(k)agg[k]=(agg[k]||0)+1;});
   return {vendas:vp.length,leads:S.l.filter(inR).length,reun:S.r.filter(x=>inR(x)&&x.s==='done').length,
     ativ:S.a.filter(inR).length,pipe:S.o.filter(ATIVA).length,
-    assin:S.o.filter(o=>ATIVA(o)&&/assinatur/i.test(String(o.step||''))).length,
+    assin:(S.p||[]).length, assinVelhos:(S.p||[]).filter(x=>(+x.dias||0)>30).length,
     valor:vp.reduce((s,x)=>s+(+x.va||0),0),top:Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,5)};
 }
 function prevRange(d1,d2){const a=new Date(d1+'T00:00'),b=new Date(d2+'T00:00');
@@ -285,6 +287,7 @@ function render(d1,d2){
   put('taxLeads',t.leads);put('taxReun',t.reun);put('taxVend',t.vendas);put('taxPipe',t.pipe);put('taxAtiv',t.ativ);
   put('fyReun',f.reun);put('fyVend',f.vendas);put('fyPipe',f.pipe);put('fyParc',totParc);put('fyAtiv',f.ativ);put('fyVendAno',f.vendas);
   put('taxAssin',t.assin);put('fyAssin',f.assin);
+  [['taxParado',t.assinVelhos],['fyParado',f.assinVelhos]].forEach(([id,n])=>{const el=document.getElementById(id);if(el)el.textContent=n?(' · '+n+' ha +30d'):'';});
   put('ftLeads',totLeads);put('ftParc',totParc);
   document.getElementById('taxTicket').textContent=brl(t.valor/Math.max(t.vendas,1));
   document.getElementById('taxValor').textContent=brl(t.valor);

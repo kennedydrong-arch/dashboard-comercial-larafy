@@ -248,6 +248,23 @@ if B4_TAX or B4_FY:
 
     print(f"[build] B4: vendas TAX={len(vendas)} | vendasLaraFy={len(vendasLaraFy)}")
 
+# ── DOCUMENTOS PARADOS NO B4 (contrato em assinatura que ainda nao fechou) ──
+# O painel mostrava "Em assinatura" pela etapa do funil no CRM, que ninguem preenchia:
+# vivia zerado enquanto o B4 acumulava documento parado ha 90 dias, invisivel pra todo
+# mundo. Agora o numero vem da fonte real.
+pendentes = []
+if B4_TAX or B4_FY:
+    try:
+        for _k, _m in ((B4_TAX, "LaraTAX"), (B4_FY, "LaraFy")):
+            if _k:
+                pendentes += b4_vendas.pendentes(_k, _m)
+        _velhos = [p for p in pendentes if p["dias"] > 30]
+        print(f"[build] parados no B4: {len(pendentes)} | ha mais de 30 dias: {len(_velhos)}")
+        for _p in pendentes[:6]:
+            print(f"[build]    {_p['dias']:>3}d | {_p['marca']:7} | {_p['motivo']:30} | {_p['doc'][:44]}")
+    except Exception as e:
+        pendentes = []   # lista vazia = painel mostra 0, como antes; nao derruba o build
+        print("[build] pendentes do B4 falharam:", str(e)[:150])
 # ───── VENDAS MANUAIS: vendas ganhas FORA do B4 (fechadas por fora). Ficam num arquivo commitado. ─────
 # Formato vendas_manuais.json: {"laratax":[{"d":"2026-08-01","cl":"Vendedor","v":1000,"c":"Cliente","o":"origem"}],
 #                               "larafy":[{"d":"2026-08-01","vendedor":"Vendedor","grupo":"Cliente"}]}
@@ -373,7 +390,7 @@ DASH = {
     "diagnostico": {k: {"aceitas": counts.get(k, 0)} for k in ["vendas", "leads", "opps", "reunioes", "atividades"]},
     "diagVendedores": {}, "leads": leads, "opps": opps, "vendas": vendas, "reunioes": reunioes,
     "atividades": atividades, "parceiros": parceiros, "vendasLaraFy": vendasLaraFy,
-    "entregasMkt": entregasMkt, "filtros": filtros,
+    "entregasMkt": entregasMkt, "filtros": filtros, "pendentes": pendentes,
 }
 json.dump(DASH, open(OUT, "w", encoding="utf-8"), ensure_ascii=False)
 print(f"[build] OK -> {OUT}  counts={counts}")

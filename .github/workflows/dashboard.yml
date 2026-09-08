@@ -1,10 +1,13 @@
 name: Atualiza dashboard (Leads2b)
 
-# Roda de 15 em 15 min (o GitHub pode atrasar alguns min em horario de pico)
+# Roda de 30 em 30 min (o GitHub pode atrasar alguns min em horario de pico)
 # e tambem da pra rodar na mao pelo botao "Run workflow".
+# Era */15, mas o build leva ~13 min e a fila (cancel-in-progress: false) so crescia.
+# Isso NAO deixa o painel mais lento no dia a dia: quem dispara quando entra venda
+# nova e' o robo do PC (checa o B4 a cada 4 min); este cron e' rede de seguranca.
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:

@@ -175,6 +175,26 @@ def _nome_vendedor(s):
     s = unicodedata.normalize("NFKD", str(s or "")).encode("ascii", "ignore").decode()
     return " ".join(w.capitalize() for w in s.split())
 
+_DOMINIOS_DA_CASA = ("larafy.com.br", "laratax.com.br")
+
+
+def _da_casa(email):
+    """E-mail interno? Cuidado: laratax.com.br TAMBEM e' da casa — filtrar so por
+    larafy.com.br faz parecer que o cliente assinou quando quem assinou foi a equipe."""
+    e = str(email or "").lower()
+    return any(d in e for d in _DOMINIOS_DA_CASA)
+
+
+def _detalhe_bruto(doc_id, key):
+    """signatures-details cru, ou None se a chamada nao completou."""
+    H = {"X-Api-Key": key, "Accept": "application/json"}
+    try:
+        det = _get(BASE + "/api/documents/%s/signatures-details" % doc_id, H, None)
+    except Exception:
+        return None
+    return det if isinstance(det, dict) and "signers" in det else None
+
+
 def _data_iso(v):
     """So aceita data no formato AAAA-MM-DD. Qualquer outra coisa vira "".
 
@@ -308,3 +328,67 @@ def rescindidos(key, desde="2000-01-01"):
     if ilegiveis:
         print("[b4] rescisao sem cliente identificavel (nao descontada): %s" % ilegiveis[:6])
     return fora
+
+
+def _em_andamento(key):
+    """Documentos que NAO estao concluidos.
+
+    So aparecem listando SEM o parametro Status: no B4, `Status=Pending` devolve 0
+    mesmo havendo dezenas de pendentes (defeito do lado deles). E nesta listagem o
+    campo `status` vem nulo, entao o estado real so sai no signatures-details.
+    """
+    H = {"X-Api-Key": key, "Accept": "application/json"}
+    out, off = [], 0
+    while off < 900:
+        d = _get(BASE + "/api/documents", H, {"Limit": 100, "Offset": off})
+        its = d.get("items", [])
+        out += its
+        if len(its) < 100: break
+        off += 100
+    return out
+
+
+def pendentes(key, marca, desde="2000-01-01"):
+    """Contratos parados: assinatura comecou e o documento nao fechou.
+
+    O painel contava "em assinatura" pela etapa do funil no CRM, que ninguem
+    preenchia (vivia zerado) enquanto o B4 acumulava documento parado ha 90 dias.
+    Aqui o numero vem da fonte real.
+
+    motivo diz o que trava, porque a acao muda: sem cliente convidado e' erro de
+    cadastro da equipe; cliente convidado que nao assinou e' cobranca comercial;
+    todos assinaram e nao fechou e' problema do proprio B4.
+    """
+    if not key: return []
+    hoje = dt.date.today()
+    out = []
+    for x in _em_andamento(key):
+        nome = x.get("name") or ""
+        if _excl(nome) and not any(t in nome.lower() for t in ("contrato", "autoriza")):
+            continue
+        det = _detalhe_bruto(x.get("id"), key)
+        if det is None or det.get("isConcluded"):
+            continue
+        sg = det.get("signers") or []
+        ext = [s for s in sg if not _da_casa(s.get("emailAddress"))]
+        ext_ok = [s for s in ext if s.get("signingTime")]
+        casa_falta = [s for s in sg if _da_casa(s.get("emailAddress")) and not s.get("signingTime")]
+        cri = _data_iso(x.get("creationDate"))
+        if not cri or cri < desde:
+            continue
+        if not ext:
+            motivo = "cliente nao convidado"
+        elif not ext_ok:
+            motivo = "cliente nao assinou"
+        elif casa_falta:
+            motivo = "falta assinatura interna"
+        else:
+            motivo = "todos assinaram, B4 nao fechou"
+        try:
+            dias = (hoje - dt.date(int(cri[:4]), int(cri[5:7]), int(cri[8:10]))).days
+        except Exception:
+            dias = 0
+        out.append({"marca": marca, "doc": nome, "d": cri, "dias": dias, "motivo": motivo,
+                    "assinaram": len([s for s in sg if s.get("signingTime")]), "total": len(sg)})
+    out.sort(key=lambda r: -r["dias"])
+    return out
