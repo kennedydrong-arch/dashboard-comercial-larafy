@@ -20,6 +20,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Teto de tempo. O build leva ~10-13 min; 25 da folga de sobra.
+    # Existe porque em 22/09/2026 um job terminou o trabalho (commitou o dados.json
+    # as 15:03) e pendurou no passo "Post Python" - a limpeza de cache do
+    # actions/setup-python. Ficou 3h30 como "in_progress", e como o concurrency
+    # abaixo enfileira, segurou TODOS os builds seguintes: as vendas do dia nao
+    # entraram no painel. Sem este teto, um job zumbi trava a fila para sempre.
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
