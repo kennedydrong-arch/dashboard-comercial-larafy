@@ -265,7 +265,8 @@ def contratos(key, marca, desde, opps):
             sem_assin += 1
         if not data or data < desde: continue
         cli = _cliente(name)
-        out.append({"d": data, "cliente": cli, "vendedor": vendedor, "op": _match(cli, opps, grupos)})
+        out.append({"d": data, "cliente": cli, "vendedor": vendedor, "id": d.get("id"),
+                    "nome": name, "op": _match(cli, opps, grupos)})
     if sem_assin:
         print("[b4] %s: %d contrato(s) sem assinatura legivel -> datados pelo envio" % (marca, sem_assin))
     if falhas:

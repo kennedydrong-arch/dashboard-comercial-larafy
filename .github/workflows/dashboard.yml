@@ -37,7 +37,8 @@ jobs:
           python-version: "3.12"
 
       - name: Dependencias
-        run: pip install requests
+        # pypdf le o PDF do contrato (mensalidade e implantacao) - ver b4_valores.py
+        run: pip install requests pypdf
 
       - name: Gera dados.json
         env:
@@ -56,7 +57,9 @@ jobs:
         run: |
           git config user.name  "dashboard-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add dados.json index.html
+          # valores_contratos.json e o cache dos valores lidos do PDF: sem commitar,
+          # cada build baixaria os 33 contratos de novo
+          git add dados.json index.html valores_contratos.json
           if git diff --cached --quiet; then
             echo "nada mudou"; exit 0
           fi

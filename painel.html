@@ -171,7 +171,7 @@ body.nostatic *{transition:none !important;animation:none !important}
       <div class="meta rv">
         <span>Atividades <b class="mono" data-c id="taxAtiv">0</b></span>
         <span>Ticket médio <b class="mono" id="taxTicket">R$ 0</b><b class="mono warn" id="taxSemValor"></b></span>
-        <span>Receita anual <b class="mono" id="taxValor">R$ 0</b></span>
+        <span>Receita recorrente <b class="mono" id="taxValor">R$ 0</b></span><span>Implantação <b class="mono" id="taxImpl">R$ 0</b></span>
         <span>Em assinatura <b class="mono hot" id="taxAssin">0</b><b class="mono warn" id="taxParado"></b></span>
       </div>
       <div class="slab rv">Volume do período</div>
@@ -284,7 +284,14 @@ function side(S,d1,d2,rk){
     valor:vp.reduce((s,x)=>s+(+x.va||0),0),
     valorMes:vp.reduce((s,x)=>s+(+x.v||0),0),
     comValor:vp.filter(x=>(+x.v||0)>0).length,
-    semValor:vp.filter(x=>!(+x.v||0)).length,
+    // do contrato (PDF): mensalidade entra todo mes; implantacao e' cobranca unica.
+    // Misturar as duas foi o que fazia o painel multiplicar por 12 uma cobranca
+    // que acontece uma vez so. Soma a mensalidade apenas dos contratos recorrentes -
+    // o contrato anual (Tower, R$ 38.400/ano) nao e' receita mensal.
+    mrr:vp.reduce((s,x)=>s+(x.rec?(+x.mensal||0):0),0),
+    impl:vp.reduce((s,x)=>s+(+x.impl||0),0),
+    comMensal:vp.filter(x=>(+x.mensal||0)>0).length,
+    semValor:vp.filter(x=>!(+x.mensal||0)).length,
     top:Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,5)};
 }
 function prevRange(d1,d2){const a=new Date(d1+'T00:00'),b=new Date(d2+'T00:00');
@@ -302,12 +309,13 @@ function render(d1,d2){
   put('taxLeads',t.leads);put('taxReun',t.reunAgenda);put('taxVend',t.vendas);put('taxPipe',t.pipe);put('taxAtiv',t.ativ);
   put('fyReun',f.reun);put('fyVend',f.vendas);put('fyPipe',f.pipe);put('fyParc',totParc);put('fyAtiv',f.ativ);put('fyVendAno',f.vendas);
   put('taxAssin',t.assin);put('fyAssin',f.assin);
-  {const el=document.getElementById('taxSemValor');if(el)el.textContent=t.semValor?(' \u00b7 '+t.semValor+' sem valor'):'';}
+  {const el=document.getElementById('taxSemValor');if(el)el.textContent=t.semValor?(' \u00b7 '+t.semValor+' sem valor no contrato'):'';}
   {const el=document.getElementById('taxPipeVelho');if(el)el.textContent=t.pipeVelho?(' \u00b7 '+t.pipeVelho+' ha +6m'):'';}
   [['taxParado',t.assinVelhos],['fyParado',f.assinVelhos]].forEach(([id,n])=>{const el=document.getElementById(id);if(el)el.textContent=n?(' · '+n+' ha +30d'):'';});
   put('ftLeads',totLeads);put('ftParc',totParc);
-  document.getElementById('taxTicket').textContent=brl(t.valorMes/Math.max(t.comValor,1));
-  document.getElementById('taxValor').textContent=brl(t.valor);
+  document.getElementById('taxTicket').textContent=brl(t.mrr/Math.max(t.comMensal,1));
+  document.getElementById('taxValor').textContent=brl(t.mrr);
+  {const el=document.getElementById('taxImpl');if(el)el.textContent=brl(t.impl);}
   delta('d_taxLeads',t.leads,tp.leads);delta('d_taxReun',t.reunAgenda,tp.reunAgenda);delta('d_taxVend',t.vendas,tp.vendas);
   delta('d_fyReun',f.reun,fp.reun);delta('d_fyVend',f.vendas,fp.vendas);
   rank('taxRank',t.top);rank('fyRank',f.top);

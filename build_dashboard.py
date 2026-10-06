@@ -177,17 +177,46 @@ B4_FY = os.environ.get("B4_KEY_LARAFY")
 B4_CUTOFF = os.environ.get("B4_CUTOFF", "2026-06-01")
 if B4_TAX or B4_FY:
     import b4_vendas
+    # mensalidade e implantacao vem do PDF do contrato: o valor do CRM, quando existe,
+    # e' quase sempre a taxa de IMPLANTACAO (8 de 10 casos conferidos), que e' cobranca
+    # unica. Detalhes e padroes em b4_valores.py.
+    try:
+        import b4_valores
+        _valores = b4_valores.carrega_cache()
+        print("[build] valores de contrato em cache: %d" % len(_valores))
+    except Exception as e:
+        b4_valores = None
+        _valores = {}
+        print("[build] b4_valores indisponivel -> vendas ficam sem mensalidade:", str(e)[:120])
     if B4_TAX:
         try:  # monta o B4 num temporário; só troca se der certo (senão mantém o CRM, NUNCA zera)
             novos = []
-            for c in b4_vendas.contratos(B4_TAX, "LaraTAX", B4_CUTOFF, opps):
+            _cs = b4_vendas.contratos(B4_TAX, "LaraTAX", B4_CUTOFF, opps)
+            if b4_valores is not None:
+                # le o PDF so dos contratos que ainda nao estao no cache, com teto por
+                # execucao: o build ja leva ~13 min e o cron e' de 30
+                try:
+                    _valores = b4_valores.valores(_cs, B4_TAX)
+                except Exception as e:
+                    print("[build] leitura de PDF falhou -> uso o cache como esta:", str(e)[:120])
+            for c in _cs:
                 o = c["op"]; val = fnum(o.get("v")) if o else 0.0
+                vc = _valores.get(c.get("id")) or {}
                 novos.append({
                     "d": c["d"], "cl": c["vendedor"] or (o.get("r") if o else "") or "", "v": val, "va": round(val * 12),
                     "o": (o.get("o") if o else "") or "", "tl": "", "i": "", "s": "Ativo",
                     "c": (o.get("c") if o else c["cliente"]), "cnpj": "", "uf": "", "pl": "", "df": "",
+                    # do contrato: mensalidade (recorrente) e implantacao (uma vez so)
+                    "mensal": fnum(vc.get("mensal")) if vc.get("mensal") else 0.0,
+                    "impl": fnum(vc.get("implantacao")) if vc.get("implantacao") else 0.0,
+                    "rec": bool(vc.get("recorrente")),
                 })
             vendas = [v for v in vendas if v["d"] < B4_CUTOFF] + novos
+            _mrr = sum(v["mensal"] for v in novos if v["rec"])
+            _imp = sum(v["impl"] for v in novos)
+            _sem = len([v for v in novos if not v["mensal"]])
+            print("[build] LaraTAX: mensalidade somada R$ %.0f | implantacao R$ %.0f | %d sem mensalidade no PDF"
+                  % (_mrr, _imp, _sem))
         except Exception as e:
             print("[build] B4 LaraTAX falhou -> mantém vendas do CRM:", str(e)[:150])
     if B4_FY:

@@ -1,0 +1,457 @@
+{
+ "121f5a69-1bd4-47dc-b92d-12de4482ce18": {
+  "doc": "Contrato LaraTAX - BEXCONT",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 3000.0,
+  "recorrente": true
+ },
+ "131e2828-fda3-454e-9139-53db2bcf2814": {
+  "doc": "Contrato LaraTAX - MARIA LUIZA BARBOSA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "1b214c01-1a46-4fcc-a184-f2892fcd74fc": {
+  "doc": "Estival - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "1ff986c3-61a0-4116-bab5-4945df3d1a9a": {
+  "doc": "Contrato LaraTAX - PER-DCOMP - Guilherme",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 99.9,
+  "recorrente": false
+ },
+ "23fefd5f-a298-4348-aae8-138bba742ff5": {
+  "doc": "1. Contrato LaraTAX - CONTEC",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 3160.0,
+  "recorrente": true
+ },
+ "24f05ab8-127e-413c-b34e-7ceff8bcf506": {
+  "doc": "Transfast - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "27162549-c71b-45d7-81b7-4fdd9733e53c": {
+  "doc": "Grupo Talenco - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "275129ff-b92a-4471-9d8d-88a106b71d8e": {
+  "doc": "Codeline - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "2af0125d-1352-4121-82d0-82b1a52c4325": {
+  "doc": "Willner - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "2cffae27-3151-4db1-8be1-4d24a0679612": {
+  "doc": "Camila Granado De Barros - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "302c35fa-3460-4560-863e-ca576bf32409": {
+  "doc": "Criativa Embalagens - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "3739ac53-e388-4e51-abba-56139e0b1684": {
+  "doc": "TopRank - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "3786748d-a17a-430a-8617-d6b9819409a4": {
+  "doc": "San Martino Transportes - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "37afb7a5-1db1-4fd2-a28b-8dc00dac6758": {
+  "doc": "Servkollor - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "3c4aaca6-6cf7-45ce-964d-5de825cec0bf": {
+  "doc": "Beviani - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "4517cf9b-4592-48f2-a317-cae58ec67245": {
+  "doc": "Contrato LaraTAX - JOSÉ CARLOS DE ABREU FERNANDES",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "5426f902-9c85-4070-813b-22f17dfb1ca4": {
+  "doc": "Contrato LaraTAX - FS SOLUCOES TRIBUTARIAS LTDA",
+  "implantacao": 11000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 5611.0,
+  "recorrente": true
+ },
+ "57edd19f-0b47-4cb7-bde9-ced06d975d16": {
+  "doc": "Engefy - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "5d48b7c4-2a41-45a9-9a7a-d15d2ef6ff30": {
+  "doc": "T-Rex - Autorizacao Estudos Consultoria - Lfy_MLaw",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "621694dc-c778-49cb-94b4-eb76ec41812a": {
+  "doc": "Wing - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "6406cca0-0347-4e53-8396-c0b257e6621e": {
+  "doc": "Contrato LaraTAX - TRACT ASSESSORIA TRIBUTARIA E EMPRESARIAL LTDA",
+  "implantacao": 9000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 6611.0,
+  "recorrente": true
+ },
+ "650e6bfb-74ff-4599-bf5c-5d95c06fa2b0": {
+  "doc": "Contrato LaraTAX - VALLURI GESTAO LTDA",
+  "implantacao": 3000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "66c5a08c-13e4-4994-9a1f-456ce13cc2d0": {
+  "doc": "Contrato LaraTAX - FARIA CONSULTORIA E TREINAMENTOS LTDA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "6758e47c-623d-40dd-9f9e-6b6c3f55050e": {
+  "doc": "Contrato LaraTAX - ACT CONSULTORIA TRIBUTARIA LTDA",
+  "implantacao": 7500.0,
+  "lido_em": "2026-10-06",
+  "mensal": 8100.0,
+  "recorrente": true
+ },
+ "67621336-c03f-4cf0-a2e2-e73f7ca55bb2": {
+  "doc": "1. Contrato LaraTAX - AXIOS",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 11200.0,
+  "recorrente": true
+ },
+ "6ccc4e9e-d206-4f1b-9166-17076e32b789": {
+  "doc": "Contrato LaraTAX - VIDIGAL, RIGHETTI E CIRINO SOCIEDADE DE ADVOGADOS",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 4320.0,
+  "recorrente": true
+ },
+ "6e2775e0-427a-4ebd-bc01-b65da80a7f41": {
+  "doc": "Contrato LaraTAX - CONFIAL GROUP",
+  "implantacao": 3000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 5611.0,
+  "recorrente": true
+ },
+ "71421f27-5848-4858-acc1-346c433e07ea": {
+  "doc": "Contrato LaraTAX - SPEROTTO, MARTINS & KNAACK CONTADORES ASSOCIADOS LTDA",
+  "implantacao": 15000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "72c32810-4f4e-48fa-886b-40e0b7cdb1ec": {
+  "doc": "Kapazi - Autorização Planejamento Tributário",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "75300b03-0ab3-4c5c-9ffa-3f7b273cf6f7": {
+  "doc": "ALS Logistica - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "7659fba9-9ad7-4a8b-a5d7-7e8cfa420bd0": {
+  "doc": "Contrato LaraTAX - TRIBUTARIZE RECUPERACAO TRIBUTARIA LTDA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "799321b2-6a38-44fb-b3aa-5e393c8843c5": {
+  "doc": "KIOA - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "79c51073-56d6-4489-8d86-80546cd94a91": {
+  "doc": "Contrato LaraTAX - Rede",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 14400.0,
+  "recorrente": true
+ },
+ "82d9eede-b304-4b49-a83b-a6d2c290972d": {
+  "doc": "Contrato LaraTAX - BIER E SILVA ADVOGADOS ASSOCIADOS",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "8b1479de-0752-46eb-9916-bda8d5eb71c6": {
+  "doc": "Grupo Overall Gym - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "8b5e0c01-0fe5-441d-a4ee-8e349ef4beef": {
+  "doc": "Grupo Talenco - Contrato Diagnostico Societario e Patrimonial",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "8d12892f-0cbc-407c-98c3-32b5f7ee3abc": {
+  "doc": "AudioFrahm - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "914d6f2c-0c40-42da-9896-b58d91c3ab97": {
+  "doc": "Vila Açoriana - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "9d2429e4-af7b-414b-a36a-3474172b48b1": {
+  "doc": "Stadler - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "aa7d97a6-5c4c-425c-91d8-d515fb661f16": {
+  "doc": "Grupo Euro Transportes - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "abdb98f1-07fd-433f-9aad-33c5d62ca270": {
+  "doc": "Ts Tripas  - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "ac3d62ac-91ff-4fa6-9d00-7675031454f3": {
+  "doc": "Spraying Systems - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "ad210cfe-b807-4058-8392-472e2fe009b5": {
+  "doc": "Contrato LaraTAX - OLIVEIRA E WANG ADVOCACIA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "b0d1cb1b-c71e-4bf9-925a-6f077704043f": {
+  "doc": "Mozaik - Autorização Estudos da Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "b3bba709-5f83-4fd6-b712-1ebd84b4bef5": {
+  "doc": "Frigorifico Verdi - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "b9ad6c1b-644f-4abd-a710-70c217052aa1": {
+  "doc": "Contrato LaraTAX - CTR CONSULTORIA",
+  "implantacao": 10800.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "ba1a5d88-a820-4526-a940-60d83a643b4e": {
+  "doc": "Contrato LaraTAX - Rose",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "c1883b5e-1ba8-47ab-b0a6-953ed41033d2": {
+  "doc": "Contrato LaraTAX_anual - Tower",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 38400.0,
+  "recorrente": false
+ },
+ "c9889090-312f-4b83-ba03-b1528a215e05": {
+  "doc": "Contrato LaraTAX - GERALDO SOARES DE OLIVEIRA JUNIOR",
+  "implantacao": 9000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "d0e9bf6d-d655-4e90-9d87-a0e210f38b85": {
+  "doc": "Contrato LaraTAX - CAPITAL CONSULTORIA E GESTAO EMPRESARIAL LTDA",
+  "implantacao": 7000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 4860.0,
+  "recorrente": true
+ },
+ "d95fabdc-e43c-4ee5-9939-75fd545d41b8": {
+  "doc": "Contrato LaraTAX - TRINITY CONSULTORIA TRIBUTARIA LTDA",
+  "implantacao": 5000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "def3b818-21e0-4200-83ab-b1a774ff4d85": {
+  "doc": "Forte Metal - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "e0f62ec6-cf9e-45b6-9969-f6a4907b1561": {
+  "doc": "Contrato LaraTAX - JOHN MASIERO",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "e617a775-8854-4f8b-a2f0-28896586be41": {
+  "doc": "Contrato LaraTAX - POSIVISE CONSULTORIA E GESTAO EMPRESARIAL LTDA",
+  "implantacao": 7000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "e9943a70-5e62-4a5c-a655-4cfbd159e212": {
+  "doc": "FretSolutions - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "eba125cb-1a55-46d4-809f-eb41cabb9012": {
+  "doc": "Business For Sign Soluções Em Negócios Inteligentes - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "f195b18a-4dc8-4734-95d9-d39cb4efd159": {
+  "doc": "Contrato LaraTAX - Titanium Tax",
+  "implantacao": 9000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "f37b0f95-fe8d-4bf4-b835-3c1b75898e05": {
+  "doc": "1. Contrato LaraTAX - OCP",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "f4503e5a-6d20-4ea3-ba0b-79d01a37bef8": {
+  "doc": "Brovalle - Contrato Consultoria e Contabilidade",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "f5a4305a-ca45-4442-916c-cdb7e16c80ce": {
+  "doc": "Contrato LaraTAX - FARIAS APOIO ADMINISTRATIVO",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 4320.0,
+  "recorrente": true
+ },
+ "f710e0e8-eae7-4089-a487-5cd6e5dd3c33": {
+  "doc": "Contrato LaraTAX - ABRAO E SILVA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "f79b11ea-3666-41a0-9de6-050db32be427": {
+  "doc": "Contrato LaraTAX - BOLONHA E MACHADO SOLUCOES TRIBUTARIAS LTDA",
+  "implantacao": 9000.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "f869ec76-3e1b-4b2a-a8a8-d150348e4ac7": {
+  "doc": "Contrato LaraTAX - ERNESTO BORGES ADVOGADOS",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "f97ea8a1-0b4d-4bd8-a1be-1f2b6fff7a23": {
+  "doc": "Favoreto - Contrato Consultoria e Contabilidade _1",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ },
+ "fb842457-b249-4b6c-abf0-7f81c6e37e5f": {
+  "doc": "SF Esquadrias - Autorização Consultoria",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-06",
+  "mensal": null,
+  "recorrente": false
+ }
+}
