@@ -79,6 +79,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .meta b{font-family:'Montserrat';font-weight:800;color:var(--ink);font-size:1cqw}
 .meta b.hot{color:var(--cyan-ink)}
 .meta b.warn{color:var(--bad);margin-left:.5cqw;font-size:.82cqw}
+.kpi-k b.velho{color:var(--bad);font-weight:700;margin-left:.4cqw;letter-spacing:0}
 .meta span{display:flex;align-items:center;gap:.45cqw}
 
 /* section */
@@ -163,17 +164,17 @@ body.nostatic *{transition:none !important;animation:none !important}
       <div class="brand rv"><img id="logoTax" alt="LaraTAX"><span class="brand-tag">Plataforma tributária</span></div>
       <div class="kpis rv">
         <div class="kpi"><div class="dlt" id="d_taxLeads"></div><div class="kpi-v mono" data-c id="taxLeads">0</div><div class="kpi-k">Leads</div></div>
-        <div class="kpi"><div class="dlt" id="d_taxReun"></div><div class="kpi-v mono" data-c id="taxReun">0</div><div class="kpi-k">Reuniões</div></div>
+        <div class="kpi"><div class="dlt" id="d_taxReun"></div><div class="kpi-v mono" data-c id="taxReun">0</div><div class="kpi-k">Reuniões agendadas</div></div>
         <div class="kpi big"><div class="dlt" id="d_taxVend"></div><div class="kpi-v mono" data-c id="taxVend">0</div><div class="kpi-k">Vendas</div></div>
-        <div class="kpi"><div class="kpi-v mono" data-c id="taxPipe">0</div><div class="kpi-k">Pipeline</div></div>
+        <div class="kpi"><div class="kpi-v mono" data-c id="taxPipe">0</div><div class="kpi-k">Pipeline<b class="velho" id="taxPipeVelho"></b></div></div>
       </div>
       <div class="meta rv">
         <span>Atividades <b class="mono" data-c id="taxAtiv">0</b></span>
-        <span>Ticket médio <b class="mono" id="taxTicket">R$ 0</b></span>
-        <span>Faturamento <b class="mono" id="taxValor">R$ 0</b></span>
+        <span>Ticket médio <b class="mono" id="taxTicket">R$ 0</b><b class="mono warn" id="taxSemValor"></b></span>
+        <span>Receita anual <b class="mono" id="taxValor">R$ 0</b></span>
         <span>Em assinatura <b class="mono hot" id="taxAssin">0</b><b class="mono warn" id="taxParado"></b></span>
       </div>
-      <div class="slab rv">Funil do período</div>
+      <div class="slab rv">Volume do período</div>
       <div class="funnel rv" id="taxFunnel"></div>
       <div class="slab rv">Ranking de closers</div>
       <div class="rank rv" id="taxRank"></div>
@@ -199,7 +200,7 @@ body.nostatic *{transition:none !important;animation:none !important}
         <span>Atividades <b class="mono" data-c id="fyAtiv">0</b></span>
         <span>Em assinatura <b class="mono hot" id="fyAssin">0</b><b class="mono warn" id="fyParado"></b></span>
       </div>
-      <div class="slab rv">Funil do período</div>
+      <div class="slab rv">Volume do período</div>
       <div class="funnel rv" id="fyFunnel"></div>
       <div class="slab rv">Ranking de vendedores</div>
       <div class="rank rv" id="fyRank"></div>
@@ -258,6 +259,8 @@ const isFY=x=>String(x&&x.p||'').toLowerCase().includes('larafy');
 const ATIVA=o=>{const s=String(o.s||'').toLowerCase();return !(s==='ganha'||s==='won'||s==='perdida'||s==='lost');};
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+// oportunidade aberta ha mais de 6 meses: entulho, nao pipeline. Vira aviso no card.
+const CORTE_VELHO=(()=>{const d=new Date();d.setDate(d.getDate()-180);return iso(d);})();
 function splitData(){
   const l=DASH.leads||[],r=DASH.reunioes||[],a=DASH.atividades||[],o=DASH.opps||[];
   const pend=DASH.pendentes||[];
@@ -267,10 +270,22 @@ function splitData(){
 function side(S,d1,d2,rk){
   const inR=x=>x.d&&x.d>=d1&&x.d<=d2, vp=S.v.filter(inR), agg={};
   vp.forEach(x=>{const k=((x[rk]||'')+'').trim();if(k)agg[k]=(agg[k]||0)+1;});
-  return {vendas:vp.length,leads:S.l.filter(inR).length,reun:S.r.filter(x=>inR(x)&&x.s==='done').length,
+  return {vendas:vp.length,leads:S.l.filter(inR).length,
+    reun:S.r.filter(x=>inR(x)&&x.s==='done').length,
+    // agendadas = TODA reuniao marcada no periodo, realizada ou nao. O LaraTAX usa esta;
+    // o LaraFy segue usando 'reun' (so as realizadas).
+    reunAgenda:S.r.filter(inR).length,
     ativ:S.a.filter(inR).length,pipe:S.o.filter(ATIVA).length,
+    pipeVelho:S.o.filter(o=>ATIVA(o)&&o.d&&o.d<CORTE_VELHO).length,
     assin:(S.p||[]).length, assinVelhos:(S.p||[]).filter(x=>(+x.dias||0)>30).length,
-    valor:vp.reduce((s,x)=>s+(+x.va||0),0),top:Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,5)};
+    // valor: 'va' e' o anualizado (v x 12) e 'v' o mensal. Receita anual soma va;
+    // o ticket usa o MENSAL e divide so pelas vendas que tem valor - dividir pelo total
+    // faz as vendas sem valor preenchido puxarem a media para baixo.
+    valor:vp.reduce((s,x)=>s+(+x.va||0),0),
+    valorMes:vp.reduce((s,x)=>s+(+x.v||0),0),
+    comValor:vp.filter(x=>(+x.v||0)>0).length,
+    semValor:vp.filter(x=>!(+x.v||0)).length,
+    top:Object.entries(agg).sort((a,b)=>b[1]-a[1]).slice(0,5)};
 }
 function prevRange(d1,d2){const a=new Date(d1+'T00:00'),b=new Date(d2+'T00:00');
   const len=Math.round((b-a)/864e5)+1,pb=new Date(a);pb.setDate(pb.getDate()-1);
@@ -284,20 +299,22 @@ function render(d1,d2){
   const t=side(TAX,d1,d2,'cl'),f=side(FY,d1,d2,'vendedor');
   const[pd1,pd2]=prevRange(d1,d2),tp=side(TAX,pd1,pd2,'cl'),fp=side(FY,pd1,pd2,'vendedor');
   const totParc=(DASH.parceiros||[]).length,totLeads=(DASH.leads||[]).length;
-  put('taxLeads',t.leads);put('taxReun',t.reun);put('taxVend',t.vendas);put('taxPipe',t.pipe);put('taxAtiv',t.ativ);
+  put('taxLeads',t.leads);put('taxReun',t.reunAgenda);put('taxVend',t.vendas);put('taxPipe',t.pipe);put('taxAtiv',t.ativ);
   put('fyReun',f.reun);put('fyVend',f.vendas);put('fyPipe',f.pipe);put('fyParc',totParc);put('fyAtiv',f.ativ);put('fyVendAno',f.vendas);
   put('taxAssin',t.assin);put('fyAssin',f.assin);
+  {const el=document.getElementById('taxSemValor');if(el)el.textContent=t.semValor?(' \u00b7 '+t.semValor+' sem valor'):'';}
+  {const el=document.getElementById('taxPipeVelho');if(el)el.textContent=t.pipeVelho?(' \u00b7 '+t.pipeVelho+' ha +6m'):'';}
   [['taxParado',t.assinVelhos],['fyParado',f.assinVelhos]].forEach(([id,n])=>{const el=document.getElementById(id);if(el)el.textContent=n?(' · '+n+' ha +30d'):'';});
   put('ftLeads',totLeads);put('ftParc',totParc);
-  document.getElementById('taxTicket').textContent=brl(t.valor/Math.max(t.vendas,1));
+  document.getElementById('taxTicket').textContent=brl(t.valorMes/Math.max(t.comValor,1));
   document.getElementById('taxValor').textContent=brl(t.valor);
-  delta('d_taxLeads',t.leads,tp.leads);delta('d_taxReun',t.reun,tp.reun);delta('d_taxVend',t.vendas,tp.vendas);
+  delta('d_taxLeads',t.leads,tp.leads);delta('d_taxReun',t.reunAgenda,tp.reunAgenda);delta('d_taxVend',t.vendas,tp.vendas);
   delta('d_fyReun',f.reun,fp.reun);delta('d_fyVend',f.vendas,fp.vendas);
   rank('taxRank',t.top);rank('fyRank',f.top);
   rank('taxOrigem',byField(TAX.l,d1,d2,'o'));
   rank('taxVendOrigem',byField(TAX.v,d1,d2,'o'));
   rank('fyReunVend',byField(FY.r,d1,d2,'u',true));
-  funnel('taxFunnel',[{v:t.leads,k:'Leads'},{v:t.reun,k:'Reuniões'},{v:t.vendas,k:'Vendas'}]);
+  funnel('taxFunnel',[{v:t.leads,k:'Leads'},{v:t.reunAgenda,k:'Reuniões'},{v:t.vendas,k:'Vendas'}]);
   funnel('fyFunnel',[{v:f.reun,k:'Reuniões'},{v:f.vendas,k:'Contratos'}]);
   requestAnimationFrame(()=>document.querySelectorAll('.rk-fill').forEach(x=>x.style.width=x.dataset.w+'%'));
 }
