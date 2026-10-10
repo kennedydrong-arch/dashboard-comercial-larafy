@@ -97,6 +97,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "38638c77-c780-4796-a3d8-e3efcead63cd": {
+  "doc": "Contrato LaraTAX - TERRA NOVA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-10",
+  "mensal": 11419.0,
+  "recorrente": true
+ },
  "3c4aaca6-6cf7-45ce-964d-5de825cec0bf": {
   "doc": "Beviani - Autorização Consultoria",
   "implantacao": 0.0,
