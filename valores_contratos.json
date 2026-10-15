@@ -48,6 +48,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "271e52e9-54a4-4092-802e-139ebe6ddf4a": {
+  "doc": "Contrato LaraTAX - INCENTIVE MARKETING E NEGOCIOS LTDA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-15",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
  "275129ff-b92a-4471-9d8d-88a106b71d8e": {
   "doc": "Codeline - Autorização Estudos da Consultoria",
   "implantacao": 0.0,
