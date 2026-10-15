@@ -139,6 +139,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "6079bb7d-ca4d-4276-84f9-8f1ebc2f109f": {
+  "doc": "Contrato LaraTAX - MARCO BAJARUNAS SOCIEDADE INDIVIDUAL DE ADVOCACIA",
+  "implantacao": 0.0,
+  "lido_em": "2026-10-15",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
  "621694dc-c778-49cb-94b4-eb76ec41812a": {
   "doc": "Wing - Contrato Consultoria e Contabilidade",
   "implantacao": 0.0,
