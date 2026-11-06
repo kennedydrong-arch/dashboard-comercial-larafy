@@ -223,6 +223,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "74d88d62-841c-4eb9-8ffb-5976c3af4874": {
+  "doc": "Contrato LaraTAX - MONTALVAO & SOUZA LIMA SOCIEDADE DE ADVOGADOS",
+  "implantacao": 0.0,
+  "lido_em": "2026-11-06",
+  "mensal": 11419.0,
+  "recorrente": true
+ },
  "75300b03-0ab3-4c5c-9ffa-3f7b273cf6f7": {
   "doc": "ALS Logistica - Autorização Consultoria",
   "implantacao": 0.0,
@@ -388,6 +395,13 @@
   "doc": "Contrato LaraTAX - JOHN MASIERO",
   "implantacao": 0.0,
   "lido_em": "2026-10-06",
+  "mensal": 2160.0,
+  "recorrente": true
+ },
+ "e171af16-90b4-41a9-ba85-164be2bc0820": {
+  "doc": "Contrato LaraTAX - RIBEIRO FIALHO ADVOGADOS",
+  "implantacao": 0.0,
+  "lido_em": "2026-11-06",
   "mensal": 2160.0,
   "recorrente": true
  },
