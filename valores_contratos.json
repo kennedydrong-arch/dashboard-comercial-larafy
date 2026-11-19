@@ -433,6 +433,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "ef69d1ec-e444-44d4-80dd-3739d9c7a938": {
+  "doc": "Contrato LaraTAX - CONASSCON S-C LTDA",
+  "implantacao": 0.0,
+  "lido_em": "2026-11-19",
+  "mensal": 3160.0,
+  "recorrente": true
+ },
  "f195b18a-4dc8-4734-95d9-d39cb4efd159": {
   "doc": "Contrato LaraTAX - Titanium Tax",
   "implantacao": 9000.0,
