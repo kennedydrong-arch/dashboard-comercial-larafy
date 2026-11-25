@@ -496,6 +496,13 @@
   "mensal": null,
   "recorrente": false
  },
+ "f9e15405-2eca-45c0-870b-df4b0713790d": {
+  "doc": "Contrato LaraTAX - NOROESTE GESTAO EMPRESARIAL",
+  "implantacao": 0.0,
+  "lido_em": "2026-11-25",
+  "mensal": 4888.0,
+  "recorrente": true
+ },
  "fb842457-b249-4b6c-abf0-7f81c6e37e5f": {
   "doc": "SF Esquadrias - Autorização Consultoria",
   "implantacao": 0.0,
