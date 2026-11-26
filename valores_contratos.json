@@ -13,6 +13,13 @@
   "mensal": 2160.0,
   "recorrente": true
  },
+ "1604dcb1-9a1e-46bd-84c6-5d529ad5488f": {
+  "doc": "Contrato-LaraTAX - NEVES-E-LELIS",
+  "implantacao": 1500.0,
+  "lido_em": "2026-11-26",
+  "mensal": 3160.0,
+  "recorrente": true
+ },
  "1b214c01-1a46-4fcc-a184-f2892fcd74fc": {
   "doc": "Estival - Autorização Estudos da Consultoria",
   "implantacao": 0.0,
