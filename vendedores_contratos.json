@@ -1,0 +1,10 @@
+{
+  "_nota": "Excecoes de atribuicao comercial confirmadas. So altera o vendedor quando o B4 devolve o documento concluido; nao inclui vendas manuais. Comparacao pelo titulo completo, ignorando caixa, pontuacao e extensao .pdf.",
+  "atribuicoes": [
+    {
+      "documento": "Contrato-LaraTAX - NEVES-E-LELIS",
+      "vendedor": "Nelson Mocelin",
+      "motivo": "Venda do Nelson confirmada pelo responsavel pela conciliacao dos seis contratos. O remetente do B4 e o responsavel do CRM podem ser outros."
+    }
+  ]
+}

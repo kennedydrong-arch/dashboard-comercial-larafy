@@ -78,6 +78,39 @@ def _palavras(s):
     return [p for p in re.split(r"[^a-z0-9]+", s) if p]
 
 
+def _titulo_laratax(nome):
+    """Aceita espaco/hifen no titulo sem confundir LaraTAX com outra marca."""
+    return bool(re.search(r"\bcontrato[\s_\-\u2013\u2014]+lara[\s_\-\u2013\u2014]*tax\b",
+                          str(nome or ""), re.I))
+
+
+def _chave_documento(nome):
+    # O nome exportado pode incluir .pdf; pontuacao e caixa nao identificam o doc.
+    return tuple(_palavras(re.sub(r"\.pdf$", "", str(nome or "").strip(), flags=re.I)))
+
+
+def vendedores_documentos(caminho=None):
+    """Atribuicoes comerciais confirmadas, por titulo completo (sem busca parcial).
+
+    Quem enviou o PDF no B4 pode ser diferente de quem fechou a venda. A excecao
+    muda somente o vendedor de um documento ja concluido, nunca cria uma venda.
+    """
+    if caminho is None:
+        caminho = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vendedores_contratos.json")
+    if not os.path.exists(caminho):
+        return {}
+    with io.open(caminho, encoding="utf-8-sig") as f:
+        dados = json.load(f)
+    out = {}
+    for item in dados["atribuicoes"]:
+        chave = _chave_documento(item["documento"])
+        vendedor = _nome_vendedor(item["vendedor"])
+        if not chave or not vendedor or chave in out:
+            raise ValueError("Atribuicao de vendedor vazia ou repetida")
+        out[chave] = vendedor
+    return out
+
+
 def _apelido_bate(apelido, nome):
     """O apelido aparece no nome como PALAVRA(S) inteira(s)?
 
@@ -240,9 +273,11 @@ def _detalhe(doc_id, key):
 
 def contratos(key, marca, desde, opps):
     """marca: 'LaraTAX'|'LaraFy'. desde: 'YYYY-MM-DD'. opps: lista compacta do CRM p/ cruzar.
-    Retorna [{d, cliente, vendedor(=createdBy do B4), op(=oportunidade casada p/ valor, ou None)}]."""
+    Retorna [{d, cliente, vendedor(=atribuicao confirmada ou createdBy do B4),
+              op(=oportunidade casada p/ valor, ou None)}]."""
     if not key: return []
     grupos = grupos_apelidos()
+    atribuicoes = vendedores_documentos() if marca == "LaraTAX" else {}
     # Pre-filtro barato com MARGEM: em tese assinar mexe no documento (updateDate >=
     # assinatura), mas essa premissa e' justamente a que falhou hoje — nao da' pra
     # apostar nela no corte exato. 6 meses de folga custam algumas chamadas a mais e
@@ -252,7 +287,7 @@ def contratos(key, marca, desde, opps):
     for d in _concluidos(key):
         name = d.get("name") or ""
         if _excl(name): continue
-        if marca == "LaraTAX" and "contrato laratax" not in name.lower(): continue
+        if marca == "LaraTAX" and not _titulo_laratax(name): continue
         du = _data_iso(d.get("updateDate"))
         if du and du < piso: continue
         vendedor, dt_assin, falhou = _detalhe(d.get("id"), key)
@@ -265,6 +300,11 @@ def contratos(key, marca, desde, opps):
             sem_assin += 1
         if not data or data < desde: continue
         cli = _cliente(name)
+        vendedor_confirmado = atribuicoes.get(_chave_documento(name))
+        if vendedor_confirmado:
+            print("[b4] vendedor confirmado: %s -> %s (%s)" %
+                  (vendedor or "sem vendedor", vendedor_confirmado, d.get("id")))
+            vendedor = vendedor_confirmado
         out.append({"d": data, "cliente": cli, "vendedor": vendedor, "id": d.get("id"),
                     "nome": name, "op": _match(cli, opps, grupos)})
     if sem_assin:
